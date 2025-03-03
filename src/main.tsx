@@ -5,6 +5,8 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './components/Homepage.tsx'
 import Dashboard from './components/Dashboard.tsx'
+import Medicine from './components/Medicine/Medicine.tsx'
+import MedicinePanel from './components/Medicine/MedicinePanel.tsx'
 
 
 let router = createBrowserRouter([
@@ -19,6 +21,16 @@ let router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />
+      },
+      {
+        path: "medicine-panel",
+        element: <Medicine />,
+        children: [
+          {
+            index: true,
+            element: <MedicinePanel />
+          }
+        ]
       }
     ]
   }

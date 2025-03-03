@@ -1,7 +1,10 @@
 import { FaRegBell } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({value}:any) {
+
+    const navigate = useNavigate()
 
     const months = ['Jan', 'Feb', "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     let date = new Date()
@@ -13,7 +16,7 @@ export default function Header({value}:any) {
 
         if(res.status == 200) {
             alert("You've been Logged Out!")
-            // redirect("/account")
+            navigate("/account")
         }
     }
 

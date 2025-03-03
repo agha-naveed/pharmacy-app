@@ -1,5 +1,5 @@
 import Header from "../extra-components/Header"
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaRegPlusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
