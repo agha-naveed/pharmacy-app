@@ -3,13 +3,13 @@ import logo from '../assets/img/logo.png'
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
 import { PiPillFill } from "react-icons/pi";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BiSolidUserAccount } from "react-icons/bi";
 
 
 export default function Navbar() {
 
-    const [title, setTitle] = useState("Dashboard")
+    const location = useLocation()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,7 +43,12 @@ export default function Navbar() {
                     !py-[16px]
                     gap-2
                     transition-all
-                    ${title == "Dashboard" ? 'bg-slate-800' : "hover:bg-slate-600"}
+                    ${location.pathname == "/" ?
+                            'bg-slate-800' :
+                        location.pathname == "/dashboard" ?
+                            "bg-slate-800" :
+                            "hover:bg-slate-600"
+                        }
                     `}
                     >
                         <MdOutlineSpaceDashboard className='text-2xl' />
@@ -61,7 +66,7 @@ export default function Navbar() {
                     !py-[16px]
                     gap-2
                     transition-all
-                    ${title == "Medicine Panel" ? 'bg-slate-800' : "hover:bg-slate-600"}
+                    ${location.pathname == "/medicine-panel" ? 'bg-slate-800' : "hover:bg-slate-600"}
                     `}
                     >
                         <PiPillFill className='text-2xl' />
@@ -79,7 +84,7 @@ export default function Navbar() {
                     !py-[16px]
                     gap-2
                     transition-all
-                    ${title == "Suppliers"? "bg-slate-800" : "hover:bg-slate-600"}
+                    ${location.pathname == "/suppliers"? "bg-slate-800" : "hover:bg-slate-600"}
                     `}
                     >
                         <BiSolidUserAccount className='text-2xl' />
@@ -97,7 +102,7 @@ export default function Navbar() {
                     !py-[16px]
                     gap-2
                     transition-all
-                    ${title == "Setting"? "bg-slate-800" : "hover:bg-slate-600"}
+                    ${location.pathname == "/setting"? "bg-slate-800" : "hover:bg-slate-600"}
                     `}
                     >
                         <IoSettings className='text-2xl' />

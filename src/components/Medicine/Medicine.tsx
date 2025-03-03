@@ -3,11 +3,9 @@ import { Outlet } from 'react-router-dom'
 
 export default function Medicine() {
   return (
-    <div className='flex flex-col'>
+    <div className='w-full flex flex-col overflow-x-hidden'>
         <Header value="Medicine Panel" />
-        <div className='p-sec'>
-          <Outlet />
-        </div>
+        <Outlet />
     </div>
   )
 }
