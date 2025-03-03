@@ -1,1 +1,64 @@
 @import "tailwindcss";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.spin {
+  animation: spin 10s linear infinite;
+  filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.185));
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Global CSS */
+.p-sec {
+  padding: 20px 36px;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+table {
+  width: max-content;
+}
+table td {
+  width: fit-content;
+  border: 1px solid black;
+  padding: 8px 30px;
+}
+table th {
+  width: fit-content;
+  border: 1px solid black;
+  padding: 12px 30px;
+  background-color: #1d293d;
+  color: white;
+}
+table tr:nth-child(even) {
+  background-color: rgba(226, 226, 226, 0.678);
+}
+
+.c-scroll::-webkit-scrollbar {
+  height: 10px;
+  width: 12px;
+}
+.c-scroll::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background: #1d293d;
+  border-radius: 10px;
+}
+.c-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
