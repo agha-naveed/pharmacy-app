@@ -14,10 +14,19 @@ export default function NewSupplier() {
     const { register, handleSubmit } = useForm<IFormInputs>();
     
     const onSubmit = async (data: IFormInputs) => {
-      const res = await fetch("http://localhost:8000/", {
+      const res = await fetch("http://localhost:8000/supplier/api", {
         method: "POST",
         body: JSON.stringify(data)
       })
+
+      const response = await res.json()
+
+      if(response.message == 'ok') {
+        alert("New Supplier Added Successfully")
+      }
+      else {
+        alert("Some Error Occurred!")
+      }
     }
 
     var date = new Date()

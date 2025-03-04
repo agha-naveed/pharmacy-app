@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import user from './routes/user.js'
 import adduser from './routes/add-user.js'
+import supplier from './routes/supplier.js'
 
 const app = express()
 
@@ -21,6 +22,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_skd")
 
 app.use('/account/api', user)
 app.use('/signup/api', adduser)
+app.use('/supplier/api', supplier)
 
 // router.route('/')
 // .get()
