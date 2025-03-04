@@ -18,13 +18,13 @@ export default function Signup() {
 
     useEffect(() => {
       async function checkLogin() {
-        const res = await fetch("/account/api", {
+        const res = await fetch("http://localhost:8000/signup/api", {
           method: "GET"
         })
 
         const data = await res.json()
-
-        if(data.message != 'ok') {
+        console.log("asd")
+        if(data.message == 'login') {
           alert("You are Already Logged In!")
           redirect("/")
         }
@@ -34,7 +34,7 @@ export default function Signup() {
     }, [])
       
     const onSubmit = async (data: IFormInputs) => {
-        const res = await fetch("/account/signup/api", {
+        const res = await fetch("http://localhost:8000/signup/api", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {

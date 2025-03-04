@@ -6,9 +6,13 @@ const router = express.Router();
 router.route("/")
 .post(async (req, res) => {
     const body = await req.body
+
+    const fName = body.first_name, lName = body.last_name;
     const username = body.username, password = body.password;
 
-    const data = await User.findOne({
+    const data = await User.insertOne({
+        first_name: fName,
+        last_name: lName,
         username,
         password
     })
@@ -27,26 +31,21 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
-    let cookie = req.cookies.user
+
+    let cookie = req.cookies
+    
     
     if(cookie) {
         return res.json({
-            message: "duplicate"
+            message: "login"
         })
     }
+
     else {
         return res.json({
-            message: 'ok'
+            message: 'logout'
         })
     }
 })
-.patch(async(req, res) => {
-    res.clearCookie("user")
-    return res.json({
-        message: "ok"
-    })
-
-})
-
 
 export default router
