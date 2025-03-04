@@ -2,13 +2,19 @@ import { useForm } from 'react-hook-form';
 
 
 interface IFormInputs {
-  fullname: string;
-  email: string;
-  cnic: string;
-  cell: string;
-  gender: string;
-  company: string;
+  name: string;
+  batch_no: string;
+  stock: number;
+  pay_method: string;
+  supplier: string;
+  packet_price: number;
+  discount: number;
+  pills_packet: number;
   date: string;
+  pills_price: string;
+  sell_pills_price: string;
+  expiry_date: string;
+
 }
 export default function NewMedicine() {
     const { register, handleSubmit } = useForm<IFormInputs>();
@@ -24,13 +30,13 @@ export default function NewMedicine() {
             <h3 className='text-2xl font-semibold !mb-5'>Add new Medicine</h3>
 
             <form onSubmit={handleSubmit(onSubmit)}
-            className='w-[500px] grid gap-3 bg-zinc-600/5 shadow-lg rounded-lg !p-5'
+            className='w-[658px] grid gap-3 bg-zinc-600/5 shadow-lg rounded-lg !p-5'
             >
                 <div className='flex gap-5'>
                     <div className='grid'>
-                        <label htmlFor="">Full Name</label>
+                        <label htmlFor="">Medicine Name</label>
                         <input
-                        placeholder='e.g: Syed Naveed'
+                        placeholder='e.g: Panadol'
                         type="text"
                         className='
                             border
@@ -39,67 +45,93 @@ export default function NewMedicine() {
                             !px-2
                             rounded-md
                         '
-                        {...register("fullname")}
+                        {...register("name")}
                         required />
                     </div>
 
                     <div className='grid'>
-                        <label htmlFor="">Email</label>
+                        <label htmlFor="">Batch #</label>
                         <input
-                        placeholder='e.g: ali@gmail.com'
-                        type="email"
+                        placeholder='Batch No.'
+                        type="text"
                         className='
+                            w-full
                             border
                             border-zinc-400
                             h-10
                             !px-2
                             rounded-md
                         '
-                        {...register("email")}
+                        {...register("batch_no")}
                          />
+                    </div>
+
+                    <div className='grid'>
+                        <label htmlFor="">Stock</label>
+                        <input
+                        type="number"
+                        min={0}
+                        className='
+                            w-36
+                            border
+                            border-zinc-400
+                            h-10
+                            !px-2
+                            rounded-md
+                        '
+                        {...register("stock")}
+                            />
                     </div>
                 </div>
 
-                <div className='grid'>
-                        <label htmlFor="">CNIC</label>
-                        <input
-                        placeholder='Without Dashed (-)'
-                        type="number"
-                        maxLength={13}
-                        min={0}
-                        className='
-                            border
-                            border-zinc-400
-                            h-10
-                            !px-2
-                            rounded-md
-                        '
-                        {...register("cnic")}
-                         />
-                    </div>
 
                 <div className='flex gap-5'>
-                    <div className='grid'>
-                        <label htmlFor="">Gender</label>
+                    
+                    <div className='grid w-full'>
+                        <label htmlFor="">Paymethod Method</label>
                         <select
                         className='
                         border
                         border-zinc-400
                         h-10
+                        w-full
                         !px-2
                         rounded-md
                         '
-                        {...register("gender")}
+                        {...register("pay_method")}
+                        required
                         >
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="">-- select --</option>
+                            <option value="cash">Cash</option>
+                            <option value="credit">On Credit</option>
                         </select>
                     </div>
 
+                    <div className='grid w-full'>
+                        <label htmlFor="">Supplier</label>
+                        <select
+                        className='
+                        border
+                        border-zinc-400
+                        h-10
+                        w-full
+                        !px-2
+                        rounded-md
+                        '
+                        {...register("supplier")}
+                        required
+                        >
+                            <option value="">-- select --</option>
+                            <option value="ali">Ali Medical Store</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div className='flex gap-5'>
                     <div className='grid'>
-                        <label htmlFor="">Cell No.</label>
+                        <label htmlFor="">Packet Price</label>
                         <input
-                        placeholder='03*********'
                         type="number"
                         min={0}
                         className='
@@ -109,34 +141,66 @@ export default function NewMedicine() {
                             !px-2
                             rounded-md
                         '
-                        {...register("cell")}
+                        {...register("packet_price")}
                          />
                     </div>
+
                     <div className='grid'>
-                        <label htmlFor="">Date:</label>
+                        <label htmlFor="">Pills in Packet</label>
                         <input
-                        type="text"
-                        readOnly
-                        value={`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+                        type="number"
                         min={0}
                         className='
                             border
-                            w-28
                             border-zinc-400
                             h-10
                             !px-2
                             rounded-md
                         '
-                        {...register("date")}
+                        {...register("pills_packet")}
+                        required />
+                    </div>
+                    
+                </div>
+
+                <div className='flex gap-1'>
+                    <div className='grid'>
+                        <label htmlFor="">Per Pill Price</label>
+                        <input
+                        type="number"
+                        min={0}
+                        className='
+                            border
+                            border-zinc-400
+                            h-10
+                            !px-2
+                            rounded-md
+                        '
+                        {...register("pills_price")}
+                        required />
+                    </div>
+
+                    <div className='grid'>
+                        <label htmlFor="">Sell Pill Price</label>
+                        <input
+                        type="number"
+                        min={0}
+                        className='
+                            border
+                            border-zinc-400
+                            h-10
+                            !px-2
+                            rounded-md
+                        '
+                        {...register("sell_pills_price")}
                         required />
                     </div>
                 </div>
 
                 <div className='grid'>
-                    <label htmlFor="">Company Name</label>
+                    <label htmlFor="">Discount</label>
                     <input
-                    placeholder='e.g: Ali Medical Store'
-                    type="text"
+                    type="number"
                     min={0}
                     className='
                         border
@@ -145,7 +209,45 @@ export default function NewMedicine() {
                         !px-2
                         rounded-md
                     '
-                    {...register("company")}
+                    {...register("discount")}
+                    required />
+                </div>
+
+                
+
+                <div className='grid'>
+                    <label htmlFor="">Date:</label>
+                    <input
+                    type="text"
+                    readOnly
+                    value={`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+                    min={0}
+                    className='
+                        border
+                        w-28
+                        border-zinc-400
+                        h-10
+                        !px-2
+                        rounded-md
+                    '
+                    {...register("date")}
+                    required />
+                </div>
+
+                
+
+                <div className='grid'>
+                    <label htmlFor="">Expiry Date</label>
+                    <input
+                    type="date"
+                    className='
+                        border
+                        border-zinc-400
+                        h-10
+                        !px-2
+                        rounded-md
+                    '
+                    {...register("expiry_date")}
                     required />
                 </div>
                     

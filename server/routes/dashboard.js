@@ -41,7 +41,6 @@ router.route("/")
     return res.json({
         message: "ok"
     })
-
 })
 
 
