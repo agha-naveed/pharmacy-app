@@ -41,7 +41,13 @@ router.route("/")
         })
     }
 })
-// .patch()
+.patch(async(req, res) => {
+    res.clearCookie("user")
+    return res.json({
+        message: "ok"
+    })
+
+})
 
 
 export default router

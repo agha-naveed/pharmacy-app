@@ -10,13 +10,19 @@ export default function Header({value}:any) {
     let date = new Date()
 
     async function logOut() {
-        const res = await fetch("/account/api", {
+        const res = await fetch("http://localhost:8000/account/api", {
+            credentials: "include",
             method: "PATCH"
         })
 
-        if(res.status == 200) {
+        const data = await res.json()
+
+        if(data.message == "ok") {
             alert("You've been Logged Out!")
             navigate("/account")
+        }
+        else {
+            alert("Some error occurred!")
         }
     }
 
