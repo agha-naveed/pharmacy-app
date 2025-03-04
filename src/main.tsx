@@ -5,11 +5,17 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './components/Homepage.tsx'
 import Dashboard from './components/Dashboard.tsx'
+import Setting from './components/Setting.tsx'
 import Medicine from './components/Medicine/Medicine.tsx'
 import MedicinePanel from './components/Medicine/MedicinePanel.tsx'
 import NewMedicine from './components/Medicine/NewMedicine.tsx'
 import Supplier from './components/Suppliers/Supplier.tsx'
 import SupplierPanel from './components/Suppliers/SupplierPanel.tsx'
+import NewSupplier from './components/Suppliers/NewSupplier.tsx'
+import Account from './components/Accounts/Account.tsx'
+import Login from './components/Accounts/Login.tsx'
+import Signup from './components/Accounts/Signup.tsx'
+
 
 
 let router = createBrowserRouter([
@@ -46,10 +52,29 @@ let router = createBrowserRouter([
           {
             index: true,
             element: <SupplierPanel />
+          },
+          {
+            path: "new-supplier",
+            element: <NewSupplier />
           }
         ]
-      }
+      },
+      {
+        path: "setting",
+        element: <Setting />
+      },
     ]
+  },
+  {
+    path: "account",
+    element: <Account />,
+    children: [{
+      index: true,
+      element: <Login />
+    }, {
+      path: 'signup',
+      element: <Signup />
+    }]
   }
 ])
 

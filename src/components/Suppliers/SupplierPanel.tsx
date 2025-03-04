@@ -58,7 +58,7 @@ export default function SupplierPanel() {
                 </div>
                 
                 <button
-                onClick={() => navigate("/medicine-panel/new-medicine")}
+                onClick={() => navigate("/suppliers/new-supplier")}
                 className='flex gap-2 cursor-pointer hover:bg-slate-900 transition-all items-center bg-slate-800 text-white rounded-full w-fit !px-7 !py-[10px] self-end'>
                 <FaRegPlusSquare className='text-xl' />
                 <span>Add New Entry</span>
