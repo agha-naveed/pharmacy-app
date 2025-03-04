@@ -9,6 +9,7 @@ import adduser from './routes/add-user.js'
 import supplier from './routes/supplier.js'
 import setting from './routes/setting.js'
 import dashboard from './routes/dashboard.js'
+import medicine from './routes/medicine.js'
 
 const app = express()
 
@@ -27,6 +28,8 @@ app.use('/signup/api', adduser)
 app.use('/supplier/api', supplier)
 app.use('/setting/api', setting)
 app.use('/dashboard/api', dashboard)
+
+app.use('/medicine/api', medicine)
 
 // router.route('/')
 // .get()
