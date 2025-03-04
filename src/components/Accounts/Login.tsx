@@ -13,15 +13,7 @@ export default function page() {
     const redirect = useNavigate()
 
     const { register, handleSubmit } = useForm<IFormInputs>();
-  
-    useEffect(() => {
-      async function a() {
-        const res = await fetch("https://localhost:8000/account")
-        const data = await res.json()
-        console.log(data)
-      }
-      a()
-    }, [])
+ 
     useEffect(() => {
       async function checkLogin() {
         const res = await fetch("/account/api", {
