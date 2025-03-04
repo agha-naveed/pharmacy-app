@@ -24,8 +24,6 @@ router.route("/")
         date
     })
 
-console.log(body)
-
     if(data) {
         return res.json({
             statusbar: 200,

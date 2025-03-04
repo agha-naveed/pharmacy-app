@@ -12,7 +12,6 @@ export default function Navbar() {
     const location = useLocation()
 
     useEffect(() => {
-        console.log(location.pathname)
         const fetchData = async () => {
             const res = await fetch("/api", {
                 method: "GET"

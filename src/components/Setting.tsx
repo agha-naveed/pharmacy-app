@@ -29,7 +29,7 @@ export default function page() {
         
         const fetchData = async () => {
             try {
-                const res = await fetch("/setting/api", { method: "GET" });
+                const res = await fetch("http://localhost:8000/setting/api", { method: "GET" });
                 if (res.status === 200) {
                     const data = (await res.json()).userdata;
                     Object.keys(data).forEach((key) => {

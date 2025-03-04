@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 
-
 interface IFormInputs {
   fullname: string;
   email: string;
@@ -10,25 +9,26 @@ interface IFormInputs {
   company: string;
   date: string;
 }
+
 export default function NewSupplier() {
     const { register, handleSubmit } = useForm<IFormInputs>();
     
     const onSubmit = async (data: IFormInputs) => {
 
-      await fetch("http://localhost:8000/supplier/api", {
+      const res = await fetch("http://localhost:8000/supplier/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       })
 
-      // const response = await res.json()
+      const response = await res.json()
 
-      // if(response.message == 'ok') {
-      //   alert("New Supplier Added Successfully")
-      // }
-      // else {
-      //   alert("Some Error Occurred!")
-      // }
+      if(response.message == 'ok') {
+        alert("New Supplier Added Successfully")
+      }
+      else {
+        alert("Some Error Occurred!")
+      }
     }
 
     var date = new Date()
