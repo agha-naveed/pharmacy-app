@@ -1,11 +1,11 @@
 import express from 'express'
-import User from '../model/user.js'
+import Supplier from '../model/supplier.js';
 
 const router = express.Router();
 
 router.route("/")
 .post(async (req, res) => {
-    const body = await req.body
+    const body = req.body
     const name = body.fullname
     const email = body.email;
     const cnic = body.cnic
@@ -14,19 +14,19 @@ router.route("/")
     const company = body.company
     const date = body.date
 
-    const data = await User.insertOne({
-        fullname: name,
+    const data = await Supplier.create({
+        name,
         email,
         cnic,
-        cell,
         gender,
+        cell,
         company,
         date
     })
 
-    if(data) {
-        res.cookie("user", data._id)
+console.log(body)
 
+    if(data) {
         return res.json({
             statusbar: 200,
             message: 'ok'
@@ -37,27 +37,27 @@ router.route("/")
         return res.json({statusbar: 404, message: "No User Found"})
     }
 })
-.get(async (req, res) => {
-    let cookie = req.cookies.user
+// .get(async (req, res) => {
+//     let cookie = req.cookies.user
     
-    if(cookie) {
-        return res.json({
-            message: "duplicate"
-        })
-    }
-    else {
-        return res.json({
-            message: 'ok'
-        })
-    }
-})
-.patch(async(req, res) => {
-    res.clearCookie("user")
-    return res.json({
-        message: "ok"
-    })
+//     if(cookie) {
+//         return res.json({
+//             message: "duplicate"
+//         })
+//     }
+//     else {
+//         return res.json({
+//             message: 'ok'
+//         })
+//     }
+// })
+// .patch(async(req, res) => {
+//     res.clearCookie("user")
+//     return res.json({
+//         message: "ok"
+//     })
 
-})
+// })
 
 
 export default router

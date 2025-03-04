@@ -18,14 +18,14 @@ const userSchema = new mongoose.Schema({
     cell: {
         type: String
     },
+    company: {
+        type: String,
+        required: true
+    },
     date: {
         type: String,
         default: Date.now()
     },
-    company: {
-        type: String,
-        required: true
-    }
 }, { timestamps: true });
 
 
