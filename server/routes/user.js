@@ -28,8 +28,20 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
-
+    let cookie = req.cookies.user
+    
+    if(cookie) {
+        return res.json({
+            message: "duplicate"
+        })
+    }
+    else {
+        return res.json({
+            message: 'ok'
+        })
+    }
 })
+// .patch()
 
 
 export default router

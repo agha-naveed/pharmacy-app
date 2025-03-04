@@ -16,7 +16,7 @@ export default function page() {
  
     useEffect(() => {
       async function checkLogin() {
-        const res = await fetch("/account/api", {
+        const res = await fetch("http://localhost:8000/account/api", {
           method: "GET",
           credentials: "include",
         })
