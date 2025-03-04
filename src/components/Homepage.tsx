@@ -13,15 +13,14 @@ export default function Homepage() {
 
         async function getData() {
             
-            const res = await fetch("/dashboard/api", { method: "GET" })
-
-        if(res.status == 200) {
+            const res = await fetch("http://localhost:8000/dashboard/api", { method: "GET" })
             const response = await res.json()
+            
+            if(response.message == 'ok') {
 
-            console.log(response.totalUser)
-            setUsers(response.totalUser)
+                setUsers(response.users)
+            }
         }
-    }
 
     getData()
   }, [])

@@ -28,18 +28,12 @@ router.route("/")
 })
 .get(async (req, res) => {
 
-    let cookie = await req.cookies.user
-    
-    if(cookie) {
-        return res.json({
-            message: "duplicate"
-        })
-    }
-    else {
-        return res.json({
-            message: 'ok'
-        })
-    }
+    const data = await User.find()
+
+    return res.json({
+        message: 'ok',
+        users: data.length
+    })
 })
 
 .patch(async(req, res) => {

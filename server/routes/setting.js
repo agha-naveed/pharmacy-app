@@ -7,28 +7,33 @@ const router = express.Router();
 
 router.route("/")
 .put(async (req, res) => {
+    let cookie = await req.cookies.user
+
     const body = await req.body
-    const username = body.username, password = body.password;
+    const username = body.username, first_name = body.first_name, last_name = body.last_name;
 
-    const data = await User.findOne({
-        username,
-        password
+    const data = await User.updateOne({
+        username: cookie
+    },
+    {
+        $set: {
+            first_name,
+            last_name,
+        }
     })
-
     
     if(data) {
-        res.cookie("user", data._id)
-
         return res.json({
-            statusbar: 200,
+            status: 200,
             message: 'ok'
         })
     }
 
     else {
-        return res.json({statusbar: 404, message: "No User Found"})
+        return res.json({status: 404, message: "No User Found"})
     }
 })
+
 .get(async (req, res) => {
     
     let cookie = await req.cookies.user

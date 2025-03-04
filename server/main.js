@@ -8,6 +8,7 @@ import user from './routes/user.js'
 import adduser from './routes/add-user.js'
 import supplier from './routes/supplier.js'
 import setting from './routes/setting.js'
+import dashboard from './routes/dashboard.js'
 
 const app = express()
 
@@ -25,6 +26,7 @@ app.use('/account/api', user)
 app.use('/signup/api', adduser)
 app.use('/supplier/api', supplier)
 app.use('/setting/api', setting)
+app.use('/dashboard/api', dashboard)
 
 // router.route('/')
 // .get()

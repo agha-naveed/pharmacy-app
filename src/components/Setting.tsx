@@ -12,6 +12,8 @@ interface IFormInputs {
 
 export default function page() {
 
+    const [msg, setMsg] = useState("")
+
     const [details, setDetails] = useState<IFormInputs>({
         first_name: "",
         last_name: "",
@@ -61,12 +63,14 @@ export default function page() {
         if(changes) {
             const res = await fetch("http://localhost:8000/setting/api", {
                 method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(obj)
             })
             const fetchedData = await res.json()
 
             if(fetchedData.message == 'ok') {
-                
+                setMsg("Changes has been Saved!")
             }
             
         }
@@ -97,13 +101,13 @@ export default function page() {
 
                     <div className='grid'>
                         <label htmlFor="">Username</label>
-                        <input type="text"
+                        <input type="text" readOnly
                         className='border border-zinc-300 h-8 !px-2 rounded-md'
                         {...register("username")} />
                     </div>
 
                     <button type='submit' className='bg-slate-800 text-white rounded-lg !p-2 cursor-pointer hover:bg-slate-900 transition-all'>Submit</button>
-
+                    <span className='text-red-600'>{msg}</span>
                 </form>
 
             </div>
