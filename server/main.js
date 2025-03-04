@@ -10,6 +10,7 @@ import supplier from './routes/supplier.js'
 import setting from './routes/setting.js'
 import dashboard from './routes/dashboard.js'
 import medicine from './routes/medicine.js'
+import medicineDetail from './routes/medicine-detail.js'
 
 const app = express()
 
@@ -30,6 +31,8 @@ app.use('/setting/api', setting)
 app.use('/dashboard/api', dashboard)
 
 app.use('/medicine/api', medicine)
+app.use('/medicine-detail/api', medicineDetail)
+
 
 // router.route('/')
 // .get()

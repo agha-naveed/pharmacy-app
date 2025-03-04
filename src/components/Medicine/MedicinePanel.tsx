@@ -7,15 +7,24 @@ import { useEffect, useState } from "react";
 export default function MedicinePanel() {
     const navigate = useNavigate()
 
+    const [medDetails, setMedDetails] = useState([])
+
     const [focus, setFocus] = useState(false)
 
     useEffect(() => {
       const fetchData = async () => {
-        const res = await fetch("/medicine-panel/api", {
+        const res = await fetch("http://localhost:8000/medicine-detail/api", {
           method: "GET"
         })
+        
+        const response = await res.json()
+
+        if(response.message == 'ok') {
+            setMedDetails(response.medicines)
+        }
 
       }
+      fetchData()
     }, [])
 
     return (
@@ -82,46 +91,53 @@ export default function MedicinePanel() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>Panadol</td>
-                    <td>12ba</td>
-                    <td>20</td>
-                    <td>28</td>
-                    <td>1000</td>
-                    <td>20000</td>
-                    <td>20/8/2024</td>
-                    <td>01/5/2024</td>
-                    <td>
-                        <button className='
-                        bg-green-700
-                        !py-2
-                        !px-4
-                        rounded-md
-                        text-white
-                        text-[14.5px]
-                        cursor-pointer
-                        hover:bg-green-800
-                        transition-all
-                        '>
-                        Update
-                        </button>
-                    </td>
-                    <td>
-                        <button className='
-                        bg-red-700
-                        !py-2
-                        !px-4
-                        rounded-md
-                        text-white
-                        text-[14.5px]
-                        cursor-pointer
-                        hover:bg-red-800
-                        transition-all
-                        '>
-                        Remove
-                        </button>
-                    </td>
-                    </tr>
+                    {
+                        medDetails ?
+                        medDetails.map((i:any, idx) => (
+                        
+                            <tr key={`medicine-display-${idx}`}>
+                                <td>{i.name}</td>
+                                <td>{i.batch_no}</td>
+                                <td>{i.pills_packet}</td>
+                                <td>{i.pills_price}</td>
+                                <td>{i.stock}</td>
+                                <td>200</td>
+                                <td>{i.date}</td>
+                                <td>{i.expiry_date}</td>
+                                <td>
+                                    <button className='
+                                    bg-green-700
+                                    !py-2
+                                    !px-4
+                                    rounded-md
+                                    text-white
+                                    text-[14.5px]
+                                    cursor-pointer
+                                    hover:bg-green-800
+                                    transition-all
+                                    '>
+                                    Update
+                                    </button>
+                                </td>
+                                <td>
+                                    <button className='
+                                    bg-red-700
+                                    !py-2
+                                    !px-4
+                                    rounded-md
+                                    text-white
+                                    text-[14.5px]
+                                    cursor-pointer
+                                    hover:bg-red-800
+                                    transition-all
+                                    '>
+                                    Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                        : null
+                    }
                 </tbody>
                 </table>
             </section>

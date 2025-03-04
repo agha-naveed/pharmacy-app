@@ -10,7 +10,7 @@ router.route("/")
 
     const name = body.name
     const stock = body.stock
-    const batch_no = body.batch_no
+    const batch = body.batch_no
     const pay_method = body.pay_method
     const supplier = body.supplier
     const packet_price = body.packet_price
@@ -24,7 +24,7 @@ router.route("/")
     await Medicine.insertOne({
         name,
         stock,
-        batch_no,
+        batch,
         pay_method,
         supplier,
         packet_price,
@@ -40,10 +40,10 @@ router.route("/")
 })
 .get(async (req, res) => {
 
-    const data = await Supplier.find()
+    const data = await Medicine.find()
 
     return res.json({
-        suppliers: data,
+        medicines: data,
         message: 'ok'
     })
 
