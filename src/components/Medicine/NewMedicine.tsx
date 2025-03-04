@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 
@@ -18,13 +19,37 @@ interface IFormInputs {
 }
 export default function NewMedicine() {
     const { register, handleSubmit } = useForm<IFormInputs>();
+    const [supplier, setSupplier] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch("http://localhost:8000/medicine/api", {
+                method: "GET"
+            })
+            const response = await res.json()
+            if(response.message == 'ok') {
+                setSupplier(response.suppliers)
+            }
+        }
+        fetchData()
+    }, [])
     
     const onSubmit = async (data: IFormInputs) => {
-        await fetch("http://localhost:8000/medicine/api", {
+        const res = await fetch("http://localhost:8000/medicine/api", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         })
+
+        const response = await res.json()
+
+        if(response.message == 'ok') {
+            alert("✅ Medicine has been Added!")
+            window.location.reload()
+        }
+        else {
+            alert("❌ Error Occurred")
+        }
 
     }
 
@@ -75,7 +100,6 @@ export default function NewMedicine() {
 
                 </div>
 
-
                 <div className='flex gap-5'>
                     
                     <div className='grid w-full'>
@@ -113,7 +137,16 @@ export default function NewMedicine() {
                         required
                         >
                             <option value="">-- select --</option>
-                            <option value="ali">Ali Medical Store</option>
+                            {
+                                supplier ?
+                                    supplier.map((i:any, idx) => (
+                                        <option value={i._id}
+                                        key={`supplier-detail-${idx}`}>
+                                            {i.name}
+                                        </option>
+                                    ))
+                                : null
+                            }
                         </select>
                     </div>
 
@@ -168,7 +201,7 @@ export default function NewMedicine() {
                             rounded-md
                         '
                         {...register("pills_packet")}
-                        required />
+                         />
                     </div>
 
                     <div className='grid'>
@@ -185,7 +218,7 @@ export default function NewMedicine() {
                             rounded-md
                         '
                         {...register("pills_price")}
-                        required />
+                         />
                     </div>
 
                     <div className='grid'>
@@ -202,7 +235,7 @@ export default function NewMedicine() {
                             rounded-md
                         '
                         {...register("sell_pills_price")}
-                        required />
+                         />
                     </div>
                     
                 </div>
@@ -221,7 +254,7 @@ export default function NewMedicine() {
                             rounded-md
                         '
                         {...register("discount")}
-                        required />
+                         />
                     </div>
 
                     

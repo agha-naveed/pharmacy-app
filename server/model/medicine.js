@@ -17,7 +17,7 @@ const medicineSchema = new mongoose.Schema({
         Enumerator: ['cash', 'credit'],
     },
     supplier: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier',
     },
     packet_price: {
@@ -44,7 +44,7 @@ const medicineSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-const Medicines = mongoose.models.Medicine || mongoose.model('Medicine', medicineSchema);
+const Medicine = mongoose.models.Medicine || mongoose.model('Medicine', medicineSchema);
 
 
-export default Medicines;
+export default Medicine;
