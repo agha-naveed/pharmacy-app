@@ -35,5 +35,13 @@ router.route("/")
         return res.json({statusbar: 404, message: "No User Found"})
     }
 })
+.get(async (req, res) => {
+    const data = await Supplier.find()
+
+    return res.json({
+        message: "ok",
+        suppliers: data
+    })
+})
 
 export default router

@@ -7,15 +7,23 @@ import { useEffect, useState } from "react";
 export default function SupplierPanel() {
     const navigate = useNavigate()
 
+    const [details, setDetails] = useState([])
     const [focus, setFocus] = useState(false)
 
     useEffect(() => {
       const fetchData = async () => {
-        const res = await fetch("/medicine-panel/api", {
+        const res = await fetch("http://localhost:8000/supplier/api", {
           method: "GET"
         })
 
+        const response = await res.json()
+
+        if(response.message == 'ok') {
+            setDetails(response.suppliers)
+        }
+
       }
+      fetchData()
     }, [])
 
     return (
@@ -69,59 +77,30 @@ export default function SupplierPanel() {
                 <table>
                 <thead>
                     <tr>
-                    <th>Medicine Name</th>
-                    <th>Batch No.</th>
-                    <th>Pills in Packet</th>
-                    <th>Pill/rs</th>
-                    <th>Stock</th>
-                    <th>Pills Stock</th>
-                    <th>Entry Date</th>
-                    <th>Expiry Date</th>
-                    <th>Update</th>
-                    <th>Remove</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>CNIC</th>
+                        <th>Gender</th>
+                        <th>Cell No.</th>
+                        <th>Company</th>
+                        <th>Entry Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>Panadol</td>
-                    <td>12ba</td>
-                    <td>20</td>
-                    <td>28</td>
-                    <td>1000</td>
-                    <td>20000</td>
-                    <td>20/8/2024</td>
-                    <td>01/5/2024</td>
-                    <td>
-                        <button className='
-                        bg-green-700
-                        !py-2
-                        !px-4
-                        rounded-md
-                        text-white
-                        text-[14.5px]
-                        cursor-pointer
-                        hover:bg-green-800
-                        transition-all
-                        '>
-                        Update
-                        </button>
-                    </td>
-                    <td>
-                        <button className='
-                        bg-red-700
-                        !py-2
-                        !px-4
-                        rounded-md
-                        text-white
-                        text-[14.5px]
-                        cursor-pointer
-                        hover:bg-red-800
-                        transition-all
-                        '>
-                        Remove
-                        </button>
-                    </td>
-                    </tr>
+                    {
+                        details ?
+                        details.map((i:any, idx:number) => (
+                            <tr key={`suppliers-page-${idx}`}>
+                                <td>{i.name}</td>
+                                <td>{i.email}</td>
+                                <td>{i.cnic}</td>
+                                <td>{i.gender}</td>
+                                <td>{i.cell}</td>
+                                <td>{i.company}</td>
+                                <td>{i.date}</td>
+                            </tr>
+                        )) : "<span>No Details<span/>"
+                    }
                 </tbody>
                 </table>
             </section>
