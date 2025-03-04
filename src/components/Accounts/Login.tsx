@@ -17,7 +17,8 @@ export default function page() {
     useEffect(() => {
       async function checkLogin() {
         const res = await fetch("/account/api", {
-          method: "GET"
+          method: "GET",
+          credentials: "include",
         })
 
         const data = await res.json()
@@ -34,6 +35,7 @@ export default function page() {
     const onSubmit = async (data: IFormInputs) => {
       const res = await fetch("http://localhost:8000/account/api", {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json"

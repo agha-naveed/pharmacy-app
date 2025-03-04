@@ -15,6 +15,8 @@ router.route("/")
     })
 
     if(data) {
+        res.cookie("user", data._id)
+
         return res.json({
             statusbar: 200,
             message: 'ok'
@@ -26,7 +28,7 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
-    
+
 })
 
 
