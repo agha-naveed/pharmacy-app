@@ -8,6 +8,8 @@ import Dashboard from './components/Dashboard.tsx'
 import Medicine from './components/Medicine/Medicine.tsx'
 import MedicinePanel from './components/Medicine/MedicinePanel.tsx'
 import NewMedicine from './components/Medicine/NewMedicine.tsx'
+import Supplier from './components/Suppliers/Supplier.tsx'
+import SupplierPanel from './components/Suppliers/SupplierPanel.tsx'
 
 
 let router = createBrowserRouter([
@@ -34,6 +36,16 @@ let router = createBrowserRouter([
           {
             path: "new-medicine",
             element: <NewMedicine />
+          }
+        ]
+      },
+      {
+        path: "suppliers",
+        element: <Supplier />,
+        children: [
+          {
+            index: true,
+            element: <SupplierPanel />
           }
         ]
       }
