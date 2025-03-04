@@ -17,7 +17,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_skd")
 }).catch(() => console.log("Error while connecting to the server..."))
 
 
-app.use('/account', user)
+app.use('/account/api', user)
+
 // router.route('/')
 // .get()
 

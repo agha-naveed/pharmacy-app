@@ -32,7 +32,7 @@ export default function page() {
     }, [])
 
     const onSubmit = async (data: IFormInputs) => {
-      const res = await fetch("/account/api", {
+      const res = await fetch("http://localhost:8000/account/api", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -40,7 +40,9 @@ export default function page() {
         }
       })
 
-      if(res.status == 200) {
+      const fetched = await res.json()
+
+      if(fetched.message == 'ok') {
         redirect("/")
       }
       else {
