@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Header from '../extra-components/Header';
 
@@ -29,9 +29,14 @@ export default function page() {
         
         const fetchData = async () => {
             try {
-                const res = await fetch("http://localhost:8000/setting/api", { method: "GET" });
-                if (res.status === 200) {
-                    const data = (await res.json()).userdata;
+                const res = await fetch("http://localhost:8000/setting/api", {
+                    method: "GET",
+                    credentials: "include"
+                });
+                const getData = await res.json();
+
+                if (getData.message === 'ok') {
+                    const data = getData.datas;
                     Object.keys(data).forEach((key) => {
                         setValue(key as keyof IFormInputs, data[key]);
                     });
@@ -54,10 +59,16 @@ export default function page() {
         let changes = confirm("Click OK to Confirm Changes!")
 
         if(changes) {
-            const res = await fetch("/setting/api", {
+            const res = await fetch("http://localhost:8000/setting/api", {
                 method: "PUT",
                 body: JSON.stringify(obj)
             })
+            const fetchedData = await res.json()
+
+            if(fetchedData.message == 'ok') {
+                
+            }
+            
         }
 
     }

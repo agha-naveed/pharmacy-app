@@ -35,27 +35,5 @@ router.route("/")
         return res.json({statusbar: 404, message: "No User Found"})
     }
 })
-// .get(async (req, res) => {
-//     let cookie = req.cookies.user
-    
-//     if(cookie) {
-//         return res.json({
-//             message: "duplicate"
-//         })
-//     }
-//     else {
-//         return res.json({
-//             message: 'ok'
-//         })
-//     }
-// })
-// .patch(async(req, res) => {
-//     res.clearCookie("user")
-//     return res.json({
-//         message: "ok"
-//     })
-
-// })
-
 
 export default router

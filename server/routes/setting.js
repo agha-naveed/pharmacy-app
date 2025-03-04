@@ -1,10 +1,12 @@
 import express from 'express'
 import User from '../model/user.js'
+import Cookies from "js-cookie";
+
 
 const router = express.Router();
 
 router.route("/")
-.post(async (req, res) => {
+.put(async (req, res) => {
     const body = await req.body
     const username = body.username, password = body.password;
 
@@ -13,10 +15,9 @@ router.route("/")
         password
     })
 
-
-
+    
     if(data) {
-        res.cookie("user", username)
+        res.cookie("user", data._id)
 
         return res.json({
             statusbar: 200,
@@ -29,28 +30,22 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
-
-    let cookie = await req.cookies.user
     
-    if(cookie) {
+    let cookie = await req.cookies.user
+
+    const data = await User.findOne({username: cookie})
+
+    if(data) {
         return res.json({
-            message: "duplicate"
+            message: "ok",
+            datas: data
         })
     }
     else {
         return res.json({
-            message: 'ok'
+            message: 'no data'
         })
     }
 })
-
-.patch(async(req, res) => {
-    res.clearCookie("user")
-    return res.json({
-        message: "ok"
-    })
-
-})
-
 
 export default router
