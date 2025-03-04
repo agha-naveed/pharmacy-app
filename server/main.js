@@ -3,6 +3,7 @@ dotenv.config()
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import user from './routes/user.js'
 
 const app = express()
 
@@ -16,6 +17,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_skd")
 }).catch(() => console.log("Error while connecting to the server..."))
 
 
+app.use('/account', user)
 // router.route('/')
 // .get()
 

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,14 @@ export default function page() {
 
     const { register, handleSubmit } = useForm<IFormInputs>();
   
+    useEffect(() => {
+      async function a() {
+        const res = await fetch("https://localhost:8000/account")
+        const data = await res.json()
+        console.log(data)
+      }
+      a()
+    }, [])
     useEffect(() => {
       async function checkLogin() {
         const res = await fetch("/account/api", {
