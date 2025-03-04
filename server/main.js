@@ -20,6 +20,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_skd")
 // router.route('/')
 // .get()
 
+router.get("/")
 
 
 
