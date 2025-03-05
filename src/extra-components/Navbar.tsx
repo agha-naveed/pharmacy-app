@@ -49,7 +49,7 @@ export default function Navbar() {
                     transition-all
                     ${location.pathname == "/" ?
                             'bg-slate-800' :
-                        location.pathname == "/dashboard" ?
+                        location.pathname == "/sell-new-entry" ?
                             "bg-slate-800" :
                             "hover:bg-slate-600"
                         }

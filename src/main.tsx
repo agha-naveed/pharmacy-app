@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './components/Homepage.tsx'
-import Dashboard from './components/Dashboard.tsx'
+import NewSell from './components/Sell/NewSell.tsx'
 import Setting from './components/Setting.tsx'
 import Medicine from './components/Medicine/Medicine.tsx'
 import MedicinePanel from './components/Medicine/MedicinePanel.tsx'
@@ -30,8 +30,8 @@ let router = createBrowserRouter([
         element: <Homepage />,
       },
       {
-        path: "dashboard",
-        element: <Dashboard />
+        path: "sell-new-entry",
+        element: <NewSell />
       },
       {
         path: "medicine-panel",

@@ -35,12 +35,6 @@ app.use('/medicine/api', medicine)
 app.use('/medicine-detail/api', medicineDetail)
 
 
-// router.route('/')
-// .get()
-
-
-
-
 app.listen(8000, () => {
     console.log("server running on port: "+ 8000)
 })

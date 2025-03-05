@@ -45,7 +45,7 @@ export default function Homepage() {
                 justify-center
                 text-white text-center
                 '
-                onClick={() => navigate("/dashboard")}>
+                onClick={() => navigate("/sell-new-entry")}>
                     <div className='h-[49px] content-center'>
                         <FaRegPlusSquare className='text-3xl' />
                     </div>

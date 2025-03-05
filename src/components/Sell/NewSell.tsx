@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../extra-components/Header'
+import Header from '../../extra-components/Header'
 import { useForm } from 'react-hook-form';
 
 interface IFormInputs {
@@ -13,11 +13,11 @@ interface IFormInputs {
     total: number;
 }
 
-export default function Dashboard() {
+export default function NewSell() {
 
     useEffect(() => {
         const fetchData = async () => {
-
+            const res = await fetch("http://localhost:8000/sell/api")
         }
     }, [])
 
@@ -134,11 +134,11 @@ export default function Dashboard() {
                                 <div className='flex flex-wrap gap-y-4 gap-x-3 w-[550px] border-y border-y-black/35 !py-5'>
                                     <div className='grid'>
                                         <label htmlFor="">Medicine Name</label>
-                                        <select className='w-56 h-[35px] rounded-md !px-2 border border-black'
-                                        {...register("medicine_name")}
-                                        >
-                                            <option value="-">-- select --</option>
-                                        </select>
+                                        <input type='text'
+                                        className='w-56 h-[35px] rounded-md !px-2 border border-black'
+                                        // {...register("medicine_name")}
+                                        
+                                        />
                                     </div>
 
 
