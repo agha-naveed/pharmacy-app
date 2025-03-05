@@ -23,12 +23,10 @@ export default function NewSell() {
 
     const [options, setOptions] = useState<OptionType[]>([]);
     const [loading, setLoading] = useState(false);
+    const [name, setName] = useState<any>('');
+    const [wholeName, setWholeName] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch("http://localhost:8000/sell/api")
-        }
-    }, [])
+    
 
     const fetchOptions = async (inputValue: string) => {
         if (!inputValue || typeof inputValue !== "string") return;
@@ -41,11 +39,15 @@ export default function NewSell() {
 
           const medicines = await response.json();
     
-          // Format response data for react-select
           const formattedOptions: OptionType[] = medicines.map((medicine: { name: string }) => ({
             value: medicine.name,
             label: medicine.name,
-          }));
+          }
+        
+        ));
+        
+        setName(medicines)
+        
     
           setOptions(formattedOptions);
         } catch (error) {
@@ -68,8 +70,12 @@ export default function NewSell() {
 
     };
 
+    useEffect(() => {
+        
+    }, [name])
 
     const onSubmit = async (data: IFormInputs) => {
+        
 
         if(productDetails.length != 0) {
             setProductDetails((prev:any) => [
@@ -98,7 +104,7 @@ export default function NewSell() {
                 total: data.total
             }])
         }
-        console.log(productDetails)
+
         reset();
     }
 

@@ -71,10 +71,6 @@ let router = createBrowserRouter([
         children: [{
           index: true,
           element: <SellHistory />
-        },
-        {
-          path: 'new-sell-entry',
-          element: ''
         }]
       }
     ]
