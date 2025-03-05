@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../extra-components/Header'
 import { useForm } from 'react-hook-form';
-import Select from 'react-select'
 
 
 interface IFormInputs {
@@ -18,6 +17,7 @@ interface OptionType {
     value: string;
     label: string;
 }
+
 export default function NewSell() {
 
 
@@ -25,36 +25,34 @@ export default function NewSell() {
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState<any>('');
     const [wholeName, setWholeName] = useState([]);
+    const [id, setId] = useState<string>('')
+    const [focus, setFocus] = useState<boolean>(false)
 
     
-
-    const fetchOptions = async (inputValue: string) => {
-        if (!inputValue || typeof inputValue !== "string") return;
-    
-        setLoading(true);
+    async function handleSearch(medName:string) {
+        // medName
         try {
-          const response = await fetch(`http://localhost:8000/sell/api?query=${inputValue}`, {
-            method: "GET"
-          });
-
-          const medicines = await response.json();
-    
-          const formattedOptions: OptionType[] = medicines.map((medicine: { name: string }) => ({
-            value: medicine.name,
-            label: medicine.name,
-          }
-        
-        ));
-        
-        setName(medicines)
-        
-    
-          setOptions(formattedOptions);
-        } catch (error) {
-          console.error("Error fetching data:", error);
+            const res = await fetch(`http://localhost:8000/sell/api?query=${medName}`, {
+                method: "GET"
+            });
+            const data = await res.json()
+            console.log(data)
+            
+            setName(data)
+        } catch(err) {
+            console.log("try catch: "+err)
         }
-        setLoading(false);
-    };
+    }
+
+    useEffect(() => {
+        if(!focus)
+            setName('')
+            
+    }, [focus])
+
+    useEffect(() => {
+        console.log("id: "+id)
+    }, [id])
 
     const { register, handleSubmit, reset } = useForm<IFormInputs>();
 
@@ -130,7 +128,7 @@ export default function NewSell() {
                         products.map((_, idx) => (
                             <React.Fragment key={`add-item-${idx}`}>
                                 <div className='flex !mt-8 justify-between w-[550px] h-fit'>
-                                    <p>Product: #{idx+1}</p>
+                                    <p>Product:</p>
                                     <button
                                     title='Save Data'
                                     type='submit'
@@ -141,21 +139,52 @@ export default function NewSell() {
                                 </div>
                                 
                                 <div className='flex flex-wrap gap-y-4 gap-x-3 w-[550px] border-y border-y-black/35 !py-5'>
-                                    <div className='grid relative w-full'>
+                                    <div className='grid w-full'>
                                         <label htmlFor="">Medicine Name</label>
-                                        
-                                        <Select
-                                            placeholder="Search for medicine..."
-                                            options={options}
-                                            className='w-full'
-                                            onInputChange={(inputValue) => {
-                                                if (typeof inputValue === "string") {
-                                                  fetchOptions(inputValue);
+                                        <div className='relative'
+                                            onFocus={() => {
+                                                setFocus(true)
+                                            }}
+                                            onBlur={() => {
+                                                setTimeout(() => {
+                                                    setFocus(false)
+                                                }, 100)
+                                            }}
+                                        >
+                                            <input type="text"
+                                            className='w-full
+                                            h-[35px]
+                                            rounded-md !px-2
+                                            border border-black
+                                            '
+                                            onInput={(e:any) => handleSearch(e.target.value)}
+
+                                            />
+
+                                            <ul className='
+                                            absolute
+                                            top-[35px]
+                                            bg-zinc-200
+                                            w-full
+                                            rounded-lg
+                                            '>
+                                                {
+                                                    name  ?
+                                                    name.map((i:any, idx:number) => (
+                                                        <li
+                                                        className='!px-2 !py-[6px] cursor-pointer'
+                                                        key={`medicine-name-${idx}`}
+                                                        onClick={() => {
+                                                            setId(i._id)
+                                                        }}
+                                                        >
+                                                            {i.name}
+                                                        </li>
+                                                    ))
+                                                    : null
                                                 }
-                                              }}
-                                            isLoading={loading}
-                                            isClearable
-                                        />
+                                            </ul>
+                                        </div>
                                     </div>
 
 
