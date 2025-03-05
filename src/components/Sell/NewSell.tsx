@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../extra-components/Header'
 import { useForm } from 'react-hook-form';
-import { RxCross2 } from "react-icons/rx";
 
 interface IFormInputs {
     patient_name: string;
@@ -18,6 +17,7 @@ interface IFormInputs {
 
 export default function NewSell() {
 
+    const [allMedicines, setAllMedicines] = useState([])
     const [searchInput, setSearchInput] = useState<string>("")
     const [name, setName] = useState<any>('');
     const [wholeName, setWholeName] = useState<any>({});
@@ -100,26 +100,29 @@ export default function NewSell() {
 
     };
 
+    function saveData() {
+        console.log(productDetails)
+    }
 
     const onSubmit = async (data: IFormInputs) => {
         
 
-        // if(productDetails.length != 0) {
-        //     setProductDetails((prev:any) => [
-        //         ...prev, {
-        //             id: prev.length+1,
-        //             medicine_name: searchInput,
-        //             batch_no: data.batch_no,
-        //             pills_packet: data.pills_packet,
-        //             price: data.price,
-        //             quantity: data.quantity,
-        //             discount: data.discount,
-        //             total: data.total
-        //         }
-        //     ])
-        // }
+        if(productDetails.length != 0) {
+            setProductDetails((prev:any) => [
+                ...prev, {
+                    id: wholeName._id,
+                    medicine_name: searchInput,
+                    batch_no: wholeName.batch_no,
+                    pills_packet: wholeName.pills_packet,
+                    price: wholeName.sell_pills_price,
+                    quantity: data.quantity,
+                    discount: data.discount,
+                    total: totalPrice
+                }
+            ])
+        }
 
-        // else {
+        else {
             setProductDetails([{
                 id: wholeName._id,
                 medicine_name: searchInput,
@@ -128,11 +131,10 @@ export default function NewSell() {
                 price: wholeName.sell_pills_price,
                 quantity: data.quantity,
                 discount: data.discount,
-                total: wholeName.total
+                total: totalPrice
             }])
-        // }
+        }
 
-        // reset();
     }
 
 
@@ -179,24 +181,19 @@ export default function NewSell() {
                                                 }, 500)
                                             }}
                                         >
-                                            <div className='flex items-center'>
-                                                <input type="text"
-                                                className='w-[550px]
-                                                h-[35px]
-                                                rounded-md !px-2
-                                                border border-black
-                                                '
-                                                value={searchInput}
-                                                onInput={async (e:any) => {
-                                                    setSearchInput(await e.target.value)
-                                                    handleSearch(await e.target.value)
-                                                }}
-                                                {...register("medicine_name")}
-                                                />
-                                                <RxCross2 className={`relative right-7 text-[18px] cursor-pointer ${searchInput ? "block" : "hidden"}`} 
-                                                onClick={() => setSearchInput("")}
-                                                />
-                                            </div>
+                                            <input type="text"
+                                            className='w-[550px]
+                                            h-[35px]
+                                            rounded-md !px-2
+                                            border border-black
+                                            '
+                                            value={searchInput}
+                                            onInput={async (e:any) => {
+                                                setSearchInput(await e.target.value)
+                                                handleSearch(await e.target.value)
+                                            }}
+                                            {...register("medicine_name")}
+                                            />
 
                                             <ul className={`
                                             absolute
@@ -220,7 +217,6 @@ export default function NewSell() {
                                                         onClick={() => {
                                                             setId(i._id)
                                                             setSearchInput(i.name)
-                                                            console.log(id)
                                                         }}
                                                         >
                                                             {i.name}
@@ -306,9 +302,9 @@ export default function NewSell() {
                         ))
                     }
 
-
                     <button
-                    type='submit'
+                    type='button'
+                    onClick={saveData}
                     className='bg-slate-800 text-white !py-2 !px-7 rounded-lg cursor-pointer transition-all font-semibold text-[15px] !mt-4 hover:bg-slate-900'
                     >
                         Submit!
@@ -338,11 +334,9 @@ export default function NewSell() {
                                             <td>{i?.medicine_name}</td>
                                             <td>{i?.batch_no}</td>
                                             <td>{i?.pills_packet}</td>
-                                            <td>{i?.quantity}</td>
-                                            <td>{i?.discount}</td>
-                                            <td>
-
-                                            </td>
+                                            <td>{i?.quantity ? i?.quantity : 1}</td>
+                                            <td>{i?.discount ? i?.discount : 0}</td>
+                                            <td>{totalPrice}</td>
                                         </tr>
                                     ))
                                 }
