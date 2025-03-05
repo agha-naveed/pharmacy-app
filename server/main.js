@@ -12,6 +12,7 @@ import setting from './routes/setting.js'
 import dashboard from './routes/dashboard.js'
 import medicine from './routes/medicine.js'
 import medicineDetail from './routes/medicine-detail.js'
+import sell from './routes/sell.js'
 
 const app = express()
 
@@ -33,6 +34,9 @@ app.use('/dashboard/api', dashboard)
 
 app.use('/medicine/api', medicine)
 app.use('/medicine-detail/api', medicineDetail)
+
+app.use('/sell/api', sell)
+
 
 
 app.listen(8000, () => {

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../extra-components/Header'
 import { useForm } from 'react-hook-form';
+import Select from 'react-select'
+
+
 
 interface IFormInputs {
     patient_name: string;
@@ -12,14 +15,42 @@ interface IFormInputs {
     quantity: number;
     total: number;
 }
-
+interface OptionType {
+    value: string;
+    label: string;
+}
 export default function NewSell() {
+
+
+    const [options, setOptions] = useState<OptionType[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch("http://localhost:8000/sell/api")
         }
     }, [])
+
+    const fetchOptions = async (inputValue: string) => {
+        if (!inputValue) return;
+    
+        setLoading(true);
+        try {
+          const response = await fetch(`http://localhost:8000/sell/api?query=${inputValue}`);
+          const medicines = await response.json();
+    
+          // Format response data for react-select
+          const formattedOptions: OptionType[] = medicines.map((medicine: { name: string }) => ({
+            value: medicine.name,
+            label: medicine.name,
+          }));
+    
+          setOptions(formattedOptions);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+        setLoading(false);
+    };
 
     const { register, handleSubmit, reset } = useForm<IFormInputs>();
 
@@ -132,12 +163,15 @@ export default function NewSell() {
                                 </div>
                                 
                                 <div className='flex flex-wrap gap-y-4 gap-x-3 w-[550px] border-y border-y-black/35 !py-5'>
-                                    <div className='grid'>
+                                    <div className='grid relative'>
                                         <label htmlFor="">Medicine Name</label>
-                                        <input type='text'
-                                        className='w-56 h-[35px] rounded-md !px-2 border border-black'
-                                        // {...register("medicine_name")}
                                         
+                                        <Select
+                                            placeholder="Search for medicine..."
+                                            options={options}
+                                            onInputChange={(inputValue) => fetchOptions(inputValue)}
+                                            isLoading={loading}
+                                            isClearable
                                         />
                                     </div>
 
