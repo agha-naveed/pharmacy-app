@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 
-const medicinePurchaseSchema = new mongoose.Schema({
-    patientName: {
-        type: String,
-    },
+const arrayFormat = new mongoose.Schema({
     medicineName: {
         type: String
     },
@@ -19,10 +16,18 @@ const medicinePurchaseSchema = new mongoose.Schema({
     },
     total: {
         type: Number
+    }
+})
+
+const medicinePurchaseSchema = new mongoose.Schema({
+    patientName: {
+        type: String,
     },
+    details: [arrayFormat],
     date: {
         type: String
     },
+    
 }, { timestamps: true });
 
 

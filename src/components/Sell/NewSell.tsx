@@ -124,7 +124,8 @@ export default function NewSell() {
         const data = await res.json()
 
         if(data.message == 'ok') {
-            // setWholeName(data.fetchData)
+            alert("✅ Done")
+            window.location.reload()
         }
         
         

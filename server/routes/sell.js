@@ -12,9 +12,17 @@ router.route("/")
   const productDetails = body.productDetails;
   const date = body.date
 
-  await MedicinePurchase.insertOne({
-    
+  const response = await MedicinePurchase.insertOne({
+    patientName,
+    details: productDetails,
+    date
   })
+  if(response) {
+    console.log("Success")
+    return res.json({
+      message: 'ok'
+    })
+  }
 
 })
 .get(async (req, res) => {
