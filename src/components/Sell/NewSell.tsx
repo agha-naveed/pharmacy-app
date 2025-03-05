@@ -13,16 +13,11 @@ interface IFormInputs {
     quantity: number;
     total: number;
 }
-interface OptionType {
-    value: string;
-    label: string;
-}
+
 
 export default function NewSell() {
 
-
-    const [options, setOptions] = useState<OptionType[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [searchInput, setSearchInput] = useState<any>("")
     const [name, setName] = useState<any>('');
     const [wholeName, setWholeName] = useState<any>({});
     const [id, setId] = useState<string>('')
@@ -44,7 +39,9 @@ export default function NewSell() {
             console.log("try catch: "+err)
         }
     }
-
+    async function handleInput(data:string) {
+        setSearchInput(data)
+    }
     useEffect(() => {
         const sendData = async () => {
             let obj = {
@@ -64,16 +61,16 @@ export default function NewSell() {
             }
         }
         
-        if(id)
+        if(id) {
             sendData()
+            setTimeout(() => {
+                setFocus(false)
+                setName("")
+            }, 800)
+        }
 
     }, [id])
 
-    // useEffect(() => {
-    //     if(!focus)
-    //         setName('')
-            
-    // }, [focus])
 
     const { register, handleSubmit, reset } = useForm<IFormInputs>();
 
@@ -175,8 +172,10 @@ export default function NewSell() {
                                             rounded-md !px-2
                                             border border-black
                                             '
+                                            value={searchInput}
                                             onInput={(e:any) => {
                                                 handleSearch(e.target.value)
+                                                handleInput(e.target.value)
                                             }}
                                             />
 
@@ -188,7 +187,7 @@ export default function NewSell() {
                                             rounded-lg
                                             '>
                                                 {
-                                                    name  ?
+                                                    name && focus ?
                                                     name.map((i:any, idx:number) => (
                                                         <li
                                                         className='!px-2
@@ -199,6 +198,7 @@ export default function NewSell() {
                                                         key={`medicine-name-${idx}`}
                                                         onClick={() => {
                                                             setId(i._id)
+                                                            setSearchInput(i.name)
                                                         }}
                                                         >
                                                             {i.name}
@@ -215,7 +215,7 @@ export default function NewSell() {
                                         <label htmlFor="">Batch No.</label>
                                         <input type='text' className='w-40 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
                                         {...register("batch_no")}
-                                        value={wholeName.batch_no}
+                                        value={wholeName.batch_no ? wholeName.batch_no : ""}
                                         readOnly
                                         />
                                         
