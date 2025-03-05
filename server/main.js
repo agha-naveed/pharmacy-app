@@ -4,6 +4,7 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
+import api from './routes/api.js'
 import user from './routes/user.js'
 import adduser from './routes/add-user.js'
 import supplier from './routes/supplier.js'
@@ -23,7 +24,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_skd")
     console.log("Server Connected...")
 }).catch(() => console.log("Error while connecting to the server..."))
 
-
+app.use('/api', api)
 app.use('/account/api', user)
 app.use('/signup/api', adduser)
 app.use('/supplier/api', supplier)

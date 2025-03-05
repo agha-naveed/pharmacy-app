@@ -13,10 +13,12 @@ export default function Navbar() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch("/api", {
-                method: "GET"
+            const res = await fetch("http://localhost:8000/api", {
+                method: "GET",
+                credentials: 'include'
             })
-            if(res.status != 200) {
+
+            if((await res.json()).message != 'login') {
                 alert("You are Not Logged in!!!")
                 redirect("/account")
             }
