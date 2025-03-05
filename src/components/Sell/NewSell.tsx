@@ -24,10 +24,10 @@ export default function NewSell() {
     const [id, setId] = useState<string>('')
     const [focus, setFocus] = useState<boolean>(false)
     const [totalPrice, setTotalPrice] = useState<number>()
+    const [qty, setQty] = useState<number>()
+    const [discount, setDiscount] = useState<number>()
     
     async function handleSearch(medName:string) {
-        setSearchInput(medName)
-        console.log(medName)
         try {
             if(!medName.includes("\\")) {
                 const res = await fetch(`http://localhost:8000/sell/api?query=${medName}`, {
@@ -42,9 +42,19 @@ export default function NewSell() {
         }
     }
     
-    // useEffect(() => {
-    //     setSearchInput(searchInput)
-    // }, [searchInput])
+    useEffect(() => {
+        let pillPrice = wholeName.sell_pills_price
+
+        if(qty && !discount && pillPrice) {
+            setTotalPrice(pillPrice * qty)
+        }
+
+        if(qty && discount && pillPrice) {
+            setTotalPrice((pillPrice * qty) - ((pillPrice * qty) * (discount/100)))
+        }
+        console.log(discount)
+
+    }, [discount, qty])
 
 
     useEffect(() => {
@@ -63,15 +73,16 @@ export default function NewSell() {
             if(data.message == 'ok') {
                 setWholeName(data.fetchData)
             }
+            setTotalPrice(data.fetchData.sell_pills_price)
         }
         
         if(id) {
             sendData()
             setTimeout(() => {
-                setFocus(false)
                 setName("")
             }, 800)
         }
+
 
     }, [id])
 
@@ -114,7 +125,7 @@ export default function NewSell() {
                 medicine_name: searchInput,
                 batch_no: wholeName.batch_no,
                 pills_packet: wholeName.pills_packet,
-                price: wholeName.pills_price,
+                price: wholeName.sell_pills_price,
                 quantity: data.quantity,
                 discount: data.discount,
                 total: wholeName.total
@@ -123,6 +134,7 @@ export default function NewSell() {
 
         // reset();
     }
+
 
     return (
         
@@ -169,7 +181,7 @@ export default function NewSell() {
                                         >
                                             <div className='flex items-center'>
                                                 <input type="text"
-                                                className='w-full
+                                                className='w-[550px]
                                                 h-[35px]
                                                 rounded-md !px-2
                                                 border border-black
@@ -181,15 +193,18 @@ export default function NewSell() {
                                                 }}
                                                 {...register("medicine_name")}
                                                 />
-                                                <RxCross2 className={`relative right-7 text-[18px] cursor-pointer ${searchInput ? "block" : "hidden"}`} />
+                                                <RxCross2 className={`relative right-7 text-[18px] cursor-pointer ${searchInput ? "block" : "hidden"}`} 
+                                                onClick={() => setSearchInput("")}
+                                                />
                                             </div>
 
                                             <ul className={`
                                             absolute
                                             top-[35px]
                                             bg-zinc-200
-                                            w-full
+                                            w-[550px]
                                             rounded-lg
+                                            z-10
                                             ${focus ? "grid": "hidden"}
                                             `}>
                                                 {
@@ -251,7 +266,8 @@ export default function NewSell() {
                                         <label htmlFor="">Qty</label>
                                         <div className='flex'>
                                             <input type='number'
-                                            className='w-28 h-[35px] cursor-pointer rounded-md !px-2 border border-black' 
+                                            className='w-28 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
+                                            onInput={(e:any) => setQty(e.target.value)}
                                             min={0}
                                             {...register("quantity")}
                                             />
@@ -265,6 +281,7 @@ export default function NewSell() {
                                             <input type='number'
                                             className='w-20 h-[35px] cursor-pointer rounded-md !pl-2 !pr-[26px] border border-black'
                                             min={0}
+                                            onInput={(e:any) => setDiscount(e.target.value)}
                                             {...register("discount")} 
                                             />
                                             <span className='relative right-6 text-[15px] top-[6px]'>%</span>
@@ -275,7 +292,7 @@ export default function NewSell() {
                                         <label htmlFor="">Total</label>
                                         <div className='w-56 flex'>
                                             <input readOnly
-                                            value={wholeName.pills_price}
+                                            value={totalPrice}
                                             type='number'
                                             className='h-[35px] cursor-pointer rounded-md !pl-2 !pr-5 border border-black'
                                             {...register("total")} 
