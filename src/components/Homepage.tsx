@@ -26,7 +26,7 @@ export default function Homepage() {
   }, [])
 
     return (
-        <div className="w-full flex flex-col">
+        <div className="w-full flex flex-col overflow-hidden">
             <Header value={"Dashboard"} />
             <section className='flex gap-5 p-sec'>
 

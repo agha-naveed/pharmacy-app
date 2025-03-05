@@ -10,19 +10,18 @@ router.route("/")
 
 })
 .get(async (req, res) => {
-      try {
-        const { query } = req.query;
-  
-        // Search in MongoDB using regex (case-insensitive)
-        const medicines = await Medicine.find(
-          { name: { $regex: query, $options: "i" } }, // Case-insensitive search
-          "name" // Select only the `name` field
-        ).limit(10); // Limit results
-  
-        return res.status(200).json(medicines);
-      } catch (error) {
-        res.status(500).json({ error: "Failed to fetch medicines" });
-      }
+  try {
+    const { query } = req.query;
+    const medicines = await Medicine.find(
+      { name: { $regex: query, $options: "i" } },
+      "name"
+    ).limit(10);
+
+    res.status(200).json(medicines);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch medicines" });
+  }
+
 })
 
 export default router

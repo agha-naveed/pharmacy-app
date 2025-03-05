@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import Select from 'react-select'
 
 
-
 interface IFormInputs {
     patient_name: string;
     medicine_name: string;
@@ -32,11 +31,14 @@ export default function NewSell() {
     }, [])
 
     const fetchOptions = async (inputValue: string) => {
-        if (!inputValue) return;
+        if (!inputValue || typeof inputValue !== "string") return;
     
         setLoading(true);
         try {
-          const response = await fetch(`http://localhost:8000/sell/api?query=${inputValue}`);
+          const response = await fetch(`http://localhost:8000/sell/api?query=${inputValue}`, {
+            method: "GET"
+          });
+
           const medicines = await response.json();
     
           // Format response data for react-select
@@ -102,7 +104,7 @@ export default function NewSell() {
 
     return (
         
-        <div className="w-full flex flex-col">
+        <div className="w-full flex flex-col overflow-hidden">
             <Header value={"Dashboard"} />
 
             <section className='p-sec'>
@@ -116,37 +118,7 @@ export default function NewSell() {
                         />
                     </div>
 
-                    {
-                        productDetails.length > 0 ?
-                            
-                            <table >
-                                <thead className='border'>
-                                    <tr>
-                                        <th>Medicine Name</th>
-                                        <th>Batch No.</th>
-                                        <th>Qty. in Packet</th>
-                                        <th>Qty.</th>
-                                        <th>Discount %</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        productDetails.map((i:any, idx:number) => (
-                                            <tr key={`daily-entry-${idx}`}>
-                                                <td>{i?.medicine_name}</td>
-                                                <td>{i?.batch_no}</td>
-                                                <td>{i?.pills_packet}</td>
-                                                <td>{i?.quantity}</td>
-                                                <td>{i?.discount}</td>
-                                                <td>{i?.total}</td>
-                                            </tr>
-                                        ))
-                                    }
-                                </tbody>
-                            </table>
-                        : null
-                    }
+                    
 
                     {
                         products.map((_, idx) => (
@@ -163,13 +135,18 @@ export default function NewSell() {
                                 </div>
                                 
                                 <div className='flex flex-wrap gap-y-4 gap-x-3 w-[550px] border-y border-y-black/35 !py-5'>
-                                    <div className='grid relative'>
+                                    <div className='grid relative w-full'>
                                         <label htmlFor="">Medicine Name</label>
                                         
                                         <Select
                                             placeholder="Search for medicine..."
                                             options={options}
-                                            onInputChange={(inputValue) => fetchOptions(inputValue)}
+                                            className='w-full'
+                                            onInputChange={(inputValue) => {
+                                                if (typeof inputValue === "string") {
+                                                  fetchOptions(inputValue);
+                                                }
+                                              }}
                                             isLoading={loading}
                                             isClearable
                                         />
@@ -178,17 +155,17 @@ export default function NewSell() {
 
                                     <div className='grid'>
                                         <label htmlFor="">Batch No.</label>
-                                        <select className='w-56 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
+                                        <input type='text' className='w-40 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
                                         {...register("batch_no")} 
-                                        >
-                                            <option value="-">-- select --</option>
-                                        </select>
+                                        readOnly
+                                        />
+                                        
                                     </div>
 
                                     <div className='grid'>
-                                        <label htmlFor="">Packet</label>
+                                        <label htmlFor="">Pills in Packet</label>
                                         <input type='number' readOnly
-                                        className='w-16 h-[35px] cursor-pointer rounded-md !px-2 border border-black' 
+                                        className='w-[100px] h-[35px] cursor-pointer rounded-md !px-2 border border-black' 
                                         value={"2"}
                                         {...register("pills_packet")} 
                                         />
@@ -197,7 +174,7 @@ export default function NewSell() {
                                     <div className='grid'>
                                         <label htmlFor="">Price</label>
                                         <input type='number'
-                                        className='w-20 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
+                                        className='w-24 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
                                         readOnly min={0}
                                         {...register("price")} 
                                         />
@@ -250,6 +227,40 @@ export default function NewSell() {
                     </button>
                 </form>
             </section>
+
+            <div className='c-scroll !px-2 overflow-x-scroll !mt-7'>
+                {
+                    productDetails.length > 0 ?
+                        
+                        <table className='overflow-x-auto'>
+                            <thead className='border'>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Batch No.</th>
+                                    <th>Qty. in Packet</th>
+                                    <th>Qty.</th>
+                                    <th>Discount %</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    productDetails.map((i:any, idx:number) => (
+                                        <tr key={`daily-entry-${idx}`}>
+                                            <td>{i?.medicine_name}</td>
+                                            <td>{i?.batch_no}</td>
+                                            <td>{i?.pills_packet}</td>
+                                            <td>{i?.quantity}</td>
+                                            <td>{i?.discount}</td>
+                                            <td>{i?.total}</td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    : null
+                }
+            </div>
         </div>
     )
 }
