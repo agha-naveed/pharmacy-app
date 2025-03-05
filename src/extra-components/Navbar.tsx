@@ -5,6 +5,7 @@ import { IoSettings } from "react-icons/io5";
 import { PiPillFill } from "react-icons/pi";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BiSolidUserAccount } from "react-icons/bi";
+import { FaDollarSign } from "react-icons/fa";
 
 
 export default function Navbar() {
@@ -101,6 +102,29 @@ export default function Navbar() {
                     >
                         <BiSolidUserAccount className='text-2xl' />
                         Suppliers
+                    </Link>
+                </li>
+                <li className='border-t border-t-white/10'>
+                    <Link
+                    to={'/sell'}
+                    className={`
+                    text-white
+                    flex text-xl
+                    items-center
+                    !px-[40px]
+                    !py-[16px]
+                    gap-2
+                    transition-all
+                    ${location.pathname == "/sell" ?
+                        'bg-slate-800' :
+                        location.pathname == "/sell/new-sell-entry" ?
+                            "bg-slate-800" :
+                            "hover:bg-slate-600"
+                        }
+                    `}
+                    >
+                        <FaDollarSign className='text-2xl' />
+                        Sell
                     </Link>
                 </li>
                 <li className='border-t border-t-white/10'>

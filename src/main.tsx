@@ -15,6 +15,8 @@ import NewSupplier from './components/Suppliers/NewSupplier.tsx'
 import Account from './components/Accounts/Account.tsx'
 import Login from './components/Accounts/Login.tsx'
 import Signup from './components/Accounts/Signup.tsx'
+import Sell from './components/Sell/Sell.tsx'
+import SellHistory from './components/Sell/SellHistory.tsx'
 
 
 
@@ -63,6 +65,18 @@ let router = createBrowserRouter([
         path: "setting",
         element: <Setting />
       },
+      {
+        path: "sell",
+        element: <Sell />,
+        children: [{
+          index: true,
+          element: <SellHistory />
+        },
+        {
+          path: 'new-sell-entry',
+          element: ''
+        }]
+      }
     ]
   },
   {
