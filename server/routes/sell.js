@@ -1,12 +1,20 @@
 import express from 'express'
 import Medicine from '../model/medicine.js'
+import MedicinePurchase from '../model/medicine-purchase.js'
 
 const router = express.Router();
 
 router.route("/")
 .post(async (req, res) => {
-    const body = await req.body
+  const body = await req.body
 
+  const patientName = body.patientName;
+  const productDetails = body.productDetails;
+  const date = body.date
+
+  await MedicinePurchase.insertOne({
+    
+  })
 
 })
 .get(async (req, res) => {

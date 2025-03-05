@@ -1,46 +1,28 @@
 import mongoose from "mongoose";
 
 const medicinePurchaseSchema = new mongoose.Schema({
-    name: {
+    patientName: {
         type: String,
-        required: true
+    },
+    medicineName: {
+        type: String
     },
     batch_no: {
         type: String,
         unique: true
     },
-    stock: {
+    quantity: {
         type: Number,
     },
-    pay_method: {
-        type: String,
-        Enumerator: ['cash', 'credit'],
-    },
-    supplier: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Supplier',
-    },
-    packet_price: {
-        type: Number
-    },
     discount: {
-        type: String
-    },
-    pills_packet: {
         type: Number
     },
-    pills_price: {
+    total: {
         type: Number
-    },
-    sell_pills_price: {
-        type: String
     },
     date: {
         type: String
     },
-    expiry_date: {
-        type: String
-    }
 }, { timestamps: true });
 
 

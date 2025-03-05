@@ -16,8 +16,7 @@ interface IFormInputs {
 
 
 export default function NewSell() {
-
-    const [allMedicines, setAllMedicines] = useState([])
+    
     const [searchInput, setSearchInput] = useState<string>("")
     const [name, setName] = useState<any>('');
     const [wholeName, setWholeName] = useState<any>({});
@@ -26,6 +25,7 @@ export default function NewSell() {
     const [totalPrice, setTotalPrice] = useState<number>()
     const [qty, setQty] = useState<number>()
     const [discount, setDiscount] = useState<number>()
+    const [patientName, setPatientName] = useState<string>('')
     
     async function handleSearch(medName:string) {
         try {
@@ -100,8 +100,34 @@ export default function NewSell() {
 
     };
 
-    function saveData() {
-        console.log(productDetails)
+    async function saveData() {
+        const date = new Date()
+
+        const today = date.getDate()
+        const month = (date.getMonth()) + 1
+        const year = date.getFullYear()
+
+        const finalDate = today + '/'+ month + '/' + year
+
+        let obj = {
+            patientName,
+            productDetails,
+            date: finalDate
+        }
+        
+        const res = await fetch(`http://localhost:8000/sell/api`, {
+            method: "POST",
+            body: JSON.stringify(obj),
+            headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json()
+
+        if(data.message == 'ok') {
+            // setWholeName(data.fetchData)
+        }
+        
+        
     }
 
     const onSubmit = async (data: IFormInputs) => {
@@ -110,11 +136,8 @@ export default function NewSell() {
         if(productDetails.length != 0) {
             setProductDetails((prev:any) => [
                 ...prev, {
-                    id: wholeName._id,
                     medicine_name: searchInput,
                     batch_no: wholeName.batch_no,
-                    pills_packet: wholeName.pills_packet,
-                    price: wholeName.sell_pills_price,
                     quantity: data.quantity,
                     discount: data.discount,
                     total: totalPrice
@@ -124,11 +147,8 @@ export default function NewSell() {
 
         else {
             setProductDetails([{
-                id: wholeName._id,
                 medicine_name: searchInput,
                 batch_no: wholeName.batch_no,
-                pills_packet: wholeName.pills_packet,
-                price: wholeName.sell_pills_price,
                 quantity: data.quantity,
                 discount: data.discount,
                 total: totalPrice
@@ -150,7 +170,7 @@ export default function NewSell() {
                         <label htmlFor="">Patient Name</label>
                         <input type="text"
                         className='w-56 h-[35px] rounded-md !px-2 border border-black'
-                        {...register("patient_name")} 
+                        onInput={(e:any) => setPatientName(e.target.value)} 
                         />
                     </div>
 
