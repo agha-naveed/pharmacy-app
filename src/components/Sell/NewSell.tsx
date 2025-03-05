@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../extra-components/Header'
 import { useForm } from 'react-hook-form';
-
+import { RxCross2 } from "react-icons/rx";
 
 interface IFormInputs {
     patient_name: string;
@@ -12,19 +12,22 @@ interface IFormInputs {
     discount: number;
     quantity: number;
     total: number;
+    pills_price: number;
 }
 
 
 export default function NewSell() {
 
-    const [searchInput, setSearchInput] = useState<any>("")
+    const [searchInput, setSearchInput] = useState<string>("")
     const [name, setName] = useState<any>('');
     const [wholeName, setWholeName] = useState<any>({});
     const [id, setId] = useState<string>('')
     const [focus, setFocus] = useState<boolean>(false)
-
+    const [totalPrice, setTotalPrice] = useState<number>()
     
     async function handleSearch(medName:string) {
+        setSearchInput(medName)
+        console.log(medName)
         try {
             if(!medName.includes("\\")) {
                 const res = await fetch(`http://localhost:8000/sell/api?query=${medName}`, {
@@ -33,15 +36,17 @@ export default function NewSell() {
                 const data = await res.json()
                 
                 setName(data)
-                console.log(data)
             }
         } catch(err) {
             console.log("try catch: "+err)
         }
     }
-    async function handleInput(data:string) {
-        setSearchInput(data)
-    }
+    
+    // useEffect(() => {
+    //     setSearchInput(searchInput)
+    // }, [searchInput])
+
+
     useEffect(() => {
         const sendData = async () => {
             let obj = {
@@ -57,7 +62,6 @@ export default function NewSell() {
 
             if(data.message == 'ok') {
                 setWholeName(data.fetchData)
-                console.log(data.fetchData)
             }
         }
         
@@ -72,8 +76,7 @@ export default function NewSell() {
     }, [id])
 
 
-    const { register, handleSubmit, reset } = useForm<IFormInputs>();
-
+    const { register, handleSubmit } = useForm<IFormInputs>();
 
     const [products, setProducts] = useState([{ id: 1 }]);
 
@@ -90,35 +93,35 @@ export default function NewSell() {
     const onSubmit = async (data: IFormInputs) => {
         
 
-        if(productDetails.length != 0) {
-            setProductDetails((prev:any) => [
-                ...prev, {
-                    id: prev.length+1,
-                    medicine_name: data.medicine_name,
-                    batch_no: data.batch_no,
-                    pills_packet: data.pills_packet,
-                    price: data.price,
-                    quantity: data.quantity,
-                    discount: data.discount,
-                    total: data.total
-                }
-            ])
-        }
+        // if(productDetails.length != 0) {
+        //     setProductDetails((prev:any) => [
+        //         ...prev, {
+        //             id: prev.length+1,
+        //             medicine_name: searchInput,
+        //             batch_no: data.batch_no,
+        //             pills_packet: data.pills_packet,
+        //             price: data.price,
+        //             quantity: data.quantity,
+        //             discount: data.discount,
+        //             total: data.total
+        //         }
+        //     ])
+        // }
 
-        else {
+        // else {
             setProductDetails([{
-                id: 1,
-                medicine_name: data.medicine_name,
-                batch_no: data.batch_no,
-                pills_packet: data.pills_packet,
-                price: data.price,
+                id: wholeName._id,
+                medicine_name: searchInput,
+                batch_no: wholeName.batch_no,
+                pills_packet: wholeName.pills_packet,
+                price: wholeName.pills_price,
                 quantity: data.quantity,
                 discount: data.discount,
-                total: data.total
+                total: wholeName.total
             }])
-        }
+        // }
 
-        reset();
+        // reset();
     }
 
     return (
@@ -136,8 +139,6 @@ export default function NewSell() {
                         {...register("patient_name")} 
                         />
                     </div>
-
-                    
 
                     {
                         products.map((_, idx) => (
@@ -163,31 +164,36 @@ export default function NewSell() {
                                             onBlur={() => {
                                                 setTimeout(() => {
                                                     setFocus(false)
-                                                }, 100)
+                                                }, 500)
                                             }}
                                         >
-                                            <input type="text"
-                                            className='w-full
-                                            h-[35px]
-                                            rounded-md !px-2
-                                            border border-black
-                                            '
-                                            value={searchInput}
-                                            onInput={(e:any) => {
-                                                handleSearch(e.target.value)
-                                                handleInput(e.target.value)
-                                            }}
-                                            />
+                                            <div className='flex items-center'>
+                                                <input type="text"
+                                                className='w-full
+                                                h-[35px]
+                                                rounded-md !px-2
+                                                border border-black
+                                                '
+                                                value={searchInput}
+                                                onInput={async (e:any) => {
+                                                    setSearchInput(await e.target.value)
+                                                    handleSearch(await e.target.value)
+                                                }}
+                                                {...register("medicine_name")}
+                                                />
+                                                <RxCross2 className={`relative right-7 text-[18px] cursor-pointer ${searchInput ? "block" : "hidden"}`} />
+                                            </div>
 
-                                            <ul className='
+                                            <ul className={`
                                             absolute
                                             top-[35px]
                                             bg-zinc-200
                                             w-full
                                             rounded-lg
-                                            '>
+                                            ${focus ? "grid": "hidden"}
+                                            `}>
                                                 {
-                                                    name && focus ?
+                                                    name ?
                                                     name.map((i:any, idx:number) => (
                                                         <li
                                                         className='!px-2
@@ -199,6 +205,7 @@ export default function NewSell() {
                                                         onClick={() => {
                                                             setId(i._id)
                                                             setSearchInput(i.name)
+                                                            console.log(id)
                                                         }}
                                                         >
                                                             {i.name}
@@ -225,27 +232,31 @@ export default function NewSell() {
                                         <label htmlFor="">Pills in Packet</label>
                                         <input type='number' readOnly
                                         className='w-[100px] h-[35px] cursor-pointer rounded-md !px-2 border border-black' 
-                                        value={"2"}
+                                        value={wholeName.pills_packet}
                                         {...register("pills_packet")} 
                                         />
                                     </div>
 
                                     <div className='grid'>
-                                        <label htmlFor="">Price</label>
+                                        <label htmlFor="">Pills Price</label>
                                         <input type='number'
                                         className='w-24 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
                                         readOnly min={0}
-                                        {...register("price")} 
+                                        value={wholeName.sell_pills_price}
+                                        {...register("pills_price")}
                                         />
                                     </div>
 
                                     <div className='grid'>
                                         <label htmlFor="">Qty</label>
-                                        <input type='number'
-                                        className='w-28 h-[35px] cursor-pointer rounded-md !px-2 border border-black' 
-                                        min={0}
-                                        {...register("quantity")} 
-                                        />
+                                        <div className='flex'>
+                                            <input type='number'
+                                            className='w-28 h-[35px] cursor-pointer rounded-md !px-2 border border-black' 
+                                            min={0}
+                                            {...register("quantity")}
+                                            />
+                                            <span className='relative right-10 top-[7px] text-zinc-500 text-[15px]'>/200</span>
+                                        </div>
                                     </div>
 
                                     <div className='grid'>
@@ -264,6 +275,7 @@ export default function NewSell() {
                                         <label htmlFor="">Total</label>
                                         <div className='w-56 flex'>
                                             <input readOnly
+                                            value={wholeName.pills_price}
                                             type='number'
                                             className='h-[35px] cursor-pointer rounded-md !pl-2 !pr-5 border border-black'
                                             {...register("total")} 
@@ -287,7 +299,7 @@ export default function NewSell() {
                 </form>
             </section>
 
-            <div className='c-scroll !px-2 overflow-x-scroll !mt-7'>
+            <div className='c-scroll !px-2 overflow-x-scroll !mt-7 !mb-10'>
                 {
                     productDetails.length > 0 ?
                         
@@ -311,7 +323,9 @@ export default function NewSell() {
                                             <td>{i?.pills_packet}</td>
                                             <td>{i?.quantity}</td>
                                             <td>{i?.discount}</td>
-                                            <td>{i?.total}</td>
+                                            <td>
+
+                                            </td>
                                         </tr>
                                     ))
                                 }
