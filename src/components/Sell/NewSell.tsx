@@ -24,35 +24,56 @@ export default function NewSell() {
     const [options, setOptions] = useState<OptionType[]>([]);
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState<any>('');
-    const [wholeName, setWholeName] = useState([]);
+    const [wholeName, setWholeName] = useState<any>({});
     const [id, setId] = useState<string>('')
     const [focus, setFocus] = useState<boolean>(false)
 
     
     async function handleSearch(medName:string) {
-        // medName
         try {
-            const res = await fetch(`http://localhost:8000/sell/api?query=${medName}`, {
-                method: "GET"
-            });
-            const data = await res.json()
-            console.log(data)
-            
-            setName(data)
+            if(!medName.includes("\\")) {
+                const res = await fetch(`http://localhost:8000/sell/api?query=${medName}`, {
+                    method: "GET"
+                });
+                const data = await res.json()
+                
+                setName(data)
+                console.log(data)
+            }
         } catch(err) {
             console.log("try catch: "+err)
         }
     }
 
     useEffect(() => {
-        if(!focus)
-            setName('')
-            
-    }, [focus])
+        const sendData = async () => {
+            let obj = {
+                id
+            }
+            const res = await fetch(`http://localhost:8000/sell/api`, {
+                method: "PATCH",
+                body: JSON.stringify(obj),
+                headers: { "Content-Type": "application/json" },
+            });
 
-    useEffect(() => {
-        console.log("id: "+id)
+            const data = await res.json()
+
+            if(data.message == 'ok') {
+                setWholeName(data.fetchData)
+                console.log(data.fetchData)
+            }
+        }
+        
+        if(id)
+            sendData()
+
     }, [id])
+
+    // useEffect(() => {
+    //     if(!focus)
+    //         setName('')
+            
+    // }, [focus])
 
     const { register, handleSubmit, reset } = useForm<IFormInputs>();
 
@@ -68,9 +89,6 @@ export default function NewSell() {
 
     };
 
-    useEffect(() => {
-        
-    }, [name])
 
     const onSubmit = async (data: IFormInputs) => {
         
@@ -157,8 +175,9 @@ export default function NewSell() {
                                             rounded-md !px-2
                                             border border-black
                                             '
-                                            onInput={(e:any) => handleSearch(e.target.value)}
-
+                                            onInput={(e:any) => {
+                                                handleSearch(e.target.value)
+                                            }}
                                             />
 
                                             <ul className='
@@ -172,7 +191,11 @@ export default function NewSell() {
                                                     name  ?
                                                     name.map((i:any, idx:number) => (
                                                         <li
-                                                        className='!px-2 !py-[6px] cursor-pointer'
+                                                        className='!px-2
+                                                        !py-[6px]
+                                                        cursor-pointer
+                                                        hover:bg-zinc-300
+                                                        '
                                                         key={`medicine-name-${idx}`}
                                                         onClick={() => {
                                                             setId(i._id)
@@ -191,7 +214,8 @@ export default function NewSell() {
                                     <div className='grid'>
                                         <label htmlFor="">Batch No.</label>
                                         <input type='text' className='w-40 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
-                                        {...register("batch_no")} 
+                                        {...register("batch_no")}
+                                        value={wholeName.batch_no}
                                         readOnly
                                         />
                                         

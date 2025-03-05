@@ -23,5 +23,21 @@ router.route("/")
   }
 
 })
+.patch(async (req, res) => {
+  const body = await req.body
+
+  const id = body.id
+
+  const data = await Medicine.findById(id)
+
+  console.log("data: "+ await data)
+
+  if(data) {
+    return res.json({
+      message: 'ok',
+      fetchData: data
+    })
+  }
+})
 
 export default router
