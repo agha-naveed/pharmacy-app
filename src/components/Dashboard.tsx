@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../extra-components/Header'
 import { useForm } from 'react-hook-form';
 
@@ -15,6 +15,11 @@ interface IFormInputs {
 
 export default function Dashboard() {
 
+    useEffect(() => {
+        const fetchData = async () => {
+
+        }
+    }, [])
 
     const { register, handleSubmit, reset } = useForm<IFormInputs>();
 

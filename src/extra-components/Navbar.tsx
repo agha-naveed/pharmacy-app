@@ -5,7 +5,8 @@ import { IoSettings } from "react-icons/io5";
 import { PiPillFill } from "react-icons/pi";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BiSolidUserAccount } from "react-icons/bi";
-import { FaDollarSign } from "react-icons/fa";
+import { FaFileInvoiceDollar } from "react-icons/fa6";
+
 
 
 export default function Navbar() {
@@ -123,7 +124,7 @@ export default function Navbar() {
                         }
                     `}
                     >
-                        <FaDollarSign className='text-2xl' />
+                        <FaFileInvoiceDollar className='text-2xl' />
                         Sell
                     </Link>
                 </li>
