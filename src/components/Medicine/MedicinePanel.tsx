@@ -18,8 +18,10 @@ export default function MedicinePanel() {
         const res = await fetch("http://localhost:8000/medicine-detail/api", {
           method: "GET"
         })
+
         
         const response = await res.json()
+        console.log(response)
 
         if(response.message == 'ok') {
             setMedDetails(response.medicines)
@@ -99,6 +101,7 @@ export default function MedicinePanel() {
                     <th>Pill/rs</th>
                     <th>Stock</th>
                     <th>Pills Stock</th>
+                    <th>Supplier</th>
                     <th>Entry Date</th>
                     <th>Expiry Date</th>
                     <th>Update</th>
@@ -116,7 +119,8 @@ export default function MedicinePanel() {
                                 <td>{i.pills_packet}</td>
                                 <td>{i.pills_price}</td>
                                 <td>{i.stock}</td>
-                                <td>200</td>
+                                <td>Pill stock</td>
+                                <td>{i.supplierName}</td>
                                 <td>{i.date}</td>
                                 <td>{i.expiry_date}</td>
                                 <td>

@@ -15,7 +15,7 @@ interface IFormInputs {
   pills_price: string;
   sell_pills_price: string;
   expiry_date: string;
-
+  pills_stock: number;
 }
 export default function NewMedicine() {
 
@@ -38,6 +38,7 @@ export default function NewMedicine() {
             pillsPacket: undefined,
             pillsPrice: undefined,
             sellPillsPrice: undefined,
+            pills_stock: undefined,
             discount: undefined,
             expiryDate: undefined
         },
@@ -228,7 +229,7 @@ export default function NewMedicine() {
                         type="number"
                         min={0}
                         className='
-                            w-36
+                            w-full
                             border
                             border-zinc-400
                             h-10
@@ -262,7 +263,7 @@ export default function NewMedicine() {
                         type="number"
                         min={0}
                         className='
-                            w-36
+                            w-full
                             border
                             border-zinc-400
                             h-10
@@ -279,7 +280,7 @@ export default function NewMedicine() {
                         type="number"
                         min={0}
                         className='
-                            w-36
+                            w-full
                             border
                             border-zinc-400
                             h-10
@@ -287,6 +288,23 @@ export default function NewMedicine() {
                             rounded-md
                         '
                         {...register("sell_pills_price")}
+                         />
+                    </div>
+
+                    <div className='grid'>
+                        <label htmlFor="">Pills Available</label>
+                        <input
+                        type="number"
+                        min={0}
+                        className='
+                            w-full
+                            border
+                            border-zinc-400
+                            h-10
+                            !px-2
+                            rounded-md
+                        '
+                        {...register("pills_stock")}
                          />
                     </div>
                     

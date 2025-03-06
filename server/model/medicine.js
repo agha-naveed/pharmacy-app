@@ -32,8 +32,11 @@ const medicineSchema = new mongoose.Schema({
     pills_price: {
         type: Number
     },
+    pills_stock: {
+        type: Number
+    },
     sell_pills_price: {
-        type: String
+        type: Number
     },
     date: {
         type: String

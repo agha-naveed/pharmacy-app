@@ -20,6 +20,7 @@ router.route("/")
     const date = body.date
     const sell_pills_price = body.sell_pills_price
     const expiry_date = body.expiry_date
+    const pills_stock = body.pills_stock
 
     await Medicine.insertOne({
         name,
@@ -31,6 +32,7 @@ router.route("/")
         discount,
         pills_packet,
         pills_price,
+        pills_stock,
         date,
         sell_pills_price,
         expiry_date

@@ -40,10 +40,25 @@ router.route("/")
 })
 .get(async (_, res) => {
 
-    const data = await Medicine.find()
+    const data = await Medicine.find().lean()
+
+    
+    let arr = []
+
+    for(let i=0; i<data.length; i++) {
+
+        let obj = data[i]
+
+        const name = await Supplier.findById(obj.supplier)
+        
+        obj['supplierName'] = await name.name
+
+        arr.push(obj)
+    }
+
 
     return res.json({
-        medicines: data,
+        medicines: arr,
         message: 'ok'
     })
 
