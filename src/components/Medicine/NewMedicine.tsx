@@ -28,6 +28,7 @@ export default function NewMedicine() {
     const { register, handleSubmit } = useForm<IFormInputs>();
     const [supplier, setSupplier] = useState([])
 
+
     const [product, setProduct] = useState({
         med: {
             name: undefined,
@@ -42,7 +43,9 @@ export default function NewMedicine() {
             discount: undefined,
             expiryDate: undefined
         },
-        suppliers: undefined
+        suppliers: {
+            name: undefined,
+        }
     })
 
     let date = new Date()
@@ -189,17 +192,25 @@ export default function NewMedicine() {
                         {...register("supplier")}
                         required
                         >
-                            <option value="">-- select --</option>
                             {
-                                supplier ?
-                                    supplier.map((i:any, idx) => (
-                                        <option value={i._id}
-                                        key={`supplier-detail-${idx}`}>
-                                            {i.name}
-                                        </option>
-                                    ))
-                                : null
+                                product.med.name ? 
+                                <option value="">{product.suppliers.name}</option>
+                                :
+                                <>
+                                    <option value="">-- select --</option>
+                                    {
+                                        supplier ?
+                                            supplier.map((i:any, idx) => (
+                                                <option value={i._id}
+                                                key={`supplier-detail-${idx}`}>
+                                                    {i.name}
+                                                </option>
+                                            ))
+                                        : null
+                                    }
+                                </>
                             }
+                            
                         </select>
                     </div>
 
@@ -288,23 +299,6 @@ export default function NewMedicine() {
                             rounded-md
                         '
                         {...register("sell_pills_price")}
-                         />
-                    </div>
-
-                    <div className='grid'>
-                        <label htmlFor="">Pills Available</label>
-                        <input
-                        type="number"
-                        min={0}
-                        className='
-                            w-full
-                            border
-                            border-zinc-400
-                            h-10
-                            !px-2
-                            rounded-md
-                        '
-                        {...register("pills_stock")}
                          />
                     </div>
                     

@@ -119,7 +119,7 @@ export default function MedicinePanel() {
                                 <td>{i.pills_packet}</td>
                                 <td>{i.pills_price}</td>
                                 <td>{i.stock}</td>
-                                <td>Pill stock</td>
+                                <td>{i.pills_stock}</td>
                                 <td>{i.supplierName}</td>
                                 <td>{i.date}</td>
                                 <td>{i.expiry_date}</td>
