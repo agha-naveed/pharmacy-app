@@ -32,14 +32,7 @@ export default function MedicinePanel() {
     useEffect(() => {
         
         async function update() {
-            
-            const res = await fetch(`http://localhost:8000/medicine/api?q=${id}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-            })
-            
             navigate(`/medicine-panel/new-medicine?q=${id}`)
-    
         }
 
         if(id.length > 0) {

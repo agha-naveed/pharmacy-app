@@ -39,37 +39,27 @@ router.route("/")
 
 })
 .get(async (req, res) => {
-    try {
-        const data = await Supplier.find()
+    console.log("GETm ehtid")
+    const data = await Supplier.find()
 
-        if(q) {
-            return res.json({
-                suppliers: data,
-                message: 'get'
-            })
-        }
-        else {
-            
-        }
-    }
-    catch(err) {
-        console.log("try catch: "+err)
-    }
-
+    return res.json({
+        suppliers: data,
+        message: 'ok'
+    })
 })
 .patch(async (req, res) => {
-    const { q } = req.query
-    console.log(q)
+    let { q } = req.query
+    
+    const medicine = await Medicine.findById(q)
 
-    const medicine = await Medicine.find()
+    const data = await Supplier.findById(medicine.supplier)
+
 
     return res.json({
         medicine,
         suppliers: data,
-        message: 'patch'
+        message: 'ok'
     })
-
 })
-
 
 export default router

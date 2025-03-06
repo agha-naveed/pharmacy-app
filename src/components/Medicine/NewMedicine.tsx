@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-
+import { useLocation } from "react-router-dom";
 
 interface IFormInputs {
   name: string;
@@ -18,12 +18,28 @@ interface IFormInputs {
 
 }
 export default function NewMedicine() {
+
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const id = searchParams.get("q") || undefined;
+
+    
+
     const { register, handleSubmit } = useForm<IFormInputs>();
     const [supplier, setSupplier] = useState([])
 
     const [product, setProduct] = useState({
         med: {
-            name: undefined
+            name: undefined,
+            batch_no: undefined,
+            payment_method: undefined,
+            stock: undefined,
+            packetPrice: undefined,
+            pillsPacket: undefined,
+            pillsPrice: undefined,
+            sellPillsPrice: undefined,
+            discount: undefined,
+            expiryDate: undefined
         },
         suppliers: undefined
     })
@@ -36,21 +52,33 @@ export default function NewMedicine() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch("http://localhost:8000/medicine/api", {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-            })
-            const response = await res.json()
-            if(response.message == 'get') {
-                setSupplier(response.suppliers)
-                console.log("Sup")
-            }
-            if(response.message == 'patch') {
-                console.log("pat")
-                setProduct({
-                    med: response.medicine,
-                    suppliers: response.suppliers
+
+            if(!id) {
+                const res = await fetch("http://localhost:8000/medicine/api", {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
                 })
+                const response = await res.json()
+                if(response.message == 'ok') {
+                    setSupplier(response.suppliers)
+                    console.log("Sup")
+                }
+            }
+            
+            else {
+                const res = await fetch(`http://localhost:8000/medicine/api?q=${id}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                })
+                const response = await res.json()
+                if(response.message == 'ok') {
+                    console.log(response)
+                    setProduct({
+                        med: response.medicine,
+                        suppliers: response.suppliers
+                    })
+                }
+                
             }
         }
         fetchData()
@@ -90,7 +118,7 @@ export default function NewMedicine() {
                         <input
                         placeholder='e.g: Panadol'
                         type="text"
-                        value={product.med.name ? product?.med?.name : ""}
+                        value={product ? product.med.name : ""}
                         className='
                             w-full
                             border
@@ -106,6 +134,7 @@ export default function NewMedicine() {
                     <div className='grid w-full'>
                         <label htmlFor="">Batch #</label>
                         <input
+                        value={product ? product.med.batch_no : ""}
                         placeholder='Batch No.'
                         type="text"
                         className='
