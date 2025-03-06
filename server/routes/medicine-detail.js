@@ -63,10 +63,16 @@ router.route("/")
     })
 
 })
-.patch(async(req, res) => {
+.put(async(req, res) => {
     const body = await req.body
-    const id = await body.id
-    
+    const id = await body.rmId
+    console.log(id)
+
+    await Medicine.findByIdAndDelete(id).then(() => {
+        return res.json({
+            message: "ok"
+        })
+    }).catch(() => res.json({message: "error"}))
 })
 
 

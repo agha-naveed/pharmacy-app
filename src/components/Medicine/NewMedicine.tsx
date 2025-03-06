@@ -91,7 +91,7 @@ export default function NewMedicine() {
         fetchData()
     }, [])
 
-
+    
     
     const onSubmit = async (data: IFormInputs) => {
         const res = await fetch("http://localhost:8000/medicine/api", {
@@ -357,8 +357,8 @@ export default function NewMedicine() {
                     <div className='grid'>
                         <label htmlFor="">Expiry Date</label>
                         <input
-                        type="date"value={expiryDate} // Controlled state
-                        // onChange={(e) => setExpiryDate(e.target.value)}
+                        type="date"
+                        value={expiryDate}
                         className='
                             w-full
                             border

@@ -6,12 +6,48 @@ import { useEffect, useState } from "react";
 
 export default function MedicinePanel() {
     const navigate = useNavigate()
-    const [clicked, setClick] = useState<boolean>(false)
-    const [medDetails, setMedDetails] = useState([])
+    const [medDetails, setMedDetails] = useState<any>([])
 
     const [focus, setFocus] = useState(false)
 
     const [id, setId] = useState<string>("")
+
+    const [rmId, setRmId] = useState(undefined)
+
+
+    useEffect(() => {
+        const removeMedicine = async() => {
+            const res = await fetch(`http://localhost:8000/medicine-detail/api`, {
+                method: "PUT",
+                body: JSON.stringify({rmId}),
+                headers: { "Content-Type": "application/json" },
+            })
+            const response = await res.json()
+
+            if(response.message == 'ok') {
+                alert("Deleted")
+                window.location.reload()
+
+                const arr:any[] = []
+                
+                medDetails.map((i:any) => {
+                    if(!i?._id)
+                        arr.push(i)
+                })
+
+                setMedDetails(arr)
+            }
+            else {
+                alert("Some Error!")
+            }
+        }
+
+        if(rmId)
+            removeMedicine()
+
+    }, [rmId])
+    
+
 
     useEffect(() => {
       const fetchData = async () => {
@@ -111,7 +147,7 @@ export default function MedicinePanel() {
                 <tbody>
                     {
                         medDetails ?
-                        medDetails.map((i:any, idx) => (
+                        medDetails.map((i:any, idx:number) => (
                         
                             <tr key={`medicine-display-${idx}`}>
                                 <td>{i.name}</td>
@@ -136,7 +172,6 @@ export default function MedicinePanel() {
                                     transition-all
                                     '
                                     onClick={() => {
-                                        setClick(true)
                                         setId(i._id)
                                     }}
                                     >
@@ -154,7 +189,11 @@ export default function MedicinePanel() {
                                     cursor-pointer
                                     hover:bg-red-800
                                     transition-all
-                                    '>
+                                    '
+                                    onClick={() => {
+                                        setRmId(i._id)
+                                    }}
+                                    >
                                     Remove
                                     </button>
                                 </td>
