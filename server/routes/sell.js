@@ -28,12 +28,31 @@ router.route("/")
 .get(async (req, res) => {
   try {
     const { query } = req.query;
-    const medicines = await Medicine.find(
-      { name: { $regex: query, $options: "i" } },
-      "name"
-    ).limit(10);
 
-    res.status(200).json(medicines);
+    if(query) {
+      const medicines = await Medicine.find(
+        { name: { $regex: query, $options: "i" } },
+        "name"
+      ).limit(10);
+
+      res.status(200).json(medicines);
+    }
+
+    else {
+      const medicine = await MedicinePurchase.find()
+      
+      if(medicine) {
+        return res.json({
+          message: 'ok',
+          details: medicine
+        })
+      }
+      else {
+        return res.json({
+          message: "error"
+        })
+      }
+    }
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch medicines" });
   }

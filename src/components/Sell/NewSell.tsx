@@ -104,13 +104,12 @@ export default function NewSell() {
     };
 
     async function saveData() {
-        const date = new Date()
+        let date = new Date()
+        let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
+        let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
 
-        const today = date.getDate()
-        const month = (date.getMonth()) + 1
-        const year = date.getFullYear()
+        let finalDate = `${date.getFullYear()}-${month}-${onlyDate}`
 
-        const finalDate = today + '/'+ month + '/' + year
 
         let obj = {
             patientName,

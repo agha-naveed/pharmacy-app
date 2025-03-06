@@ -20,11 +20,13 @@ export default function SellHistory() {
         const response = await res.json()
 
         if(response.message == 'ok') {
-            setMedDetails(response.medicines)
+            setMedDetails(response.details)
+
+            console.log(response.details)
         }
 
       }
-    //   fetchData()
+      fetchData()
     }, [])
 
     return (
@@ -78,16 +80,15 @@ export default function SellHistory() {
                 <table>
                 <thead>
                     <tr>
-                    <th>Medicine Name</th>
-                    <th>Batch No.</th>
-                    <th>Pills in Packet</th>
-                    <th>Pill/rs</th>
-                    <th>Stock</th>
-                    <th>Pills Stock</th>
-                    <th>Entry Date</th>
-                    <th>Expiry Date</th>
-                    <th>Update</th>
-                    <th>Remove</th>
+                        <th>Patient Name</th>
+                        <th>Medicine Name</th>
+                        <th>Batch No.</th>
+                        <th>Pill/rs</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Entry Date</th>
+                        <th>Update</th>
+                        <th>Remove</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,14 +97,13 @@ export default function SellHistory() {
                         medDetails.map((i:any, idx) => (
                         
                             <tr key={`medicine-display-${idx}`}>
-                                <td>{i.name}</td>
-                                <td>{i.batch_no}</td>
-                                <td>{i.pills_packet}</td>
-                                <td>{i.pills_price}</td>
-                                <td>{i.stock}</td>
-                                <td>200</td>
+                                <td>{i.patientName}</td>
+                                <td>a</td>
+                                <td>{i.details.batch_no}</td>
+                                <td>{i.details.pills_price}</td>
+                                <td>{i.details.quantity}</td>
+                                <td>{i.details.total}</td>
                                 <td>{i.date}</td>
-                                <td>{i.expiry_date}</td>
                                 <td>
                                     <button className='
                                     bg-green-700
