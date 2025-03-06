@@ -14,7 +14,6 @@ export default function MedicinePanel() {
 
     const [rmId, setRmId] = useState(undefined)
 
-
     useEffect(() => {
         const removeMedicine = async() => {
             const res = await fetch(`http://localhost:8000/medicine-detail/api`, {
@@ -25,17 +24,7 @@ export default function MedicinePanel() {
             const response = await res.json()
 
             if(response.message == 'ok') {
-                alert("Deleted")
-                window.location.reload()
-
-                const arr:any[] = []
-                
-                medDetails.map((i:any) => {
-                    if(!i?._id)
-                        arr.push(i)
-                })
-
-                setMedDetails(arr)
+                setMedDetails((prev:any) => prev.filter((med:any) => med._id !== rmId))
             }
             else {
                 alert("Some Error!")

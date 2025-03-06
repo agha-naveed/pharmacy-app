@@ -223,7 +223,7 @@ export default function NewMedicine() {
                         <input
                         type="number"
                         min={0}
-                        value={product.med.stock ? product.med.stock : ""}
+                        value={product ? product.med.stock : ""}
                         className='
                             w-36
                             border
@@ -243,7 +243,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Packet Price</label>
                         <input
                         type="number"
-                        value={product.med.packet_price ? product.med.packet_price : ""}
+                        value={product ? product.med.packet_price : ""}
                         min={0}
                         className='
                             w-full
@@ -261,7 +261,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Pills in Packet</label>
                         <input
                         type="number"
-                        value={product.med.pills_packet ? product.med.pills_packet : ""}
+                        value={product ? product.med.pills_packet : ""}
                         min={0}
                         className='
                             w-full
@@ -279,7 +279,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Per Pill Price</label>
                         <input
                         type="number"
-                        value={product.med.pills_price ? product.med.pills_price : ""}
+                        value={product ? product.med.pills_price : ""}
                         min={0}
                         className='
                             w-full
@@ -297,7 +297,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Sell Pill Price</label>
                         <input
                         type="number"
-                        value={product.med.sell_pills_price ? product.med.sell_pills_price : ""}
+                        value={product ? product.med.sell_pills_price : ""}
                         min={0}
                         className='
                             w-full
@@ -318,7 +318,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Discount</label>
                         <input
                         type="number"
-                        value={product.med.discount ? product.med.discount : 0}
+                        value={product ? product.med.discount : 0}
                         min={0}
                         className='
                             border
