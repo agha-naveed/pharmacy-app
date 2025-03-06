@@ -35,24 +35,26 @@ export default function NewMedicine() {
             batch_no: undefined,
             payment_method: undefined,
             stock: undefined,
-            packetPrice: undefined,
-            pillsPacket: undefined,
-            pillsPrice: undefined,
-            sellPillsPrice: undefined,
+            packet_price: undefined,
+            pills_packet: undefined,
+            pills_price: undefined,
+            sell_pills_price: undefined,
             pills_stock: undefined,
             discount: undefined,
-            expiryDate: undefined
+            expiry_date: undefined
         },
         suppliers: {
             name: undefined,
         }
     })
 
+
     let date = new Date()
     let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
     let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
 
     let today = `${date.getFullYear()}-${month}-${onlyDate}`
+    const [expiryDate, setExpiryDate] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -81,12 +83,14 @@ export default function NewMedicine() {
                         med: response.medicine,
                         suppliers: response.suppliers
                     })
+                    setExpiryDate(response.medicine.expiry_date)
                 }
                 
             }
         }
         fetchData()
     }, [])
+
 
     
     const onSubmit = async (data: IFormInputs) => {
@@ -219,6 +223,7 @@ export default function NewMedicine() {
                         <input
                         type="number"
                         min={0}
+                        value={product.med.stock ? product.med.stock : ""}
                         className='
                             w-36
                             border
@@ -238,6 +243,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Packet Price</label>
                         <input
                         type="number"
+                        value={product.med.packet_price ? product.med.packet_price : ""}
                         min={0}
                         className='
                             w-full
@@ -255,6 +261,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Pills in Packet</label>
                         <input
                         type="number"
+                        value={product.med.pills_packet ? product.med.pills_packet : ""}
                         min={0}
                         className='
                             w-full
@@ -272,6 +279,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Per Pill Price</label>
                         <input
                         type="number"
+                        value={product.med.pills_price ? product.med.pills_price : ""}
                         min={0}
                         className='
                             w-full
@@ -289,6 +297,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Sell Pill Price</label>
                         <input
                         type="number"
+                        value={product.med.sell_pills_price ? product.med.sell_pills_price : ""}
                         min={0}
                         className='
                             w-full
@@ -309,6 +318,7 @@ export default function NewMedicine() {
                         <label htmlFor="">Discount</label>
                         <input
                         type="number"
+                        value={product.med.discount ? product.med.discount : 0}
                         min={0}
                         className='
                             border
@@ -347,7 +357,8 @@ export default function NewMedicine() {
                     <div className='grid'>
                         <label htmlFor="">Expiry Date</label>
                         <input
-                        type="date"
+                        type="date"value={expiryDate} // Controlled state
+                        // onChange={(e) => setExpiryDate(e.target.value)}
                         className='
                             w-full
                             border
@@ -357,6 +368,7 @@ export default function NewMedicine() {
                             rounded-md
                         '
                         {...register("expiry_date")}
+                        onChange={(e:any) => setExpiryDate(e.target.value)}
                         required />
                     </div>
 

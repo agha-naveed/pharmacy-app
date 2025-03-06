@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "developer": "Agha Naveed",
+    "email": "naveedabs31@gmail.com",
+    "GitHub": "https://github.com/agha-naveed"
+  },
   "scripts": {
     "dev": "vite",
     "start": "nodemon server/main.js",
