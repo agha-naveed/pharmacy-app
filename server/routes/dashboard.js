@@ -1,5 +1,6 @@
 import express from 'express'
 import User from '../model/user.js'
+import Medicine from '../model/medicine.js';
 
 const router = express.Router();
 
@@ -29,10 +30,12 @@ router.route("/")
 .get(async (req, res) => {
 
     const data = await User.find()
+    const stock = await Medicine.find()
 
     return res.json({
         message: 'ok',
-        users: data.length
+        users: data.length,
+        medicines: stock.length
     })
 })
 

@@ -8,6 +8,7 @@ export default function Homepage() {
     const navigate = useNavigate()
   
     const [users, setUsers] = useState(0)
+    const [stock, setStock] = useState(0)
 
     useEffect(() => {
 
@@ -19,6 +20,7 @@ export default function Homepage() {
             if(response.message == 'ok') {
 
                 setUsers(response.users)
+                setStock(response.medicines)
             }
         }
 
@@ -89,6 +91,25 @@ export default function Homepage() {
                 >
                     <h4 className='text-[32px] font-semibold'>{users}</h4>
                     <span>Total Users</span>
+                </div>
+
+                <div
+                title="Total Medicines"
+                className='
+                w-40
+                h-36
+                rounded-lg
+                bg-cyan-600
+                cursor-pointer
+                flex
+                flex-col
+                items-center
+                justify-center
+                text-white text-center
+                '
+                >
+                    <h4 className='text-[32px] font-semibold'>{stock}</h4>
+                    <span>Stock</span>
                 </div>
 
 

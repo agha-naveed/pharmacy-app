@@ -52,7 +52,10 @@ export default function NewSell() {
         if(qty && discount && pillPrice) {
             setTotalPrice((pillPrice * qty) - ((pillPrice * qty) * (discount/100)))
         }
-        console.log(discount)
+
+        if(discount && !qty && pillPrice) {
+            setTotalPrice((pillPrice) - ((pillPrice) * (discount/100)))
+        }
 
     }, [discount, qty])
 
@@ -217,6 +220,7 @@ export default function NewSell() {
                                                 handleSearch(await e.target.value)
                                             }}
                                             {...register("medicine_name")}
+                                            required
                                             />
 
                                             <ul className={`
@@ -349,6 +353,7 @@ export default function NewSell() {
                                     <th>Medicine Name</th>
                                     <th>Batch No.</th>
                                     <th>Pills in Packet</th>
+                                    <th>Pills Price</th>
                                     <th>Qty.</th>
                                     <th>Discount %</th>
                                     <th>Total</th>
@@ -361,6 +366,7 @@ export default function NewSell() {
                                             <td>{i?.medicine_name}</td>
                                             <td>{i?.batch_no}</td>
                                             <td>{wholeName.pills_packet}</td>
+                                            <td>{wholeName.sell_pills_price}</td>
                                             <td>{i?.quantity ? i?.quantity : 1}</td>
                                             <td>{i?.discount ? i?.discount : 0}</td>
                                             <td>{totalPrice}</td>

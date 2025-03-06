@@ -21,6 +21,12 @@ export default function NewMedicine() {
     const { register, handleSubmit } = useForm<IFormInputs>();
     const [supplier, setSupplier] = useState([])
 
+    let date = new Date()
+    let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
+    let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+
+    let today = `${date.getFullYear()}-${month}-${onlyDate}`
+
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch("http://localhost:8000/medicine/api", {
@@ -53,7 +59,6 @@ export default function NewMedicine() {
 
     }
 
-    var date = new Date()
 
     return (
         <div className='p-sec'>
@@ -264,7 +269,7 @@ export default function NewMedicine() {
                         <input
                         type="text"
                         readOnly
-                        value={`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+                        value={today}
                         min={0}
                         className='
                             border
