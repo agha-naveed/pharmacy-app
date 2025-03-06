@@ -21,6 +21,13 @@ export default function NewMedicine() {
     const { register, handleSubmit } = useForm<IFormInputs>();
     const [supplier, setSupplier] = useState([])
 
+    const [product, setProduct] = useState({
+        med: {
+            name: undefined
+        },
+        suppliers: undefined
+    })
+
     let date = new Date()
     let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
     let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
@@ -30,15 +37,25 @@ export default function NewMedicine() {
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch("http://localhost:8000/medicine/api", {
-                method: "GET"
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
             })
             const response = await res.json()
-            if(response.message == 'ok') {
+            if(response.message == 'get') {
                 setSupplier(response.suppliers)
+                console.log("Sup")
+            }
+            if(response.message == 'patch') {
+                console.log("pat")
+                setProduct({
+                    med: response.medicine,
+                    suppliers: response.suppliers
+                })
             }
         }
         fetchData()
     }, [])
+
     
     const onSubmit = async (data: IFormInputs) => {
         const res = await fetch("http://localhost:8000/medicine/api", {
@@ -73,6 +90,7 @@ export default function NewMedicine() {
                         <input
                         placeholder='e.g: Panadol'
                         type="text"
+                        value={product.med.name ? product?.med?.name : ""}
                         className='
                             w-full
                             border

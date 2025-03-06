@@ -39,12 +39,34 @@ router.route("/")
 
 })
 .get(async (req, res) => {
+    try {
+        const data = await Supplier.find()
 
-    const data = await Supplier.find()
+        if(q) {
+            return res.json({
+                suppliers: data,
+                message: 'get'
+            })
+        }
+        else {
+            
+        }
+    }
+    catch(err) {
+        console.log("try catch: "+err)
+    }
+
+})
+.patch(async (req, res) => {
+    const { q } = req.query
+    console.log(q)
+
+    const medicine = await Medicine.find()
 
     return res.json({
+        medicine,
         suppliers: data,
-        message: 'ok'
+        message: 'patch'
     })
 
 })
