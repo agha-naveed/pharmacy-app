@@ -38,7 +38,7 @@ router.route("/")
     .catch(() => res.json({ message: "some error occurred!" }))
 
 })
-.get(async (req, res) => {
+.get(async (_, res) => {
 
     const data = await Medicine.find()
 
@@ -47,6 +47,11 @@ router.route("/")
         message: 'ok'
     })
 
+})
+.patch(async(req, res) => {
+    const body = await req.body
+    const id = await body.id
+    
 })
 
 

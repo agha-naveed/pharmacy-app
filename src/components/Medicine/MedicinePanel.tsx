@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 
 export default function MedicinePanel() {
     const navigate = useNavigate()
-
+    const [clicked, setClick] = useState<boolean>(false)
     const [medDetails, setMedDetails] = useState([])
 
     const [focus, setFocus] = useState(false)
+
+    const [id, setId] = useState<string>("")
 
     useEffect(() => {
       const fetchData = async () => {
@@ -26,6 +28,29 @@ export default function MedicinePanel() {
       }
       fetchData()
     }, [])
+
+    useEffect(() => {
+        
+        async function update() {
+            navigate("/medicine-panel/new-medicine")
+            
+            const res = await fetch("http://localhost:8000/medicine-detail/api", {
+                method: "PATCH",
+                body: JSON.stringify({id}),
+                
+                headers: { "Content-Type": "application/json" },
+            })
+
+
+    
+        }
+
+        if(id.length > 0) {
+            update()
+        }
+
+    }, [id])
+    
 
     return (
         <div className="overflow-hidden">
@@ -115,7 +140,12 @@ export default function MedicinePanel() {
                                     cursor-pointer
                                     hover:bg-green-800
                                     transition-all
-                                    '>
+                                    '
+                                    onClick={() => {
+                                        setClick(true)
+                                        setId(i._id)
+                                    }}
+                                    >
                                     Update
                                     </button>
                                 </td>
