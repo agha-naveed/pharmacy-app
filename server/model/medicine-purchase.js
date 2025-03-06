@@ -6,7 +6,6 @@ const arrayFormat = new mongoose.Schema({
     },
     batch_no: {
         type: String,
-        unique: true
     },
     quantity: {
         type: Number,

@@ -165,7 +165,16 @@ export default function NewSell() {
             <Header value={"Dashboard"} />
 
             <section className='p-sec'>
-                <h2 className='text-[28px] font-bold !mb-3'>Transaction Entry</h2>
+                <div className='flex justify-between'>
+                    <h2 className='text-[28px] font-bold !mb-3'>Transaction Entry</h2>
+                    <button
+                    type='button'
+                    onClick={saveData}
+                    className='bg-slate-800 text-white !py-2 !px-7 rounded-lg cursor-pointer transition-all font-semibold text-[15px] !mt-4 hover:bg-slate-900'
+                    >
+                        Submit!
+                    </button>
+                </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='grid !mb-7'>
                         <label htmlFor="">Patient Name</label>
@@ -180,13 +189,7 @@ export default function NewSell() {
                             <React.Fragment key={`add-item-${idx}`}>
                                 <div className='flex !mt-8 justify-between w-[550px] h-fit'>
                                     <p>Product:</p>
-                                    <button
-                                    title='Save Data'
-                                    type='submit'
-                                    className='cursor-pointer underline text-orange-600'
-                                    >
-                                        Save
-                                    </button>
+                                    
                                 </div>
                                 
                                 <div className='flex flex-wrap gap-y-4 gap-x-3 w-[550px] border-y border-y-black/35 !py-5'>
@@ -208,7 +211,7 @@ export default function NewSell() {
                                             rounded-md !px-2
                                             border border-black
                                             '
-                                            value={searchInput}
+                                            value={searchInput || ""}
                                             onInput={async (e:any) => {
                                                 setSearchInput(await e.target.value)
                                                 handleSearch(await e.target.value)
@@ -323,12 +326,15 @@ export default function NewSell() {
                         ))
                     }
 
+
                     <button
-                    type='button'
-                    onClick={saveData}
-                    className='bg-slate-800 text-white !py-2 !px-7 rounded-lg cursor-pointer transition-all font-semibold text-[15px] !mt-4 hover:bg-slate-900'
+                    title='Save Data'
+                    type='submit'
+                    className='cursor-pointer hover:underline bg-orange-600
+                    text-white !py-2 !px-6 rounded-md font-semibold !mt-2
+                    '
                     >
-                        Submit!
+                        Save
                     </button>
                 </form>
             </section>
@@ -342,7 +348,7 @@ export default function NewSell() {
                                 <tr>
                                     <th>Medicine Name</th>
                                     <th>Batch No.</th>
-                                    <th>Qty. in Packet</th>
+                                    <th>Pills in Packet</th>
                                     <th>Qty.</th>
                                     <th>Discount %</th>
                                     <th>Total</th>
@@ -354,7 +360,7 @@ export default function NewSell() {
                                         <tr key={`daily-entry-${idx}`}>
                                             <td>{i?.medicine_name}</td>
                                             <td>{i?.batch_no}</td>
-                                            <td>{i?.pills_packet}</td>
+                                            <td>{wholeName.pills_packet}</td>
                                             <td>{i?.quantity ? i?.quantity : 1}</td>
                                             <td>{i?.discount ? i?.discount : 0}</td>
                                             <td>{totalPrice}</td>
