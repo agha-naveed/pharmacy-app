@@ -17,6 +17,7 @@ import Login from './components/Accounts/Login.tsx'
 import Signup from './components/Accounts/Signup.tsx'
 import Sell from './components/Sell/Sell.tsx'
 import SellHistory from './components/Sell/SellHistory.tsx'
+import PrintContent from './extra-components/PrintContent.tsx'
 
 
 
@@ -85,6 +86,10 @@ let router = createBrowserRouter([
       path: 'signup',
       element: <Signup />
     }]
+  },
+  {
+    path: "print/:id",
+    element: <PrintContent />
   }
 ])
 

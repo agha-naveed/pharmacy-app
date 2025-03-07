@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 
 export default function SellHistory() {
+   
     const navigate = useNavigate()
 
     const [medDetails, setMedDetails] = useState([])
@@ -50,7 +51,8 @@ export default function SellHistory() {
                     title='Search Bar'
                     placeholder='Click to Search...'
                     />
-                    <button className={`
+                    <button
+                    className={`
                         text-[22px]
                         !py-2
                         !px-3
@@ -87,7 +89,7 @@ export default function SellHistory() {
                         <th>Total Price</th>
                         <th>Entry Date</th>
                         <th>Update</th>
-                        <th>Remove</th>
+                        <th>Print</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,18 +121,20 @@ export default function SellHistory() {
                                     </button>
                                 </td>
                                 <td>
-                                    <button className='
-                                    bg-red-700
+                                    <button
+                                    onClick={() => navigate(`/print/${i._id}`)}
+                                    className='
+                                    bg-blue-600
                                     !py-2
                                     !px-4
                                     rounded-md
                                     text-white
                                     text-[14.5px]
                                     cursor-pointer
-                                    hover:bg-red-800
+                                    hover:bg-blue-800
                                     transition-all
                                     '>
-                                    Remove
+                                    Print
                                     </button>
                                 </td>
                             </tr>
