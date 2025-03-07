@@ -7,7 +7,11 @@ export default function PrintContent() {
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({ contentRef });
     useEffect(() => {
-        reactToPrintFn()
+        const fetchData = async () => {
+            
+        }
+
+        // reactToPrintFn()
     }, [])
     return (
         <section className='flex justify-center items-center !p-10 bg-zinc-400'>
@@ -42,8 +46,8 @@ export default function PrintContent() {
                 </div>
 
                 <div>
-                    <table className='!w-full'>
-                        <thead>
+                    <table className='!w-full p-table'>
+                        <thead className='h-[50px] content-center'>
                             <tr className='border-b font-semibold text-[15px]'>
                                 <td className='!w-[46%] !border-none'>ITEM</td>
                                 <td className='!border-none'>UNIT PRICE</td>
@@ -51,6 +55,37 @@ export default function PrintContent() {
                                 <td className='!border-none'>TOTAL</td>
                             </tr>
                         </thead>
+
+                        <tbody>
+                            <tr className='text-[15px]'>
+                                <td className='!w-[46%] !border-none'>Panadol Extra</td>
+                                <td className='!border-none'>10 rs</td>
+                                <td className='!border-none'>5</td>
+                                <td className='!border-none'>2000 rs</td>
+                            </tr>
+
+                            <tr className='text-[15px]'>
+                                <td className='!w-[46%] !border-none'>ITEM</td>
+                                <td className='!border-none'>UNIT PRICE rs</td>
+                                <td className='!border-none'>QTY</td>
+                                <td className='!border-none'>1500 rs</td>
+                            </tr>
+
+                            <tr className='text-[15px]'>
+                                <td className='!w-[46%] !border-none'>ITEM</td>
+                                <td className='!border-none'>UNIT PRICE rs</td>
+                                <td className='!border-none'>QTY</td>
+                                <td className='!border-none'>1500 rs</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr className='text-[14px] font-semibold border-t'>
+                                <td className='!w-[46%] !border-none'>SUBTOTAL</td>
+                                <td className='!border-none'>200 rs</td>
+                                <td className='!border-none'>200</td>
+                                <td className='!border-none'>50000 Pkr</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

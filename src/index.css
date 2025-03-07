@@ -50,6 +50,14 @@ input[type="number"] {
   background-color: rgba(226, 226, 226, 0.678);
 }
 
+.p-table td {
+  padding: 8px 30px;
+  height: 45px;
+}
+.p-table tr td:last-child, .p-table tr td:nth-child(2) {
+  text-align-last: center;
+  padding: 0;
+}
 .c-scroll::-webkit-scrollbar {
   height: 10px;
   width: 12px;
