@@ -8,19 +8,31 @@ router.route("/")
 .post(async (req, res) => {
   const body = await req.body
 
-  const patientName = body.patientName;
-  const productDetails = body.productDetails;
-  const date = body.date
+  const patient_name = body.patientName;
+  const medicine_name = body.medicine_name;
+  const batch_no = body.batch_no;
+  const quantity = body.quantity;
+  const pills_price = body.pills_price;
+  const discount = body.discount;
+  const total = body.total;
+  const date = body.date;
+
+
 
   const response = await MedicinePurchase.insertOne({
-    patientName,
-    details: productDetails,
+    patient_name,
+    medicine_name,
+    batch_no,
+    quantity,
+    pills_price,
+    discount,
+    total,
     date
   })
   if(response) {
     console.log("Success")
     return res.json({
-      message: 'ok'
+      message: 'ok',
     })
   }
 
@@ -29,30 +41,14 @@ router.route("/")
   try {
     const { query } = req.query;
 
-    if(query) {
       const medicines = await Medicine.find(
         { name: { $regex: query, $options: "i" } },
         "name"
       ).limit(10);
 
       res.status(200).json(medicines);
-    }
 
-    else {
-      const medicine = await MedicinePurchase.find()
-      
-      if(medicine) {
-        return res.json({
-          message: 'ok',
-          details: medicine
-        })
-      }
-      else {
-        return res.json({
-          message: "error"
-        })
-      }
-    }
+
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch medicines" });
   }
@@ -76,3 +72,18 @@ router.route("/")
 })
 
 export default router
+
+
+// const medicine = await MedicinePurchase.find()
+      
+//       if(medicine) {
+//         return res.json({
+//           message: 'ok',
+//           details: medicine
+//         })
+//       }
+//       else {
+//         return res.json({
+//           message: "error"
+//         })
+//       }

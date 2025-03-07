@@ -13,7 +13,7 @@ export default function SellHistory() {
 
     useEffect(() => {
       const fetchData = async () => {
-        const res = await fetch("http://localhost:8000/sell/api", {
+        const res = await fetch("http://localhost:8000/sell-history/api", {
           method: "GET"
         })
         
@@ -21,7 +21,6 @@ export default function SellHistory() {
 
         if(response.message == 'ok') {
             setMedDetails(response.details)
-
             console.log(response.details)
         }
 
@@ -97,12 +96,12 @@ export default function SellHistory() {
                         medDetails.map((i:any, idx) => (
                         
                             <tr key={`medicine-display-${idx}`}>
-                                <td>{i.patientName}</td>
-                                <td>a</td>
-                                <td>{i.details.batch_no}</td>
-                                <td>{i.details.pills_price}</td>
-                                <td>{i.details.quantity}</td>
-                                <td>{i.details.total}</td>
+                                <td>{i.patient_name}</td>
+                                <td>{i.medicine_name}</td>
+                                <td>{i.batch_no}</td>
+                                <td>{i.pills_price}</td>
+                                <td>{i.quantity}</td>
+                                <td>{i.total}</td>
                                 <td>{i.date}</td>
                                 <td>
                                     <button className='

@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
-const arrayFormat = new mongoose.Schema({
-    medicineName: {
+const medicinePurchaseSchema = new mongoose.Schema({
+    patient_name: {
+        type: String,
+    },
+    medicine_name: {
         type: String
     },
     batch_no: {
@@ -9,20 +12,17 @@ const arrayFormat = new mongoose.Schema({
     },
     quantity: {
         type: Number,
+        default: 0
     },
     discount: {
         type: Number
     },
+    pills_price: {
+        type: Number
+    },
     total: {
         type: Number
-    }
-})
-
-const medicinePurchaseSchema = new mongoose.Schema({
-    patientName: {
-        type: String,
     },
-    details: [arrayFormat],
     date: {
         type: String
     },

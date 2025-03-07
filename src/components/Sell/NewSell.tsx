@@ -23,8 +23,8 @@ export default function NewSell() {
     const [id, setId] = useState<string>('')
     const [focus, setFocus] = useState<boolean>(false)
     const [totalPrice, setTotalPrice] = useState<number>()
-    const [qty, setQty] = useState<number>()
-    const [discount, setDiscount] = useState<number>()
+    const [qty, setQty] = useState<number>(1)
+    const [discount, setDiscount] = useState<number>(0)
     const [patientName, setPatientName] = useState<string>('')
     
     async function handleSearch(medName:string) {
@@ -94,7 +94,6 @@ export default function NewSell() {
 
     const [products, setProducts] = useState([{ id: 1 }]);
 
-    const [productDetails, setProductDetails] = useState<any>([])
 
 
     const removeProduct = (id: number) => {
@@ -103,7 +102,10 @@ export default function NewSell() {
 
     };
 
-    async function saveData() {
+    
+
+    const onSubmit = async (data: IFormInputs) => {
+        
         let date = new Date()
         let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
         let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
@@ -111,51 +113,33 @@ export default function NewSell() {
         let finalDate = `${date.getFullYear()}-${month}-${onlyDate}`
 
 
+
         let obj = {
             patientName,
-            productDetails,
+            medicine_name: searchInput,
+            batch_no: wholeName.batch_no,
+            quantity: data.quantity,
+            pills_packet: wholeName.pills_packet,
+            pills_price: wholeName.sell_pills_price,
+            discount: data.discount,
+            total: totalPrice,
             date: finalDate
         }
-        
+
+
+        console.log(obj)
+
         const res = await fetch(`http://localhost:8000/sell/api`, {
             method: "POST",
             body: JSON.stringify(obj),
             headers: { "Content-Type": "application/json" },
         });
 
-        const data = await res.json()
+        const res_data = await res.json()
 
-        if(data.message == 'ok') {
+        if(res_data.message == 'ok') {
             alert("✅ Done")
-            window.location.reload()
-        }
-        
-        
-    }
-
-    const onSubmit = async (data: IFormInputs) => {
-        
-
-        if(productDetails.length != 0) {
-            setProductDetails((prev:any) => [
-                ...prev, {
-                    medicine_name: searchInput,
-                    batch_no: wholeName.batch_no,
-                    quantity: data.quantity,
-                    discount: data.discount,
-                    total: totalPrice
-                }
-            ])
-        }
-
-        else {
-            setProductDetails([{
-                medicine_name: searchInput,
-                batch_no: wholeName.batch_no,
-                quantity: data.quantity,
-                discount: data.discount,
-                total: totalPrice
-            }])
+            // window.location.reload()
         }
 
     }
@@ -171,10 +155,9 @@ export default function NewSell() {
                     <h2 className='text-[28px] font-bold !mb-3'>Transaction Entry</h2>
                     <button
                     type='button'
-                    onClick={saveData}
                     className='bg-slate-800 text-white !py-2 !px-7 rounded-lg cursor-pointer transition-all font-semibold text-[15px] !mt-4 hover:bg-slate-900'
                     >
-                        Submit!
+                        Continue...
                     </button>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -290,6 +273,7 @@ export default function NewSell() {
                                         <div className='flex'>
                                             <input type='number'
                                             className='w-28 h-[35px] cursor-pointer rounded-md !px-2 border border-black'
+                                            value={qty}
                                             onInput={(e:any) => setQty(e.target.value)}
                                             min={0}
                                             {...register("quantity")}
@@ -304,6 +288,7 @@ export default function NewSell() {
                                             <input type='number'
                                             className='w-20 h-[35px] cursor-pointer rounded-md !pl-2 !pr-[26px] border border-black'
                                             min={0}
+                                            value={discount}
                                             onInput={(e:any) => setDiscount(e.target.value)}
                                             {...register("discount")} 
                                             />
@@ -342,41 +327,6 @@ export default function NewSell() {
                 </form>
             </section>
 
-            <div className='c-scroll !px-2 overflow-x-scroll !mt-7 !mb-10'>
-                {
-                    productDetails.length > 0 ?
-                        
-                        <table className='overflow-x-auto'>
-                            <thead className='border'>
-                                <tr>
-                                    <th>Medicine Name</th>
-                                    <th>Batch No.</th>
-                                    <th>Pills in Packet</th>
-                                    <th>Pills Price</th>
-                                    <th>Qty.</th>
-                                    <th>Discount %</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    productDetails.map((i:any, idx:number) => (
-                                        <tr key={`daily-entry-${idx}`}>
-                                            <td>{i?.medicine_name}</td>
-                                            <td>{i?.batch_no}</td>
-                                            <td>{wholeName.pills_packet}</td>
-                                            <td>{wholeName.sell_pills_price}</td>
-                                            <td>{i?.quantity ? i?.quantity : 1}</td>
-                                            <td>{i?.discount ? i?.discount : 0}</td>
-                                            <td>{totalPrice}</td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-                    : null
-                }
-            </div>
         </div>
     )
 }
