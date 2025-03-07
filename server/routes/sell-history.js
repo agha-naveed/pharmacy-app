@@ -8,15 +8,15 @@ router.route("/")
   const medicine = await MedicinePurchase.find()
       
     if(medicine) {
-    return res.json({
-        message: 'ok',
-        details: medicine
-    })
+        return res.json({
+            message: 'ok',
+            details: medicine
+        })
     }
     else {
-    return res.json({
-        message: "error"
-    })
+        return res.json({
+            message: "error"
+        })
     }
 
 })

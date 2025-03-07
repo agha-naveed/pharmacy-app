@@ -114,6 +114,7 @@ export default function NewSell() {
 
 
         let obj = {
+            // id,
             patientName,
             medicine_name: searchInput,
             batch_no: wholeName.batch_no,

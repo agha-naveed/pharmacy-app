@@ -20,6 +20,7 @@ router.route("/")
 
 
   const response = await MedicinePurchase.insertOne({
+    id,
     patient_name,
     medicine_name,
     batch_no,

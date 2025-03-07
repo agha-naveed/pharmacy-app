@@ -70,7 +70,7 @@ export default function SellHistory() {
                 </div>
                 
                 <button
-                onClick={() => navigate("/medicine-panel/new-medicine")}
+                onClick={() => navigate("/sell-new-entry")}
                 className='flex gap-2 cursor-pointer hover:bg-slate-900 transition-all items-center bg-slate-800 text-white rounded-full w-fit !px-7 !py-[10px] self-end'>
                 <FaRegPlusSquare className='text-xl' />
                 <span>Add New Entry</span>
@@ -122,7 +122,7 @@ export default function SellHistory() {
                                 </td>
                                 <td>
                                     <button
-                                    onClick={() => window.open(`/print/${i.batch_no}`, "_blank")}
+                                    onClick={() => window.open(`/print/${i._id}`, "_blank")}
                                     className='
                                     bg-blue-600
                                     !py-2

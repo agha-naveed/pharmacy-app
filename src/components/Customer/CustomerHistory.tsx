@@ -22,6 +22,7 @@ export default function CustomerHistory() {
 
         if(response.message == 'ok') {
             setDetails(response.data)
+            console.log(response.data)
         }
 
       }
@@ -80,15 +81,9 @@ export default function CustomerHistory() {
                 <table className="table">
                 <thead>
                     <tr>
-                        <th>Patient Name</th>
-                        <th>Medicine Name</th>
-                        <th>Batch No.</th>
-                        <th>Pill/rs</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
+                        <th>Name</th>
+                        <th>Cell No.</th>
                         <th>Entry Date</th>
-                        <th>Update</th>
-                        <th>Print</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,45 +92,9 @@ export default function CustomerHistory() {
                         details.map((i:any, idx) => (
                         
                             <tr key={`medicine-display-${idx}`}>
-                                <td>{i.patient_name}</td>
-                                <td>{i.medicine_name}</td>
-                                <td>{i.batch_no}</td>
-                                <td>{i.pills_price}</td>
-                                <td>{i.quantity}</td>
-                                <td>{i.total}</td>
+                                <td>{i.name}</td>
+                                <td>{i.cell}</td>
                                 <td>{i.date}</td>
-                                <td>
-                                    <button className='
-                                    bg-green-700
-                                    !py-2
-                                    !px-4
-                                    rounded-md
-                                    text-white
-                                    text-[14.5px]
-                                    cursor-pointer
-                                    hover:bg-green-800
-                                    transition-all
-                                    '>
-                                    Update
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                    onClick={() => window.open(`/print/${i.batch_no}`, "_blank")}
-                                    className='
-                                    bg-blue-600
-                                    !py-2
-                                    !px-4
-                                    rounded-md
-                                    text-white
-                                    text-[14.5px]
-                                    cursor-pointer
-                                    hover:bg-blue-800
-                                    transition-all
-                                    '>
-                                    Print
-                                    </button>
-                                </td>
                             </tr>
                         ))
                         : null

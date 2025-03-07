@@ -47,6 +47,8 @@ app.get('/print/:id/api', async (req, res) => {
     const { id } = req.params
     const data = await MedicinePurchase.find({ patient_id: id })
 
+    console.log(id)
+
 
 })
 
