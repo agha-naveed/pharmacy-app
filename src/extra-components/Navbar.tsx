@@ -107,7 +107,7 @@ export default function Navbar() {
                 </li>
                 <li className='border-t border-t-white/10'>
                     <Link
-                    to={'/sell'}
+                    to={'/customers'}
                     className={`
                     text-white
                     flex text-xl
