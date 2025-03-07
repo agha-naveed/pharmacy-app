@@ -118,7 +118,7 @@ export default function Navbar() {
                     transition-all
                     ${location.pathname == "/customers" ?
                         'bg-slate-800' :
-                        location.pathname == "/customer/new-entry" ?
+                        location.pathname == "/customers/new-entry" ?
                             "bg-slate-800" :
                             "hover:bg-slate-600"
                         }

@@ -13,6 +13,7 @@ import medicineDetail from './routes/medicine-detail.js'
 import sell from './routes/sell.js'
 import sellHistory from './routes/sell-history.js'
 import MedicinePurchase from './model/medicine-purchase.js'
+import customer from './model/customer.js'
 
 
 const app = express()
@@ -39,7 +40,7 @@ app.use('/medicine-detail/api', medicineDetail)
 app.use('/sell/api', sell)
 app.use('/sell-history/api', sellHistory)
 
-// app.use('/customers/api', sellHistory)
+app.use('/customer/api', customer)
 
 
 app.get('/print/:id/api', async (req, res) => {
