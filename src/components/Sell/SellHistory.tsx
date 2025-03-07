@@ -8,9 +8,10 @@ export default function SellHistory() {
    
     const navigate = useNavigate()
 
-    const [medDetails, setMedDetails] = useState([])
+    const [medDetails, setMedDetails] = useState<any>([])
 
-    const [focus, setFocus] = useState(false)
+    const [toDate, setToDate] = useState('')
+    const [fromDate, setFromDate] = useState('')
 
     useEffect(() => {
       const fetchData = async () => {
@@ -32,46 +33,71 @@ export default function SellHistory() {
       fetchData()
     }, [])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch(`http://localhost:8000/sell-history/api?from=${fromDate}+to=${toDate}`, {
+              method: "PATCH",
+              credentials: "include"
+            })
+            
+            const response = await res.json()
+    
+            console.log(response)
+    
+            if(response.message == 'ok') {
+                setMedDetails(undefined)
+
+                setMedDetails(response.data)
+                console.log(response.details)
+            }
+            
+          }
+          if(fromDate)
+            fetchData()
+
+    }, [fromDate])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch(`http://localhost:8000/sell-history/api?from=${fromDate}&to=${toDate}`, {
+              method: "PATCH",
+              credentials: "include"
+            })
+            
+            const response = await res.json()
+    
+            if(response.message == 'ok') {
+                setMedDetails(undefined)
+
+                setMedDetails(response.data)
+                console.log(response.details)
+            }
+    
+          }
+          if(toDate)
+          fetchData()
+
+    }, [toDate])
+
     return (
         <div className="overflow-hidden">
             <div className='flex justify-between p-sec'>
-                <div className='flex items-center'>
-                    <input
-                    type="text"
-                    className={`
-                    border
-                    border-black
-                    outline-orange-500
-                    h-10
-                    !pl-2
-                    !pr-9
-                    rounded-lg
-                    transition-all
-                    ${focus ? "w-96" : 'w-48'}
-                    `}
-                    onFocus={() => setFocus(true)}
-                    onBlur={() => setFocus(false)}
-                    title='Search Bar'
-                    placeholder='Click to Search...'
-                    />
-                    <button
-                    className={`
-                        text-[22px]
-                        !py-2
-                        !px-3
-                        relative
-                        right-11
-                        rounded-r-lg
-                        cursor-pointer
-                        text-white border border-black
-                        bg-orange-500
-                        hover:bg-orange-600
-                        transition-all
-                        `} title='Search'>
-                        <LuSearch />
-                    </button>
+                <div className="flex gap-3">
+                    <div className="grid">
+                        <label htmlFor="">From</label>
+                        <input type="date"
+                        className="border h-9 !px-2 rounded-md"
+                        onChange={(e:any) => setFromDate(e.target.value)}
+                        />
+                    </div>
+                    <div className="grid">
+                        <label htmlFor="">To</label>
+                        <input type="date"
+                        className="border h-9 !px-2 rounded-md"
+                        onChange={(e:any) => setToDate(e.target.value)}
+                        />
+                    </div>
                 </div>
-                
                 <button
                 onClick={() => navigate("/sell-new-entry")}
                 className='flex gap-2 cursor-pointer hover:bg-slate-900 transition-all items-center bg-slate-800 text-white rounded-full w-fit !px-7 !py-[10px] self-end'>
@@ -98,7 +124,7 @@ export default function SellHistory() {
                 <tbody>
                     {
                         medDetails ?
-                        medDetails.map((i:any, idx) => (
+                        medDetails.map((i:any, idx:number) => (
                         
                             <tr key={`medicine-display-${idx}`}>
                                 <td>{i.patient_name}</td>
