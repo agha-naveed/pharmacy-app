@@ -154,9 +154,9 @@ export default function NewSell() {
                     <h2 className='text-[28px] font-bold !mb-3'>Transaction Entry</h2>
                     <button
                     type='button'
-                    className='bg-slate-800 text-white !py-2 !px-7 rounded-lg cursor-pointer transition-all font-semibold text-[15px] !mt-4 hover:bg-slate-900'
+                    className='bg-slate-800 text-white !py-[10px] !px-7 rounded-lg cursor-pointer transition-all font-semibold text-[15px] !mt-4 hover:bg-slate-900'
                     >
-                        Continue...
+                        Continue
                     </button>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>

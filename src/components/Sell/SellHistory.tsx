@@ -122,7 +122,7 @@ export default function SellHistory() {
                                 </td>
                                 <td>
                                     <button
-                                    onClick={() => window.open(`/print/${i._id}`, "_blank")}
+                                    onClick={() => window.open(`/print/${i.batch_no}`, "_blank")}
                                     className='
                                     bg-blue-600
                                     !py-2

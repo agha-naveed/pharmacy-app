@@ -12,7 +12,8 @@ import medicine from './routes/medicine.js'
 import medicineDetail from './routes/medicine-detail.js'
 import sell from './routes/sell.js'
 import sellHistory from './routes/sell-history.js'
-import print from './routes/print.js'
+import MedicinePurchase from './model/medicine-purchase.js'
+
 
 const app = express()
 
@@ -38,8 +39,14 @@ app.use('/medicine-detail/api', medicineDetail)
 app.use('/sell/api', sell)
 app.use('/sell-history/api', sellHistory)
 
-app.get('/print/:id/api', async () => {
-    
+// app.use('/customers/api', sellHistory)
+
+
+app.get('/print/:id/api', async (req, res) => {
+    const { id } = req.params
+    const data = await MedicinePurchase.find({ patient_id: id })
+
+
 })
 
 
