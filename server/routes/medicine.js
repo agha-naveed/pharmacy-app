@@ -23,6 +23,7 @@ router.route("/")
 
     const pills_stock = body.pills_packet * stock
 
+    console.log("\n\nsuppier: \n"+supplier +"\n\n\n")
 
     await Medicine.insertOne({
         name,
@@ -39,7 +40,10 @@ router.route("/")
         sell_pills_price,
         expiry_date
     }).then(() => res.json({ message: 'ok' }))
-    .catch(() => res.json({ message: "some error occurred!" }))
+    .catch((err) => {
+        res.json({ message: "some error occurred!" })
+        console.log(err)
+    })
 
 })
 .get(async (req, res) => {

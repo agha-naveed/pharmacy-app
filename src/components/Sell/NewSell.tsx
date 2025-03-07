@@ -113,7 +113,6 @@ export default function NewSell() {
         let finalDate = `${date.getFullYear()}-${month}-${onlyDate}`
 
 
-
         let obj = {
             patientName,
             medicine_name: searchInput,

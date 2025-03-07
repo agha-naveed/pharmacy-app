@@ -24,8 +24,9 @@ export default function NewMedicine() {
     const id = searchParams.get("q") || undefined;
 
     
+    const [isEditing, setIsEditing] = useState(false);
 
-    const { register, handleSubmit } = useForm<IFormInputs>();
+    const { register, handleSubmit, reset } = useForm<IFormInputs>();
     const [supplier, setSupplier] = useState([])
 
 
@@ -45,6 +46,7 @@ export default function NewMedicine() {
         },
         suppliers: {
             name: undefined,
+            _id: undefined
         }
     })
 
@@ -84,12 +86,21 @@ export default function NewMedicine() {
                         suppliers: response.suppliers
                     })
                     setExpiryDate(response.medicine.expiry_date)
+
+
+                    reset({
+                        ...response.medicine,
+                        supplier: response.suppliers._id, // Assuming suppliers have ID
+                        date: today,
+                        expiry_date: response.medicine.expiry_date
+                    });
+                    setIsEditing(true);
                 }
                 
             }
         }
         fetchData()
-    }, [])
+    }, [id, reset])
 
     
     
@@ -126,7 +137,6 @@ export default function NewMedicine() {
                         <input
                         placeholder='e.g: Panadol'
                         type="text"
-                        value={product ? product.med.name : ""}
                         className='
                             w-full
                             border
@@ -142,7 +152,6 @@ export default function NewMedicine() {
                     <div className='grid w-full'>
                         <label htmlFor="">Batch #</label>
                         <input
-                        value={product ? product.med.batch_no : ""}
                         placeholder='Batch No.'
                         type="text"
                         className='
@@ -198,7 +207,7 @@ export default function NewMedicine() {
                         >
                             {
                                 product.med.name ? 
-                                <option value="">{product.suppliers.name}</option>
+                                <option value={product.suppliers._id} selected>{product.suppliers.name}</option>
                                 :
                                 <>
                                     <option value="">-- select --</option>
@@ -223,7 +232,6 @@ export default function NewMedicine() {
                         <input
                         type="number"
                         min={0}
-                        value={product ? product.med.stock : ""}
                         className='
                             w-36
                             border
@@ -243,7 +251,6 @@ export default function NewMedicine() {
                         <label htmlFor="">Packet Price</label>
                         <input
                         type="number"
-                        value={product ? product.med.packet_price : ""}
                         min={0}
                         className='
                             w-full
@@ -261,7 +268,6 @@ export default function NewMedicine() {
                         <label htmlFor="">Pills in Packet</label>
                         <input
                         type="number"
-                        value={product ? product.med.pills_packet : ""}
                         min={0}
                         className='
                             w-full
@@ -279,7 +285,6 @@ export default function NewMedicine() {
                         <label htmlFor="">Per Pill Price</label>
                         <input
                         type="number"
-                        value={product ? product.med.pills_price : ""}
                         min={0}
                         className='
                             w-full
@@ -297,7 +302,6 @@ export default function NewMedicine() {
                         <label htmlFor="">Sell Pill Price</label>
                         <input
                         type="number"
-                        value={product ? product.med.sell_pills_price : ""}
                         min={0}
                         className='
                             w-full
@@ -318,7 +322,6 @@ export default function NewMedicine() {
                         <label htmlFor="">Discount</label>
                         <input
                         type="number"
-                        value={product ? product.med.discount : 0}
                         min={0}
                         className='
                             border
