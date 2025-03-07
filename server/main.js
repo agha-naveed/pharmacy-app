@@ -12,6 +12,7 @@ import medicine from './routes/medicine.js'
 import medicineDetail from './routes/medicine-detail.js'
 import sell from './routes/sell.js'
 import sellHistory from './routes/sell-history.js'
+import print from './routes/print.js'
 
 const app = express()
 
@@ -36,6 +37,10 @@ app.use('/medicine-detail/api', medicineDetail)
 
 app.use('/sell/api', sell)
 app.use('/sell-history/api', sellHistory)
+
+app.get('/print/:id/api', async () => {
+    
+})
 
 
 

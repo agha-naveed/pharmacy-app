@@ -1,18 +1,31 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReactToPrint } from "react-to-print";
+import { useParams } from 'react-router-dom';
 import logo from '../assets/img/logo.png'
 
 
 export default function PrintContent() {
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({ contentRef });
+
+    const [data, setData] = useState(undefined)
+
+    let { id } = useParams()
+
     useEffect(() => {
+        
+
         const fetchData = async () => {
-            
+            let response = await fetch(`http://localhost:8000/print/${id}/api`, {
+                method: "GET"
+            })
         }
+
+        fetchData()
 
         // reactToPrintFn()
     }, [])
+
     return (
         <section className='flex justify-center items-center !p-10 bg-zinc-400'>
             <div ref={contentRef}
