@@ -45,7 +45,8 @@ export default function PrintContent() {
 
         const fetchData = async () => {
             let response = await fetch(`http://localhost:8000/print/${id}/api`, {
-                method: "GET"
+                method: "GET",
+                credentials: "include"
             })
             let res = await response.json()
 

@@ -5,6 +5,9 @@ const medicinePurchaseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Customer"
     },
+    user: {
+        type: String
+    },
     patient_name: {
         type: String,
     },

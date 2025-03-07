@@ -32,7 +32,7 @@ router.route("/")
 })
 .get(async (req, res) => {
 
-    let cookie = req.cookies
+    let cookie = req.cookies.user
     
     
     if(cookie) {

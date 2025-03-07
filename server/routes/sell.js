@@ -20,13 +20,16 @@ router.route("/")
 
   const id = body.id;
 
+  let cookie = await req.cookies.user
+
+  console.log(req.cookies)
 
   if(id) {
 
     const customer = await Customer.findById(id)
-
     const response = await MedicinePurchase.insertOne({
       id,
+      user: cookie,
       patient_name: customer.name,
       medicine_name,
       batch_no,
@@ -37,7 +40,6 @@ router.route("/")
       date
     })
     if(response) {
-      console.log("Success")
       return res.json({
         message: 'ok',
       })
@@ -46,6 +48,7 @@ router.route("/")
 
   else {
     const response = await MedicinePurchase.insertOne({
+      user: cookie,
       patient_name,
       medicine_name,
       batch_no,
@@ -56,7 +59,6 @@ router.route("/")
       date
     })
     if(response) {
-      console.log("Success")
       return res.json({
         message: 'ok',
       })
@@ -94,8 +96,6 @@ router.route("/")
 
   const data = await Medicine.findById(id)
 
-  console.log("data: "+ await data)
-
   if(data) {
     return res.json({
       message: 'ok',
@@ -113,18 +113,3 @@ router.route("/")
 })
 
 export default router
-
-
-// const medicine = await MedicinePurchase.find()
-      
-//       if(medicine) {
-//         return res.json({
-//           message: 'ok',
-//           details: medicine
-//         })
-//       }
-//       else {
-//         return res.json({
-//           message: "error"
-//         })
-//       }

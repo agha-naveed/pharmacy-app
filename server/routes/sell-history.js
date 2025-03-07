@@ -5,8 +5,10 @@ const router = express.Router();
 
 router.route("/")
 .get(async (req, res) => {
-  const medicine = await MedicinePurchase.find()
-      
+  let cookie = await req.cookies.user
+
+  const medicine = await MedicinePurchase.find({user: cookie})
+
     if(medicine) {
         return res.json({
             message: 'ok',

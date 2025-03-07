@@ -15,7 +15,8 @@ export default function SellHistory() {
     useEffect(() => {
       const fetchData = async () => {
         const res = await fetch("http://localhost:8000/sell-history/api", {
-          method: "GET"
+          method: "GET",
+          credentials: "include"
         })
         
         const response = await res.json()
