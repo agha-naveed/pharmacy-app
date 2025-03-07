@@ -58,7 +58,6 @@ export default function PrintContent() {
             else {
                 alert("Some Error Occurred!")
             }
-
         }
 
         fetchData()
@@ -66,8 +65,10 @@ export default function PrintContent() {
     }, [])
 
     useEffect(() => {
-        reactToPrintFn()
-    }, [data])
+        setTimeout(() => {
+            reactToPrintFn()
+        }, 400)
+    }, [total])
 
     return (
         <section className='flex justify-center items-center !p-10 bg-zinc-400'>

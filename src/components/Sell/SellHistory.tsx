@@ -22,11 +22,9 @@ export default function SellHistory() {
         
         const response = await res.json()
 
-        console.log(response)
 
         if(response.message == 'ok') {
             setMedDetails(response.details)
-            console.log(response.details)
         }
 
       }
@@ -45,7 +43,7 @@ export default function SellHistory() {
             console.log(response)
     
             if(response.message == 'ok') {
-                setMedDetails(undefined)
+                // setMedDetails(undefined)
 
                 setMedDetails(response.data)
                 console.log(response.details)
@@ -67,7 +65,7 @@ export default function SellHistory() {
             const response = await res.json()
     
             if(response.message == 'ok') {
-                setMedDetails(undefined)
+                // setMedDetails(undefined)
 
                 setMedDetails(response.data)
                 console.log(response.details)
@@ -151,18 +149,22 @@ export default function SellHistory() {
                                 </td>
                                 <td>
                                     <button
-                                    onClick={() => window.open(`/print/${i.id}`, "_blank")}
-                                    className='
-                                    bg-blue-600
+                                    onClick={() => i.id ? window.open(`/print/${i.id}`, "_blank") : ""}
+                                    className={`
                                     !py-2
                                     !px-4
                                     rounded-md
                                     text-white
                                     text-[14.5px]
                                     cursor-pointer
-                                    hover:bg-blue-800
+                                    ${i.id ? `
+                                        bg-blue-600
+                                        hover:bg-blue-800` 
+                                        : "bg-zinc-600"
+                                    }
                                     transition-all
-                                    '>
+                                    `}
+                                    >
                                     Print
                                     </button>
                                 </td>
