@@ -13,7 +13,7 @@ import medicineDetail from './routes/medicine-detail.js'
 import sell from './routes/sell.js'
 import sellHistory from './routes/sell-history.js'
 import MedicinePurchase from './model/medicine-purchase.js'
-import customer from './model/customer.js'
+import customer from './routes/customer.js'
 
 
 const app = express()

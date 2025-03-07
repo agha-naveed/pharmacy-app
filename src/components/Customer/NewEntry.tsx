@@ -1,4 +1,3 @@
-import React from 'react'
 import { useForm } from 'react-hook-form';
 
 
@@ -19,6 +18,7 @@ export default function NewEntry() {
 
 
     const onSubmit = async (data: IFormInputs) => {
+
         let obj = {
             name: data.name,
             cell: data.cell,

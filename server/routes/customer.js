@@ -7,7 +7,7 @@ const router = express.Router();
 router.route("/")
 .post(async (req, res) => {
     const body = await req.body
-    const name = body.username, date = body.date, cell = body.cell;
+    const name = body.name, date = body.date, cell = body.cell;
 
     const data = await Customer.insertOne({
         name,
@@ -15,7 +15,6 @@ router.route("/")
         date
     })
 
-    console.log(data)
     if(data) {
         return res.json({
             message: 'ok'
@@ -27,14 +26,11 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
-
-    const data = await User.find()
-    const stock = await Medicine.find()
+    const data = await Customer.find()
 
     return res.json({
         message: 'ok',
-        users: data.length,
-        medicines: stock.length
+        data
     })
 })
 

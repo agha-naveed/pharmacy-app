@@ -8,21 +8,20 @@ export default function CustomerHistory() {
    
     const navigate = useNavigate()
 
-    const [medDetails, setMedDetails] = useState([])
+    const [details, setDetails] = useState([])
 
     const [focus, setFocus] = useState(false)
 
     useEffect(() => {
       const fetchData = async () => {
-        const res = await fetch("http://localhost:8000/sell-history/api", {
+        const res = await fetch("http://localhost:8000/customer/api", {
           method: "GET"
         })
         
         const response = await res.json()
 
         if(response.message == 'ok') {
-            setMedDetails(response.details)
-            console.log(response.details)
+            setDetails(response.data)
         }
 
       }
@@ -94,8 +93,8 @@ export default function CustomerHistory() {
                 </thead>
                 <tbody>
                     {
-                        medDetails ?
-                        medDetails.map((i:any, idx) => (
+                        details ?
+                        details.map((i:any, idx) => (
                         
                             <tr key={`medicine-display-${idx}`}>
                                 <td>{i.patient_name}</td>
