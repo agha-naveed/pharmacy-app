@@ -122,7 +122,7 @@ export default function SellHistory() {
                                 </td>
                                 <td>
                                     <button
-                                    onClick={() => navigate(`/print/${i._id}`)}
+                                    onClick={() => window.open(`/print/${i._id}`, "_blank")}
                                     className='
                                     bg-blue-600
                                     !py-2
