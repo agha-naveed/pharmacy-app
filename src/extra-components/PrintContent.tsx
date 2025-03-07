@@ -22,11 +22,8 @@ export default function PrintContent() {
             let res = await response.json()
 
             if(res.message == "ok") {
-
-                setData({
-                    data: res.data,
-                    name: res.name
-                })
+                console.log(res.data)
+                setData(res.data)
             }
             else {
                 alert("Some Error Occurred!")
@@ -56,11 +53,7 @@ export default function PrintContent() {
                 <div className='!py-16 flex justify-between'>
                     <div>
                         <h4 className='font-semibold'>BILLED TO:</h4>
-                        <span>
-                            {
-                                data.name
-                            }
-                        </span>
+                        <span>{data[0]?.patient_name}</span>
                     </div>
                     <div className='flex gap-5'>
                         <div className='font-semibold'>
@@ -69,7 +62,7 @@ export default function PrintContent() {
                         </div>
                         <div className='grid text-start'>
                             <span>123</span>
-                            <span>2025-12-31</span>
+                            <span>{data[0]?.date}</span>
                         </div>
                         
                     </div>

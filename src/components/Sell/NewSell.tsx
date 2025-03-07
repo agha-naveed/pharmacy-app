@@ -149,7 +149,6 @@ export default function NewSell() {
         else {
             obj = {
                 id: data.customer_name,
-                patientName,
                 medicine_name: searchInput,
                 batch_no: wholeName.batch_no,
                 quantity: data.quantity,

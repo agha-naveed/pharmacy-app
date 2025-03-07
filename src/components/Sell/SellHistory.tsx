@@ -20,6 +20,8 @@ export default function SellHistory() {
         
         const response = await res.json()
 
+        console.log(response)
+
         if(response.message == 'ok') {
             setMedDetails(response.details)
             console.log(response.details)
@@ -122,7 +124,7 @@ export default function SellHistory() {
                                 </td>
                                 <td>
                                     <button
-                                    onClick={() => window.open(`/print/${i._id}`, "_blank")}
+                                    onClick={() => window.open(`/print/${i.id}`, "_blank")}
                                     className='
                                     bg-blue-600
                                     !py-2

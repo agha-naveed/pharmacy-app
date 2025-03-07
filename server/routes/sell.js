@@ -22,8 +22,12 @@ router.route("/")
 
 
   if(id) {
+
+    const customer = await Customer.findById(id)
+
     const response = await MedicinePurchase.insertOne({
       id,
+      patient_name: customer.name,
       medicine_name,
       batch_no,
       quantity,

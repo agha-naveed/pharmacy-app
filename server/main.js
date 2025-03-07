@@ -57,20 +57,13 @@ app.get('/print/:id/api', async (req, res) => {
 
     const data = await MedicinePurchase.find({
         id: id,
-        // date: today
+        date: today
     })
 
-    console.log(data+"\n"+today)
-
     if(data) {
-        // const name = await Customer.findById(id)
-
-        // console.log(name)
-
         return res.json({
             message: "ok",
-            data,
-            // name: name.name
+            data
         })
     }
     else {
