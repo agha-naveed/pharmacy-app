@@ -78,7 +78,7 @@ export default function SellHistory() {
             </div>
 
             <section className='c-scroll w-full overflow-x-auto !px-2 !pb-1 !mt-7'>
-                <table>
+                <table className="table">
                 <thead>
                     <tr>
                         <th>Patient Name</th>

@@ -42,13 +42,13 @@ export default function PrintContent() {
                 </div>
 
                 <div>
-                    <table>
+                    <table className='!w-full'>
                         <thead>
-                            <tr>
-                                <td>ITEM</td>
-                                <td>UNIT PRICE</td>
-                                <td>QTY</td>
-                                <td>TOTAL</td>
+                            <tr className='border-b font-semibold text-[15px]'>
+                                <td className='!w-[46%] !border-none'>ITEM</td>
+                                <td className='!border-none'>UNIT PRICE</td>
+                                <td className='!border-none'>QTY</td>
+                                <td className='!border-none'>TOTAL</td>
                             </tr>
                         </thead>
                     </table>
