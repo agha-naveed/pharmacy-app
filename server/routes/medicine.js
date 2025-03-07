@@ -21,29 +21,62 @@ router.route("/")
     const sell_pills_price = body.sell_pills_price
     const expiry_date = body.expiry_date
 
+    const update = body.update
+
     const pills_stock = body.pills_packet * stock
 
-    console.log("\n\nsuppier: \n"+supplier +"\n\n\n")
 
-    await Medicine.insertOne({
-        name,
-        stock,
-        batch_no,
-        pay_method,
-        supplier,
-        packet_price,
-        discount,
-        pills_packet,
-        pills_price,
-        pills_stock,
-        date,
-        sell_pills_price,
-        expiry_date
-    }).then(() => res.json({ message: 'ok' }))
-    .catch((err) => {
-        res.json({ message: "some error occurred!" })
-        console.log(err)
-    })
+    if(!update) {
+        await Medicine.insertOne({
+            name,
+            stock,
+            batch_no,
+            pay_method,
+            supplier,
+            packet_price,
+            discount,
+            pills_packet,
+            pills_price,
+            pills_stock,
+            date,
+            sell_pills_price,
+            expiry_date
+        }).then(() => res.json({ message: 'ok' }))
+        .catch((err) => {
+            res.json({ message: "some error occurred!" })
+            console.log(err)
+        })
+    }
+
+    else {
+        await Medicine.updateOne(
+            {
+                batch_no
+            },
+            {
+                $set: {
+                    name,
+                    stock,
+                    batch_no,
+                    pay_method,
+                    supplier,
+                    packet_price,
+                    discount,
+                    pills_packet,
+                    pills_price,
+                    pills_stock,
+                    date,
+                    sell_pills_price,
+                    expiry_date
+                }
+        }).then(() => res.json({ message: 'ok' }))
+        .catch((err) => {
+            res.json({ message: "some error occurred!" })
+            console.log(err)
+        })
+    }
+
+    
 
 })
 .get(async (req, res) => {

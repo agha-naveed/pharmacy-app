@@ -16,6 +16,7 @@ interface IFormInputs {
   sell_pills_price: string;
   expiry_date: string;
   pills_stock: number;
+  update: boolean;
 }
 export default function NewMedicine() {
 
@@ -105,6 +106,10 @@ export default function NewMedicine() {
     
     
     const onSubmit = async (data: IFormInputs) => {
+
+        if(isEditing)
+            data['update'] = true
+
         const res = await fetch("http://localhost:8000/medicine/api", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
