@@ -3,6 +3,7 @@ import Header from '../../extra-components/Header'
 import { useForm } from 'react-hook-form';
 
 interface IFormInputs {
+    customer_name: string;
     patient_name: string;
     medicine_name: string;
     batch_no: string;
@@ -26,7 +27,25 @@ export default function NewSell() {
     const [qty, setQty] = useState<number>(1)
     const [discount, setDiscount] = useState<number>(0)
     const [patientName, setPatientName] = useState<string>('')
+    const [customers, setCustomers] = useState<any>()
     
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch(`http://localhost:8000/sell/api`, {
+                method: "PUT"
+            });
+            const data = await res.json()
+            
+            if(data.message == 'ok') {
+                setCustomers(await data.customers)
+            }
+        }
+
+        fetchData()
+    }, [])
+
+
     async function handleSearch(medName:string) {
         try {
             if(!medName.includes("\\")) {
@@ -35,7 +54,7 @@ export default function NewSell() {
                 });
                 const data = await res.json()
                 
-                setName(data)
+                setName(data.medicines)
             }
         } catch(err) {
             console.log("try catch: "+err)
@@ -112,19 +131,37 @@ export default function NewSell() {
 
         let finalDate = `${date.getFullYear()}-${month}-${onlyDate}`
 
+        let obj = {}
 
-        let obj = {
-            // id,
-            patientName,
-            medicine_name: searchInput,
-            batch_no: wholeName.batch_no,
-            quantity: data.quantity,
-            pills_packet: wholeName.pills_packet,
-            pills_price: wholeName.sell_pills_price,
-            discount: data.discount,
-            total: totalPrice,
-            date: finalDate
+        if(data.customer_name == '-') {
+            obj = {
+                patientName,
+                medicine_name: searchInput,
+                batch_no: wholeName.batch_no,
+                quantity: data.quantity,
+                pills_packet: wholeName.pills_packet,
+                pills_price: wholeName.sell_pills_price,
+                discount: data.discount,
+                total: totalPrice,
+                date: finalDate
+            }
         }
+        else {
+            obj = {
+                id: data.customer_name,
+                patientName,
+                medicine_name: searchInput,
+                batch_no: wholeName.batch_no,
+                quantity: data.quantity,
+                pills_packet: wholeName.pills_packet,
+                pills_price: wholeName.sell_pills_price,
+                discount: data.discount,
+                total: totalPrice,
+                date: finalDate
+            }
+        }
+
+        
 
 
         console.log(obj)
@@ -161,12 +198,29 @@ export default function NewSell() {
                     </button>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className='grid !mb-7'>
-                        <label htmlFor="">Patient Name</label>
-                        <input type="text"
-                        className='w-56 h-[35px] rounded-md !px-2 border border-black'
-                        onInput={(e:any) => setPatientName(e.target.value)} 
-                        />
+                    <div className='flex gap-5'>
+                        <div className='grid !mb-7'>
+                            <label htmlFor="">New Patient Name</label>
+                            <input type="text"
+                            className='w-56 h-[35px] rounded-md !px-2 border border-black'
+                            onInput={(e:any) => setPatientName(e.target.value)} 
+                            />
+                        </div>
+                        <div className='grid !mb-7'>
+                            <label htmlFor="">Patient Name</label>
+                            <select
+                            className='h-[35px] border border-black rounded-md w-56 !px-2'
+                            {...register("customer_name")}
+                            >
+                                <option value="-">-- select --</option>
+                                {
+                                    customers ?
+                                    customers.map((item:any, index:Number) => (
+                                        <option value={item._id} key={`customers-detail-${index}`}>{item.name}</option>
+                                    )) : ""
+                                }
+                            </select>
+                        </div>
                     </div>
 
                     {

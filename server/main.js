@@ -14,6 +14,7 @@ import sell from './routes/sell.js'
 import sellHistory from './routes/sell-history.js'
 import MedicinePurchase from './model/medicine-purchase.js'
 import customer from './routes/customer.js'
+import Customer from './model/customer.js'
 
 
 const app = express()
@@ -44,10 +45,39 @@ app.use('/customer/api', customer)
 
 
 app.get('/print/:id/api', async (req, res) => {
-    const { id } = req.params
-    const data = await MedicinePurchase.find({ patient_id: id })
+    let date = new Date()
+    let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
+    let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
 
-    console.log(id)
+    let today = `${date.getFullYear()}-${month}-${onlyDate}`
+    console.log(today)
+
+    const { id } = req.params
+
+
+    const data = await MedicinePurchase.find({
+        id: id,
+        // date: today
+    })
+
+    console.log(data+"\n"+today)
+
+    if(data) {
+        // const name = await Customer.findById(id)
+
+        // console.log(name)
+
+        return res.json({
+            message: "ok",
+            data,
+            // name: name.name
+        })
+    }
+    else {
+        return res.json({
+            message: "Not found!"
+        })
+    }
 
 
 })

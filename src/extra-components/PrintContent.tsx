@@ -8,7 +8,7 @@ export default function PrintContent() {
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({ contentRef });
 
-    const [data, setData] = useState(undefined)
+    const [data, setData] = useState<any>({})
 
     let { id } = useParams()
 
@@ -19,6 +19,19 @@ export default function PrintContent() {
             let response = await fetch(`http://localhost:8000/print/${id}/api`, {
                 method: "GET"
             })
+            let res = await response.json()
+
+            if(res.message == "ok") {
+
+                setData({
+                    data: res.data,
+                    name: res.name
+                })
+            }
+            else {
+                alert("Some Error Occurred!")
+            }
+
         }
 
         fetchData()
@@ -43,7 +56,11 @@ export default function PrintContent() {
                 <div className='!py-16 flex justify-between'>
                     <div>
                         <h4 className='font-semibold'>BILLED TO:</h4>
-                        <span>Agha Naveed</span>
+                        <span>
+                            {
+                                data.name
+                            }
+                        </span>
                     </div>
                     <div className='flex gap-5'>
                         <div className='font-semibold'>
