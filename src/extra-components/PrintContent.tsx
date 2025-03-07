@@ -8,9 +8,37 @@ export default function PrintContent() {
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({ contentRef });
 
-    const [data, setData] = useState<any>({})
+    const [total, setTotal] = useState({
+        price: 0,
+        quantity: 0,
+        unitPrice: 0
+    })
+
+    const [data, setData] = useState<any>([])
+    const [cell, setCell] = useState<string>("")
 
     let { id } = useParams()
+
+    useEffect(() => {
+        let price = 0;
+        let quantity = 0;
+        let unitPrice = 0;
+
+        if(data.length > 0) {
+            data.map((i:any) => {
+                price += i.total
+                quantity += i.quantity
+                unitPrice += i.pills_price
+            })
+
+            setTotal({
+                price,
+                quantity,
+                unitPrice
+            })
+        }
+
+    }, [data])
 
     useEffect(() => {
         
@@ -24,6 +52,7 @@ export default function PrintContent() {
             if(res.message == "ok") {
                 console.log(res.data)
                 setData(res.data)
+                setCell(res.cell)
             }
             else {
                 alert("Some Error Occurred!")
@@ -33,14 +62,21 @@ export default function PrintContent() {
 
         fetchData()
 
-        // reactToPrintFn()
     }, [])
+
+    useEffect(() => {
+        reactToPrintFn()
+    }, [data])
 
     return (
         <section className='flex justify-center items-center !p-10 bg-zinc-400'>
             <div ref={contentRef}
-            className='flex flex-col !p-20 min-w-[794px] w-[794px] min-h-[1123px] h-[1123px] bg-zinc-100 shadow-2xl gap-10'>
-                <div className='w-full h-fit flex items-center justify-between'>
+            className='flex flex-col relative !p-20 min-w-[794px] w-[794px] min-h-[1123px] h-[1123px] bg-zinc-100 shadow-2xl gap-10'>
+                <img src={logo}
+                    className='w-[70%] absolute opacity-5 top-[20%] left-1/2 -translate-x-1/2'
+                    alt="Ali Medical Store Logo" />
+
+                <div className='relative z-20 w-full h-fit flex items-center justify-between'>
                     <img src={logo}
                     className='w-40'
                     alt="Ali Medical Store Logo" />
@@ -50,18 +86,18 @@ export default function PrintContent() {
                     </div>
                 </div>
 
-                <div className='!py-16 flex justify-between'>
+                <div className='relative z-20 !py-16 flex justify-between'>
                     <div>
                         <h4 className='font-semibold'>BILLED TO:</h4>
                         <span>{data[0]?.patient_name}</span>
+                        <br />
+                        <span>{cell}</span>
+                        
                     </div>
-                    <div className='flex gap-5'>
-                        <div className='font-semibold'>
-                            <h4>INVOICE NO:</h4>
-                            <h4>DATE:</h4>
-                        </div>
-                        <div className='grid text-start'>
-                            <span>123</span>
+                    <div className='relative z-20 flex flex-col'>
+                        <h4 className='font-semibold text-end'>INVOICE DETAIL</h4>
+                        <div className='flex gap-4 text-[15px]'>
+                            <h4 className='font-semibold'>DATE:</h4>
                             <span>{data[0]?.date}</span>
                         </div>
                         
@@ -69,7 +105,7 @@ export default function PrintContent() {
                 </div>
 
                 <div>
-                    <table className='!w-full p-table'>
+                    <table className='relative z-20 !w-full p-table'>
                         <thead className='h-[50px] content-center'>
                             <tr className='border-b font-semibold text-[15px]'>
                                 <td className='!w-[46%] !border-none'>ITEM</td>
@@ -80,33 +116,24 @@ export default function PrintContent() {
                         </thead>
 
                         <tbody>
-                            <tr className='text-[15px]'>
-                                <td className='!w-[46%] !border-none'>Panadol Extra</td>
-                                <td className='!border-none'>10 rs</td>
-                                <td className='!border-none'>5</td>
-                                <td className='!border-none'>2000 rs</td>
-                            </tr>
-
-                            <tr className='text-[15px]'>
-                                <td className='!w-[46%] !border-none'>ITEM</td>
-                                <td className='!border-none'>UNIT PRICE rs</td>
-                                <td className='!border-none'>QTY</td>
-                                <td className='!border-none'>1500 rs</td>
-                            </tr>
-
-                            <tr className='text-[15px]'>
-                                <td className='!w-[46%] !border-none'>ITEM</td>
-                                <td className='!border-none'>UNIT PRICE rs</td>
-                                <td className='!border-none'>QTY</td>
-                                <td className='!border-none'>1500 rs</td>
-                            </tr>
+                            {
+                                data ?
+                                data.map((item:any, index:number) => (
+                                    <tr key={`invoice-${index}`} className='text-[15px]'>
+                                        <td className='!w-[46%] !border-none'>{item.medicine_name}</td>
+                                        <td className='!border-none'>{item.pills_price} Rs.</td>
+                                        <td className='!border-none'>{item.quantity}</td>
+                                        <td className='!border-none'>{item.total} Rs.</td>
+                                    </tr>
+                                )) : null
+                            }
                         </tbody>
                         <tfoot>
                             <tr className='text-[14px] font-semibold border-t'>
                                 <td className='!w-[46%] !border-none'>SUBTOTAL</td>
-                                <td className='!border-none'>200 rs</td>
-                                <td className='!border-none'>200</td>
-                                <td className='!border-none'>50000 Pkr</td>
+                                <td className='!border-none'>{total.unitPrice} Rs.</td>
+                                <td className='!border-none'>{total.quantity}</td>
+                                <td className='!border-none'>{total.price} Rs.</td>
                             </tr>
                         </tfoot>
                     </table>

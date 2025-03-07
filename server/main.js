@@ -60,10 +60,13 @@ app.get('/print/:id/api', async (req, res) => {
         date: today
     })
 
+    const cell = await Customer.findById(id)
+
     if(data) {
         return res.json({
             message: "ok",
-            data
+            data,
+            cell: cell.cell
         })
     }
     else {
