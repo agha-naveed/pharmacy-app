@@ -45,30 +45,53 @@ app.use('/customer/api', customer)
 
 
 app.get('/print/:id/date/:q_date/api', async (req, res) => {
-    
+
     const { id, q_date } = req.params
 
 
-    const data = await MedicinePurchase.find({
-        id: id,
-        date: q_date
-    })
-
-    const cell = await Customer.findById(id)
-
-    if(data) {
-        return res.json({
-            message: "ok",
-            data,
-            cell: cell.cell
+    if(id.slice(-12) == "+p_w_id_name") {
+        
+        const data = await MedicinePurchase.find({
+            patient_name: id.slice(0, -12),
+            date: q_date
         })
+    
+        if(data) {
+            return res.json({
+                message: "ok",
+                data,
+            })
+        }
+        else {
+            return res.json({
+                message: "Not found!"
+            })
+        }
+
     }
+
     else {
-        return res.json({
-            message: "Not found!"
-        })
-    }
 
+        const data = await MedicinePurchase.find({
+            id: id,
+            date: q_date
+        })
+
+        const cell = await Customer.findById(id)
+
+        if(data) {
+            return res.json({
+                message: "ok",
+                data,
+                cell: cell.cell
+            })
+        }
+        else {
+            return res.json({
+                message: "Not found!"
+            })
+        }
+    }
 
 })
 

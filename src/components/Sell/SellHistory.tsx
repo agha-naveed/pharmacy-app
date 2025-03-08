@@ -148,7 +148,7 @@ export default function SellHistory() {
                                 </td>
                                 <td>
                                     <button
-                                    onClick={() => i.id ? window.open(`/print/${i.id}/date/${i.date}`, "_blank") : ""}
+                                    onClick={() => i.id ? window.open(`/print/${i.id}/date/${i.date}`, "_blank") : window.open(`/print/${i.patient_name}+p_w_id_name/date/${i.date}`, "_blank")}
                                     className={`
                                     !py-2
                                     !px-4

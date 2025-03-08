@@ -53,7 +53,7 @@ export default function PrintContent() {
             if(res.message == "ok") {
                 console.log(res.data)
                 setData(res.data)
-                setCell(res.cell)
+                setCell(res.cell ? res.cell : "")
             }
             else {
                 alert("Some Error Occurred!")
@@ -93,7 +93,7 @@ export default function PrintContent() {
                         <h4 className='font-semibold'>BILLED TO:</h4>
                         <span>{data[0]?.patient_name}</span>
                         <br />
-                        <span>{cell}</span>
+                        <span>{cell ? cell : ""}</span>
                         
                     </div>
                     <div className='relative z-20 flex flex-col'>
