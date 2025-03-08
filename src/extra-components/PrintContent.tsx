@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useReactToPrint } from "react-to-print";
 import { useParams } from 'react-router-dom';
 import logo from '../assets/img/logo.png'
+import sign from '../assets/img/Narf_signature.png'
 
 
 export default function PrintContent() {
@@ -66,14 +67,14 @@ export default function PrintContent() {
 
     useEffect(() => {
         setTimeout(() => {
-            reactToPrintFn()
+            // reactToPrintFn()
         }, 400)
     }, [total])
 
     return (
         <section className='flex justify-center items-center !p-10 bg-zinc-400'>
             <div ref={contentRef}
-            className='flex flex-col relative !p-20 min-w-[794px] w-[794px] min-h-[1123px] h-[1123px] bg-zinc-100 shadow-2xl gap-10'>
+            className='flex flex-col relative !p-20 min-w-[794px] w-[794px] min-h-[1123px] h-[1123px] bg-white shadow-2xl gap-10'>
                 <img src={logo}
                     className='w-[70%] absolute opacity-5 top-[20%] left-1/2 -translate-x-1/2'
                     alt="Ali Medical Store Logo" />
@@ -140,6 +141,7 @@ export default function PrintContent() {
                         </tfoot>
                     </table>
                 </div>
+                <img src={sign} alt="" />
             </div>
         </section>
     )
