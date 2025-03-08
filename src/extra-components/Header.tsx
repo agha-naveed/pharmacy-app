@@ -47,35 +47,53 @@ export default function Header({value}:any) {
     <div className='w-full h-20 text-white !px-5 justify-between bg-slate-800 flex items-center'>
         <span className='font-semibold text-2xl'>{value}</span>
         <div className='flex items-center gap-4 relative'>
-            <button className='relative !p-[10px] cursor-pointer left-3 rounded-full' title='Notifications'>
-                <span
-                className={`
-                absolute
-                top-0
-                bg-red-600
-                font-semibold
-                text-[15px]
-                !px-[7px]
-                rounded-full
-                ${expired.length > 0 ? "inline" : "hidden"}
-                `}>
-                    {expired.length}
-                </span>
-                <FaRegBell className='text-3xl' />
-            </button>
-            
-            <div className="
-                absolute
-                top-[60px]
-                -left-1/3
-                rounded-md
-                w-56
-                h-32
-                bg-white
-                shadow-lg
-            ">
-                <div>
+            <div className="group">
+                <button className='relative !p-[10px] cursor-pointer left-3 rounded-full' title='Notifications'>
+                    <span
+                    className={`
+                    absolute
+                    top-0
+                    bg-red-600
+                    font-semibold
+                    text-[15px]
+                    !px-[7px]
+                    rounded-full
+                    ${expired.length > 0 ? "inline" : "hidden"}
+                    `}>
+                        {expired.length}
+                    </span>
+                    <FaRegBell className='text-3xl' />
+                </button>
+                
+                <div className={`
+                    group-hover:grid
+                    hidden
+                    absolute
+                    top-[60px]
+                    -left-1/4
+                    rounded-md
+                    w-auto
+                    max-w-[320px]
+                    h-auto
+                    bg-white
+                    shadow-lg
+                    overflow-hidden
                     
+                `}>
+                    {
+                        expired ? 
+                        expired.map((i:any, idx:number) => (
+                            <div key={`expired-products-${idx}`} className="text-black flex border-b border-b-zinc-300 gap-1
+                            !px-5 !py-[14px] cursor-pointer hover:bg-zinc-100 transition-all 
+                            ">
+                                <span className="text-[14px] self-end">{idx + 1}. </span>
+                                <div className="flex justify-between flex-wrap w-full gap-3">
+                                    <h5 className="font-semibold">{i.name}</h5>
+                                    <span className="text-[15px]">(E4ab7b)</span>
+                                </div>
+                            </div>
+                        )) : null
+                    }
                 </div>
             </div>
             
