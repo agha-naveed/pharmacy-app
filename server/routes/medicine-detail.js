@@ -44,7 +44,11 @@ router.route("/")
     
     let arr = []
 
+    let totalPrice = 0;
+
     for(let i=0; i<data.length; i++) {
+
+        totalPrice+= data[i].sell_pills_price * data[i].pills_stock
 
         let obj = data[i]
 
@@ -55,11 +59,12 @@ router.route("/")
         arr.push(obj)
     }
 
-    await Medicine.find()
+
 
     return res.json({
         medicines: arr,
-        message: 'ok'
+        message: 'ok',
+        price: totalPrice
     })
 
 })

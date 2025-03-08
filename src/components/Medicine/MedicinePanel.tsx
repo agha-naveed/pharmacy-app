@@ -11,6 +11,7 @@ export default function MedicinePanel() {
     const [focus, setFocus] = useState(false)
 
     const [id, setId] = useState<string>("")
+    const [totalPrice, setTotalPrice] = useState<number>(0)
 
     const [rmId, setRmId] = useState(undefined)
 
@@ -50,6 +51,7 @@ export default function MedicinePanel() {
 
         if(response.message == 'ok') {
             setMedDetails(response.medicines)
+            setTotalPrice(response.price)
         }
 
       }
@@ -118,7 +120,7 @@ export default function MedicinePanel() {
 
             <div className="!px-10 flex flex-col">
                 Total Price:
-                <span className="font-semibold text-2xl">2321</span>
+                <span className="font-semibold text-2xl">{totalPrice}</span>
             </div>
 
             <section className='c-scroll w-full overflow-x-auto !px-2 !pb-1 !mt-7'>
@@ -147,7 +149,7 @@ export default function MedicinePanel() {
                                 <td>{i.name}</td>
                                 <td>{i.batch_no}</td>
                                 <td>{i.pills_packet}</td>
-                                <td>{i.pills_price}</td>
+                                <td>{i.sell_pills_price}</td>
                                 <td>{i.stock}</td>
                                 <td>{i.pills_stock}</td>
                                 <td>{i.supplierName}</td>
