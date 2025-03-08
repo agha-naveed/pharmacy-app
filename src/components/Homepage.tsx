@@ -7,8 +7,11 @@ export default function Homepage() {
 
     const navigate = useNavigate()
   
-    const [users, setUsers] = useState(0)
-    const [stock, setStock] = useState(0)
+    const [details, setDetails] = useState({
+        users: 0,
+        stock: 0,
+        sell: 0
+    })
 
     useEffect(() => {
 
@@ -18,9 +21,11 @@ export default function Homepage() {
             const response = await res.json()
             
             if(response.message == 'ok') {
-
-                setUsers(response.users)
-                setStock(response.medicines)
+                setDetails({
+                    users: response.users,
+                    stock: response.medicines,
+                    sell: response.sell
+                })
             }
         }
 
@@ -70,7 +75,7 @@ export default function Homepage() {
                 text-white text-center
                 '
                 >
-                    <h4 className='text-[32px] font-semibold'>11</h4>
+                    <h4 className='text-[32px] font-semibold'>{details.sell}</h4>
                     <span>Today's Sell</span>
                 </div>
 
@@ -89,7 +94,7 @@ export default function Homepage() {
                 text-white text-center
                 '
                 >
-                    <h4 className='text-[32px] font-semibold'>{users}</h4>
+                    <h4 className='text-[32px] font-semibold'>{details.users}</h4>
                     <span>Total Users</span>
                 </div>
 
@@ -108,7 +113,7 @@ export default function Homepage() {
                 text-white text-center
                 '
                 >
-                    <h4 className='text-[32px] font-semibold'>{stock}</h4>
+                    <h4 className='text-[32px] font-semibold'>{details.stock}</h4>
                     <span>Stock</span>
                 </div>
 

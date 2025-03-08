@@ -1,4 +1,3 @@
-import { LuSearch } from "react-icons/lu";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";

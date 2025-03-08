@@ -1,6 +1,7 @@
 import express from 'express'
 import User from '../model/user.js'
 import Medicine from '../model/medicine.js';
+import MedicinePurchase from '../model/medicine-purchase.js';
 
 const router = express.Router();
 
@@ -28,14 +29,25 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
+    let date = new Date()
+    let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
+    let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+
+    let finalDate = `${date.getFullYear()}-${month}-${onlyDate}`
 
     const data = await User.find()
     const stock = await Medicine.find()
 
+    const medicinePurchase = await MedicinePurchase.find({
+        date: finalDate
+    })
+
+    
     return res.json({
         message: 'ok',
         users: data.length,
-        medicines: stock.length
+        medicines: stock.length,
+        sell: medicinePurchase.length
     })
 })
 
