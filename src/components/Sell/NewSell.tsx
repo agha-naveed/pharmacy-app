@@ -161,9 +161,6 @@ export default function NewSell() {
         }
 
 
-
-        console.log(obj)
-
         const res = await fetch(`http://localhost:8000/sell/api`, {
             method: "POST",
             body: JSON.stringify(obj),

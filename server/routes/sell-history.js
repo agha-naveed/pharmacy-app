@@ -7,7 +7,7 @@ router.route("/")
 .get(async (req, res) => {
   let cookie = await req.cookies.user
 
-  const medicine = await MedicinePurchase.find({user: cookie})
+  const medicine = await MedicinePurchase.find({user: cookie}).sort({createdAt: -1})
 
     if(medicine) {
         return res.json({
@@ -33,7 +33,7 @@ router.route("/")
                 $gte: from
             },
             user: cookie
-        })
+        }).sort({createdAt: 1})
 
         return res.json({
             message: 'ok',
@@ -46,7 +46,7 @@ router.route("/")
                 $lte: to
             },
             user: cookie
-        })
+        }).sort({createdAt: 1})
         return res.json({
             message: 'ok',
             data
@@ -60,7 +60,7 @@ router.route("/")
                 $lte: to
             },
             user: cookie
-        })
+        }).sort({createdAt: 1})
         return res.json({
             message: 'ok',
             data

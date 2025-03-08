@@ -64,8 +64,6 @@ export default function SellHistory() {
             const response = await res.json()
     
             if(response.message == 'ok') {
-                // setMedDetails(undefined)
-
                 setMedDetails(response.data)
                 console.log(response.details)
             }

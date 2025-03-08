@@ -40,8 +40,7 @@ router.route("/")
 })
 .get(async (_, res) => {
 
-    const data = await Medicine.find().lean()
-
+    const data = await Medicine.find().sort({createdAt: -1}).lean()
     
     let arr = []
 

@@ -26,7 +26,7 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
-    const data = await Customer.find()
+    const data = await Customer.find().sort({createdAt: -1})
 
     return res.json({
         message: 'ok',
