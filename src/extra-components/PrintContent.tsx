@@ -3,6 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import { useParams } from 'react-router-dom';
 import logo from '../assets/img/logo.png'
 import sign from '../assets/img/Narf_signature.png'
+import qr from '../assets/img/qr-code.png'
 
 
 export default function PrintContent() {
@@ -67,7 +68,7 @@ export default function PrintContent() {
 
     useEffect(() => {
         setTimeout(() => {
-            // reactToPrintFn()
+            reactToPrintFn()
         }, 400)
     }, [total])
 
@@ -141,7 +142,14 @@ export default function PrintContent() {
                         </tfoot>
                     </table>
                 </div>
-                <img src={sign} alt="" />
+                <div>
+                    <img src={qr} className='w-[100px] absolute bottom-20 outline-2 outline-offset-2' alt="" />
+                </div>
+                <div className='w-fit flex flex-col absolute bottom-20 right-20 items-center'>
+                    <img src={sign} className='w-32' alt="" />
+                    <span className='block w-40 h-[1px] bg-black'></span>
+                    <span className='!mt-2'>Signature</span>
+                </div>
             </div>
         </section>
     )
