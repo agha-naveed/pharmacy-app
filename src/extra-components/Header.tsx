@@ -46,12 +46,12 @@ export default function Header({value}:any) {
   return (
     <div className='w-full h-20 text-white !px-5 justify-between bg-slate-800 flex items-center'>
         <span className='font-semibold text-2xl'>{value}</span>
-        <div className='flex items-center gap-4'>
-            <button className='relative cursor-pointer' title='Notifications'>
+        <div className='flex items-center gap-4 relative'>
+            <button className='relative !p-[10px] cursor-pointer left-3 rounded-full' title='Notifications'>
                 <span
                 className={`
                 absolute
-                -top-4
+                top-0
                 bg-red-600
                 font-semibold
                 text-[15px]
@@ -64,8 +64,19 @@ export default function Header({value}:any) {
                 <FaRegBell className='text-3xl' />
             </button>
             
-            <div>
-                
+            <div className="
+                absolute
+                top-[60px]
+                -left-1/3
+                rounded-md
+                w-56
+                h-32
+                bg-white
+                shadow-lg
+            ">
+                <div>
+                    
+                </div>
             </div>
             
 
