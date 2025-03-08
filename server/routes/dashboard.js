@@ -29,6 +29,8 @@ router.route("/")
     }
 })
 .get(async (req, res) => {
+
+    let cookie = await req.cookies.user
     let date = new Date()
     let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
     let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
@@ -39,7 +41,8 @@ router.route("/")
     const stock = await Medicine.find()
 
     const medicinePurchase = await MedicinePurchase.find({
-        date: finalDate
+        date: finalDate,
+        user: cookie
     })
 
     

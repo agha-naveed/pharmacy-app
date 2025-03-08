@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BiSolidUserAccount } from "react-icons/bi";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
+import { MdPeopleAlt } from "react-icons/md";
 
 
 export default function Navbar() {
@@ -124,7 +125,7 @@ export default function Navbar() {
                         }
                     `}
                     >
-                        <CgProfile className='text-2xl' />
+                        <MdPeopleAlt className='text-2xl' />
                         Customers
                     </Link>
                 </li>
@@ -167,8 +168,8 @@ export default function Navbar() {
                         }
                     `}
                     >
-                        <IoSettings className='text-2xl' />
-                        Setting
+                        <CgProfile className='text-2xl' />
+                        Profile
                     </Link>
                 </li>
             </ul>

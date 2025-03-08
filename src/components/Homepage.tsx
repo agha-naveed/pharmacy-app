@@ -17,7 +17,10 @@ export default function Homepage() {
 
         async function getData() {
             
-            const res = await fetch("http://localhost:8000/dashboard/api", { method: "GET" })
+            const res = await fetch("http://localhost:8000/dashboard/api", {
+                method: "GET",
+                credentials: "include"
+            })
             const response = await res.json()
             
             if(response.message == 'ok') {
@@ -43,7 +46,9 @@ export default function Homepage() {
                 shadow-md
                 w-40
                 h-36
+                transition-all
                 bg-purple-800
+                hover:bg-purple-900
                 rounded-lg
                 cursor-pointer
                 flex
@@ -66,7 +71,9 @@ export default function Homepage() {
                 w-40
                 h-36
                 rounded-lg
+                transition-all
                 bg-teal-800
+                hover:bg-teal-900
                 cursor-pointer
                 flex
                 flex-col
@@ -85,7 +92,9 @@ export default function Homepage() {
                 w-40
                 h-36
                 rounded-lg
+                transition-all
                 bg-red-700
+                hover:bg-red-800
                 cursor-pointer
                 flex
                 flex-col
@@ -104,7 +113,9 @@ export default function Homepage() {
                 w-40
                 h-36
                 rounded-lg
+                transition-all
                 bg-cyan-600
+                hover:bg-cyan-700
                 cursor-pointer
                 flex
                 flex-col
