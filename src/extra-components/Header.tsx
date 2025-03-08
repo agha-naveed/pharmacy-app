@@ -86,10 +86,10 @@ export default function Header({value}:any) {
                             <div key={`expired-products-${idx}`} className="text-black flex border-b border-b-zinc-300 gap-1
                             !px-5 !py-[14px] cursor-pointer hover:bg-zinc-100 transition-all 
                             ">
-                                <span className="text-[14px] self-end">{idx + 1}. </span>
+                                <span className="text-[15px] self-end">{idx + 1}. </span>
                                 <div className="flex justify-between flex-wrap w-full gap-3">
                                     <h5 className="font-semibold">{i.name}</h5>
-                                    <span className="text-[15px]">(E4ab7b)</span>
+                                    <span className="text-[15px]">({i.batch_no})</span>
                                 </div>
                             </div>
                         )) : null
