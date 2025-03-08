@@ -27,6 +27,7 @@ router.route("/")
   if(id) {
 
     const customer = await Customer.findById(id)
+
     const response = await MedicinePurchase.insertOne({
       id,
       user: cookie,
@@ -40,6 +41,14 @@ router.route("/")
       date
     })
     if(response) {
+      await Medicine.updateOne({
+        batch_no
+      },
+      {
+        $inc: {
+          pills_stock: -quantity
+        }
+      })
       return res.json({
         message: 'ok',
       })
@@ -59,6 +68,14 @@ router.route("/")
       date
     })
     if(response) {
+      await Medicine.updateOne({
+        batch_no
+      },
+      {
+        $inc: {
+          pills_stock: -quantity
+        }
+      })
       return res.json({
         message: 'ok',
       })

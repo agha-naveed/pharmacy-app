@@ -160,7 +160,6 @@ export default function NewSell() {
             }
         }
 
-        
 
 
         console.log(obj)
@@ -176,7 +175,6 @@ export default function NewSell() {
 
         if(res_data.message == 'ok') {
             alert("✅ Done")
-            // window.location.reload()
         }
 
     }
