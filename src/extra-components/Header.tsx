@@ -1,6 +1,7 @@
 import { FaRegBell } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Header({value}:any) {
 
@@ -8,6 +9,22 @@ export default function Header({value}:any) {
 
     const months = ['Jan', 'Feb', "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     let date = new Date()
+
+    const [expired, setExpired] = useState([])
+
+    useEffect(() => {
+        async function checkExpiry() {
+            const res = await fetch("http://localhost:8000/check-expiry/api", {
+                method: "GET"
+            })
+            const response = await res.json()
+
+            if(response.message == 'ok') {
+                setExpired(response.data)
+            }
+        }
+        checkExpiry()
+    }, [])
 
     async function logOut() {
         const res = await fetch("http://localhost:8000/account/api", {
@@ -31,9 +48,27 @@ export default function Header({value}:any) {
         <span className='font-semibold text-2xl'>{value}</span>
         <div className='flex items-center gap-4'>
             <button className='relative cursor-pointer' title='Notifications'>
-                <span className='absolute -top-4  bg-red-600 font-semibold text-[15px] !px-[7px] rounded-full'>2</span>
+                <span
+                className={`
+                absolute
+                -top-4
+                bg-red-600
+                font-semibold
+                text-[15px]
+                !px-[7px]
+                rounded-full
+                ${expired.length > 0 ? "inline" : "hidden"}
+                `}>
+                    {expired.length}
+                </span>
                 <FaRegBell className='text-3xl' />
             </button>
+            
+            <div>
+                
+            </div>
+            
+
             <button className='justify-items-center hover:bg-slate-900 cursor-pointer transition-all rounded-full !p-3' onClick={() => logOut()}>
                 <BiLogOut className='text-2xl' />
                 <span>Logout</span>

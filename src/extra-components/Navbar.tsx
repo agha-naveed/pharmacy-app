@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import logo from '../assets/img/logo.png'
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { IoSettings } from "react-icons/io5";
 import { PiPillFill } from "react-icons/pi";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BiSolidUserAccount } from "react-icons/bi";

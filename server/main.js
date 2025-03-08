@@ -15,6 +15,7 @@ import sellHistory from './routes/sell-history.js'
 import MedicinePurchase from './model/medicine-purchase.js'
 import customer from './routes/customer.js'
 import Customer from './model/customer.js'
+import checkExpiration from './routes/checkExpiration.js'
 
 
 const app = express()
@@ -42,6 +43,8 @@ app.use('/sell/api', sell)
 app.use('/sell-history/api', sellHistory)
 
 app.use('/customer/api', customer)
+
+app.use('/check-expiry/api', checkExpiration)
 
 
 app.get('/print/:id/date/:q_date/api', async (req, res) => {
