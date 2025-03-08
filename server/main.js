@@ -44,20 +44,14 @@ app.use('/sell-history/api', sellHistory)
 app.use('/customer/api', customer)
 
 
-app.get('/print/:id/api', async (req, res) => {
-    let date = new Date()
-    let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
-    let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
-
-    let today = `${date.getFullYear()}-${month}-${onlyDate}`
-    console.log(today)
-
-    const { id } = req.params
+app.get('/print/:id/date/:q_date/api', async (req, res) => {
+    
+    const { id, q_date } = req.params
 
 
     const data = await MedicinePurchase.find({
         id: id,
-        date: today
+        date: q_date
     })
 
     const cell = await Customer.findById(id)

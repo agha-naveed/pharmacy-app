@@ -17,7 +17,7 @@ export default function PrintContent() {
     const [data, setData] = useState<any>([])
     const [cell, setCell] = useState<string>("")
 
-    let { id } = useParams()
+    let { id, date } = useParams()
 
     useEffect(() => {
         let price = 0;
@@ -44,7 +44,7 @@ export default function PrintContent() {
         
 
         const fetchData = async () => {
-            let response = await fetch(`http://localhost:8000/print/${id}/api`, {
+            let response = await fetch(`http://localhost:8000/print/${id}/date/${date}/api`, {
                 method: "GET",
                 credentials: "include"
             })

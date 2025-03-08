@@ -105,7 +105,7 @@ let router = createBrowserRouter([
     }]
   },
   {
-    path: "print/:id",
+    path: "print/:id/date/:date",
     element: <PrintContent />,
   }
 ])
