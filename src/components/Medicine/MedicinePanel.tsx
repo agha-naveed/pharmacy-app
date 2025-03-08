@@ -116,6 +116,11 @@ export default function MedicinePanel() {
                 </button>
             </div>
 
+            <div className="!px-10 flex flex-col">
+                Total Price:
+                <span className="font-semibold text-2xl">2321</span>
+            </div>
+
             <section className='c-scroll w-full overflow-x-auto !px-2 !pb-1 !mt-7'>
                 <table className="table">
                 <thead>

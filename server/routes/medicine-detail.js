@@ -55,6 +55,7 @@ router.route("/")
         arr.push(obj)
     }
 
+    await Medicine.find()
 
     return res.json({
         medicines: arr,

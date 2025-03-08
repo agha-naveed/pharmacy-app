@@ -40,7 +40,8 @@ router.route("/")
       total,
       date
     })
-    if(response) {
+
+    if (response) {
       await Medicine.updateOne({
         batch_no
       },
@@ -49,9 +50,15 @@ router.route("/")
           pills_stock: -quantity
         }
       })
-      return res.json({
-        message: 'ok',
-      })
+
+      const medicine = await Medicine.findOne({batch_no});
+
+      await Medicine.updateOne({
+        batch_no
+      }, {
+        stock: Math.floor(medicine.pills_stock / medicine.pills_packet)
+      }).then(() => res.json({ message: 'ok' }))
+      .catch(() => res.json({ message: "error" }))      
     }
   }
 
