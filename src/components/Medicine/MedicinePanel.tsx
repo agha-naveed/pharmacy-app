@@ -8,6 +8,8 @@ export default function MedicinePanel() {
     const navigate = useNavigate()
     const [medDetails, setMedDetails] = useState<any>([])
 
+    const [search, setSearch] = useState("")
+
     const [focus, setFocus] = useState(false)
 
     const [id, setId] = useState<string>("")
@@ -59,6 +61,25 @@ export default function MedicinePanel() {
     }, [])
 
     useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch("http://localhost:8000/medicine-detail/api", {
+              method: "GET"
+            })
+    
+            
+            const response = await res.json()
+            console.log(response)
+    
+            if(response.message == 'ok') {
+                setMedDetails(response.medicines)
+                setTotalPrice(response.price)
+            }
+    
+        }
+        fetchData()
+    }, [search])
+
+    useEffect(() => {
         
         async function update() {
             navigate(`/medicine-panel/new-medicine?q=${id}`)
@@ -90,6 +111,7 @@ export default function MedicinePanel() {
                     `}
                     onFocus={() => setFocus(true)}
                     onBlur={() => setFocus(false)}
+                    onInput={(e:any) => setSearch(e.target.value)}
                     title='Search Bar'
                     placeholder='Click to Search...'
                     />
