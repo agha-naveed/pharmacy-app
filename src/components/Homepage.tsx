@@ -53,7 +53,8 @@ export default function Homepage() {
   if(supplier) {
         for(let i=0; i<chart.length; i++) {
             arr.push(0)
-            }
+        }
+        
         supplier.map((i:any) => {
             totalSuppliers.push(i.name)
         })
@@ -74,10 +75,10 @@ export default function Homepage() {
     labels: totalSuppliers,
     datasets: [
       {
-        label: "Suppliers",
+        label: "Medicine from Suppliers",
         data: arr,
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#8E44AD"],
-        hoverOffset: 5,
+        hoverOffset: 2,
       },
     ],
   };
@@ -188,7 +189,10 @@ export default function Homepage() {
 
             </section>
 
-            <Pie data={data} options={options} className="!w-72 !h-72" />
+            <div className="w-fit items-center flex flex-col gap-5 !p-3">
+                <Pie data={data} options={options} className="!w-[270px] !h-[270px]" />
+                <label className="text-[22px] font-semibold">Medicines from Supplier</label>
+            </div>
         </div>
     )
 }

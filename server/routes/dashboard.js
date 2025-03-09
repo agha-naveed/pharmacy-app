@@ -48,7 +48,7 @@ router.route("/")
         user: cookie
     })
 
-    const supplier = await Supplier.find()
+    const supplier = await Supplier.find().limit(10)
 
     
     return res.json({
