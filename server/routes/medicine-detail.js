@@ -38,25 +38,46 @@ router.route("/")
     .catch(() => res.json({ message: "some error occurred!" }))
 
 })
-.get(async (_, res) => {
+.get(async (req, res) => {
 
-    const data = await Medicine.find().sort({createdAt: -1}).lean()
-    
-    let arr = []
+    let data, arr = [];
+
+    const { q } = req.query
 
     let totalPrice = 0;
+    
+    if(q) {
+        data = await Medicine.find({name: q}).sort({createdAt: -1}).lean()
 
-    for(let i=0; i<data.length; i++) {
+        for(let i=0; i<data.length; i++) {
 
-        totalPrice+= data[i].sell_pills_price * data[i].pills_stock
+            totalPrice+= data[i].sell_pills_price * data[i].pills_stock
 
-        let obj = data[i]
+            let obj = data[i]
 
-        const name = await Supplier.findById(obj.supplier)
-        
-        obj['supplierName'] = await name.name
+            const name = await Supplier.findById(obj.supplier)
+            
+            obj['supplierName'] = await name.name
 
-        arr.push(obj)
+            arr.push(obj)
+        }
+    }
+
+    else {
+        data = await Medicine.find().sort({createdAt: -1}).lean()
+
+        for(let i=0; i<data.length; i++) {
+
+            totalPrice+= data[i].sell_pills_price * data[i].pills_stock
+
+            let obj = data[i]
+
+            const name = await Supplier.findById(obj.supplier)
+            
+            obj['supplierName'] = await name.name
+
+            arr.push(obj)
+        }
     }
 
 
@@ -79,6 +100,10 @@ router.route("/")
         })
     }).catch(() => res.json({message: "error"}))
 })
-
+// .patch(async(req, res) => {
+//     const body = await req.body
+//     const keys = await body.data
+//     console.log(keys)
+// })
 
 export default router

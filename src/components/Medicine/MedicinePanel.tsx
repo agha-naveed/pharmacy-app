@@ -8,7 +8,6 @@ export default function MedicinePanel() {
     const navigate = useNavigate()
     const [medDetails, setMedDetails] = useState<any>([])
 
-    const [search, setSearch] = useState("")
 
     const [focus, setFocus] = useState(false)
 
@@ -46,7 +45,6 @@ export default function MedicinePanel() {
         const res = await fetch("http://localhost:8000/medicine-detail/api", {
           method: "GET"
         })
-
         
         const response = await res.json()
         console.log(response)
@@ -60,24 +58,26 @@ export default function MedicinePanel() {
       fetchData()
     }, [])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch("http://localhost:8000/medicine-detail/api", {
-              method: "GET"
-            })
-    
-            
-            const response = await res.json()
-            console.log(response)
-    
-            if(response.message == 'ok') {
-                setMedDetails(response.medicines)
-                setTotalPrice(response.price)
+
+    const searchQuery = async (q:string) => {
+        const res = await fetch(`http://localhost:8000/medicine-detail/api?q=${q}`, {
+            method: "GET",
+            headers: {
+            "Content-Type": 'application/json'
             }
-    
+        })
+
+        
+        const response = await res.json()
+        console.log(response)
+
+        if(response.message == 'ok') {
+            setMedDetails(response.medicines)
+            setTotalPrice(response.price)
         }
-        fetchData()
-    }, [search])
+
+    }
+
 
     useEffect(() => {
         
@@ -111,7 +111,7 @@ export default function MedicinePanel() {
                     `}
                     onFocus={() => setFocus(true)}
                     onBlur={() => setFocus(false)}
-                    onInput={(e:any) => setSearch(e.target.value)}
+                    onKeyDown={(e:any) => e.key == "Enter" ? searchQuery(e.target.value) : null}
                     title='Search Bar'
                     placeholder='Click to Search...'
                     />
