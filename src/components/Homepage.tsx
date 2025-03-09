@@ -14,11 +14,12 @@ export default function Homepage() {
         stock: 0,
         sell: 0
     })
+    const [chart, setChart] = useState<any>()
+    const [supplier, setSupplier] = useState<any>()
+
 
     useEffect(() => {
-
         async function getData() {
-            
             const res = await fetch("http://localhost:8000/dashboard/api", {
                 method: "GET",
                 credentials: "include"
@@ -28,9 +29,11 @@ export default function Homepage() {
             if(response.message == 'ok') {
                 setDetails({
                     users: response.users,
-                    stock: response.medicines,
+                    stock: response.medicines.length,
                     sell: response.sell
                 })
+                setChart(response.medicines)
+                setSupplier(response.supplier)
             }
         }
 
@@ -40,12 +43,39 @@ export default function Homepage() {
 
 
   ChartJS.register(ArcElement, Tooltip, Legend);
-  const data = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+  let data;
+
+  let arr:number[] = [];
+  
+
+  let totalSuppliers:string[] = []
+
+  if(supplier) {
+        for(let i=0; i<chart.length; i++) {
+            arr.push(0)
+            }
+        supplier.map((i:any) => {
+            totalSuppliers.push(i.name)
+        })
+        
+        for(let i=0; i<chart.length; i++) {
+            for(let j=0; j<supplier.length; j++) {
+                if(supplier[j]._id == chart[i].supplier) {
+                    arr[j]++;
+                }
+            }
+        }
+        console.log(arr)
+    }
+
+
+  
+  data = {
+    labels: totalSuppliers,
     datasets: [
       {
-        label: "Votes",
-        data: [12, 19, 7, 5, 10],
+        label: "Suppliers",
+        data: arr,
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#8E44AD"],
         hoverOffset: 5,
       },
@@ -158,7 +188,7 @@ export default function Homepage() {
 
             </section>
 
-            <Pie data={data} options={options} />
+            <Pie data={data} options={options} className="!w-72 !h-72" />
         </div>
     )
 }

@@ -2,6 +2,8 @@ import express from 'express'
 import User from '../model/user.js'
 import Medicine from '../model/medicine.js';
 import MedicinePurchase from '../model/medicine-purchase.js';
+import supplier from '../model/supplier.js'
+import Supplier from '../model/supplier.js';
 
 const router = express.Router();
 
@@ -40,17 +42,21 @@ router.route("/")
     const data = await User.find()
     const stock = await Medicine.find()
 
+
     const medicinePurchase = await MedicinePurchase.find({
         date: finalDate,
         user: cookie
     })
 
+    const supplier = await Supplier.find()
+
     
     return res.json({
         message: 'ok',
         users: data.length,
-        medicines: stock.length,
-        sell: medicinePurchase.length
+        medicines: stock,
+        sell: medicinePurchase.length,
+        supplier
     })
 })
 
