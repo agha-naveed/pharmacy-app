@@ -2,6 +2,8 @@ import Header from "../extra-components/Header"
 import { useEffect, useState } from 'react'
 import { FaRegPlusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions } from "chart.js";
 
 export default function Homepage() {
 
@@ -34,6 +36,31 @@ export default function Homepage() {
 
     getData()
   }, [])
+
+
+
+  ChartJS.register(ArcElement, Tooltip, Legend);
+  const data = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+    datasets: [
+      {
+        label: "Votes",
+        data: [12, 19, 7, 5, 10],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#8E44AD"],
+        hoverOffset: 5,
+      },
+    ],
+  };
+
+
+  const options: ChartOptions<"pie"> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+    },
+  };
 
     return (
         <div className="w-full flex flex-col overflow-hidden">
@@ -130,6 +157,8 @@ export default function Homepage() {
 
 
             </section>
+
+            <Pie data={data} options={options} />
         </div>
     )
 }
