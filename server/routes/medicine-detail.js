@@ -47,40 +47,26 @@ router.route("/")
     let totalPrice = 0;
     
     if(q) {
-        data = await Medicine.find({name: q}).sort({createdAt: -1}).lean()
-
-        for(let i=0; i<data.length; i++) {
-
-            totalPrice+= data[i].sell_pills_price * data[i].pills_stock
-
-            let obj = data[i]
-
-            const name = await Supplier.findById(obj.supplier)
-            
-            obj['supplierName'] = await name.name
-
-            arr.push(obj)
-        }
+        data = await Medicine.find(
+        { name: { $regex: q, $options: "i" } },
+        ).sort({createdAt: -1}).lean()
     }
-
     else {
         data = await Medicine.find().sort({createdAt: -1}).lean()
-
-        for(let i=0; i<data.length; i++) {
-
-            totalPrice+= data[i].sell_pills_price * data[i].pills_stock
-
-            let obj = data[i]
-
-            const name = await Supplier.findById(obj.supplier)
-            
-            obj['supplierName'] = await name.name
-
-            arr.push(obj)
-        }
     }
 
+    for(let i=0; i<data.length; i++) {
 
+        totalPrice+= await data[i].sell_pills_price * await data[i].pills_stock
+
+        let obj = data[i]
+
+        const names = await Supplier.findById(obj.supplier)
+        
+        obj['supplierName'] = await names?.name
+
+        arr.push(obj)
+    }
 
     return res.json({
         medicines: arr,
@@ -100,10 +86,5 @@ router.route("/")
         })
     }).catch(() => res.json({message: "error"}))
 })
-// .patch(async(req, res) => {
-//     const body = await req.body
-//     const keys = await body.data
-//     console.log(keys)
-// })
 
 export default router

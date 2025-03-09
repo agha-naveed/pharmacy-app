@@ -1,13 +1,14 @@
 import { LuSearch } from "react-icons/lu";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 
 export default function MedicinePanel() {
     const navigate = useNavigate()
     const [medDetails, setMedDetails] = useState<any>([])
 
+    const searchRef = useRef<any>(null)
 
     const [focus, setFocus] = useState(false)
 
@@ -95,7 +96,10 @@ export default function MedicinePanel() {
     return (
         <div className="overflow-hidden">
             <div className='flex justify-between p-sec'>
-                <div className='flex items-center'>
+                <div className='flex items-center' 
+                    onFocus={() => setFocus(true)}
+                    onBlur={() => setFocus(false)}
+                    >
                     <input
                     type="text"
                     className={`
@@ -107,11 +111,10 @@ export default function MedicinePanel() {
                     !pr-9
                     rounded-lg
                     transition-all
-                    ${focus ? "w-96" : 'w-48'}
+                    ${focus ? "w-96" : 'w-52'}
                     `}
-                    onFocus={() => setFocus(true)}
-                    onBlur={() => setFocus(false)}
-                    onKeyDown={(e:any) => e.key == "Enter" ? searchQuery(e.target.value) : null}
+                    ref={searchRef}
+                    onInput={(e:any) => searchQuery(e.target.value)}
                     title='Search Bar'
                     placeholder='Click to Search...'
                     />
@@ -123,11 +126,14 @@ export default function MedicinePanel() {
                         right-11
                         rounded-r-lg
                         cursor-pointer
-                        text-white border border-black
+                        text-white border
+                        ${focus ? "border-orange-500" : "border-black"}
                         bg-orange-500
                         hover:bg-orange-600
                         transition-all
-                        `} title='Search'>
+                        `} title='Search'
+                        onClick={() => searchRef.current ? searchQuery(searchRef.current.value) : ""}
+                        >
                         <LuSearch />
                     </button>
                 </div>

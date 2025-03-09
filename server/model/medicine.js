@@ -47,6 +47,7 @@ const medicineSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
+medicineSchema.index({ name: 'text' });
 const Medicine = mongoose.models.Medicine || mongoose.model('Medicine', medicineSchema);
 
 
