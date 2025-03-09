@@ -66,7 +66,6 @@ export default function Homepage() {
                 }
             }
         }
-        console.log(arr)
     }
 
 
@@ -189,8 +188,8 @@ export default function Homepage() {
 
             </section>
 
-            <div className="w-fit items-center flex flex-col gap-5 !p-3">
-                <Pie data={data} options={options} className="!w-[270px] !h-[270px]" />
+            <div className="w-fit items-center flex flex-col gap-5 !p-3 !mt-5">
+                <Pie data={data} options={options} className="!w-[250px] !h-[250px]" />
                 <label className="text-[22px] font-semibold">Medicines from Supplier</label>
             </div>
         </div>

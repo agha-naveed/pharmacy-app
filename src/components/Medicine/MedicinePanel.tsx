@@ -173,7 +173,7 @@ export default function MedicinePanel() {
                         medDetails ?
                         medDetails.map((i:any, idx:number) => (
                         
-                            <tr key={`medicine-display-${idx}`}>
+                            <tr key={`medicine-display-${idx}`} className="hover:!bg-zinc-300">
                                 <td>{i.name}</td>
                                 <td>{i.batch_no}</td>
                                 <td>{i.pills_packet}</td>
