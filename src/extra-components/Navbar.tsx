@@ -21,14 +21,15 @@ export default function Navbar() {
                 credentials: 'include'
             })
 
-            if((await res.json()).message != 'login') {
+            const response = await res.json()
+
+            if(response.message != 'login') {
                 alert("You are Not Logged in!!!")
                 redirect("/account")
             }
-            else {
-                if((await res.json()).name == "admin") {
-                    setIsAdmin(true)
-                }
+
+            if(response.name == "admin") {
+                setIsAdmin(true)
             }
         }
         fetchData()
@@ -174,7 +175,7 @@ export default function Navbar() {
                     `}
                     >
                         <CgProfile className='text-2xl' />
-                        Profile
+                        {isAdmin == true ? "Admin" : "Profile"}
                     </Link>
                 </li>
             </ul>
