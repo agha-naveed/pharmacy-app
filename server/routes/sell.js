@@ -58,7 +58,7 @@ router.route("/")
       }, {
         stock: Math.floor(medicine.pills_stock / medicine.pills_packet)
       }).then(() => res.json({ message: 'ok' }))
-      .catch(() => res.json({ message: "error" }))      
+      .catch(() => res.json({ message: "error" }))
     }
   }
 
@@ -83,14 +83,17 @@ router.route("/")
           pills_stock: -quantity
         }
       })
-      return res.json({
-        message: 'ok',
-      })
+
+      const medicine = await Medicine.findOne({batch_no});
+
+      await Medicine.updateOne({
+        batch_no
+      }, {
+        stock: Math.floor(medicine.pills_stock / medicine.pills_packet)
+      }).then(() => res.json({ message: 'ok' }))
+      .catch(() => res.json({ message: "error" }))
     }
   }
-
-  
-
 })
 .get(async (req, res) => {
   try {

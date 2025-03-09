@@ -30,6 +30,7 @@ export default function NewMedicine() {
     const { register, handleSubmit, reset } = useForm<IFormInputs>();
     const [supplier, setSupplier] = useState([])
 
+    const [fetched, setFetched] = useState(false)
 
     const [product, setProduct] = useState({
         med: {
@@ -70,7 +71,6 @@ export default function NewMedicine() {
                 const response = await res.json()
                 if(response.message == 'ok') {
                     setSupplier(response.suppliers)
-                    console.log("Sup")
                 }
             }
             
@@ -119,8 +119,10 @@ export default function NewMedicine() {
         const response = await res.json()
 
         if(response.message == 'ok') {
-            alert("✅ Medicine has been Added!")
-            window.location.reload()
+            setFetched(true)
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000)
         }
         else {
             alert("❌ Error Occurred")
@@ -381,20 +383,22 @@ export default function NewMedicine() {
                     </div>
 
                 </div>
-                    
-                <button className='
-                text-white
-                bg-slate-800
-                rounded-lg
-                !p-2
-                transition-all
-                hover:bg-slate-900
-                cursor-pointer
-                !mt-4
-                '
-                >
-                    Submit
-                </button>
+                <div className='grid'>
+                    <span className='font-semibold'>{fetched ? "✅ Medicine has been Added!" : null}</span>
+                    <button className='
+                    text-white
+                    bg-slate-800
+                    rounded-lg
+                    !p-2
+                    transition-all
+                    hover:bg-slate-900
+                    cursor-pointer
+                    !mt-4
+                    '
+                    >
+                        Submit
+                    </button>
+                </div>
                 
 
             </form>
