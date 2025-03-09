@@ -112,7 +112,7 @@ export default function SellHistory() {
                         <th>Quantity</th>
                         <th>Total Price</th>
                         <th>Entry Date</th>
-                        <th>Update</th>
+                        {/* <th>Update</th> */}
                         <th>Print</th>
                     </tr>
                 </thead>
@@ -129,7 +129,7 @@ export default function SellHistory() {
                                 <td>{i.quantity}</td>
                                 <td>{i.total}</td>
                                 <td>{i.date}</td>
-                                <td>
+                                {/* <td>
                                     <button className='
                                     bg-green-700
                                     !py-2
@@ -143,7 +143,7 @@ export default function SellHistory() {
                                     '>
                                     Update
                                     </button>
-                                </td>
+                                </td> */}
                                 <td>
                                     <button
                                     onClick={() => i.id ? window.open(`/print/${i.id}/date/${i.date}`, "_blank") : window.open(`/print/${i.patient_name}+p_w_id_name/date/${i.date}`, "_blank")}
