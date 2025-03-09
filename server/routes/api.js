@@ -7,11 +7,20 @@ router.route("/")
 .get(async (req, res) => {
 
     let cookie = req.cookies.user
-    
+
     if(cookie) {
-        return res.json({
-            message: "login"
-        })
+        if(cookie == 'admin') {
+            return res.json({
+                message: "login",
+                name: "admin"
+            })
+        }
+        else {
+            return res.json({
+                message: "login",
+                name: "users"
+            })
+        }
     }
 
     else {

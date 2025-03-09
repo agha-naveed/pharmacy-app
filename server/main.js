@@ -46,7 +46,6 @@ app.use('/customer/api', customer)
 
 app.use('/check-expiry/api', checkExpiration)
 
-
 app.get('/print/:id/date/:q_date/api', async (req, res) => {
 
     const { id, q_date } = req.params

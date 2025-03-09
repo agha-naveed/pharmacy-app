@@ -7,7 +7,14 @@ router.route("/")
 .get(async (req, res) => {
   let cookie = await req.cookies.user
 
-  const medicine = await MedicinePurchase.find({user: cookie}).sort({createdAt: -1})
+  let medicine;
+
+  if(cookie == 'admin') {
+    medicine = await MedicinePurchase.find().sort({createdAt: -1})
+  }
+  else {
+    medicine = await MedicinePurchase.find({user: cookie}).sort({createdAt: -1})
+  }
 
     if(medicine) {
         return res.json({
