@@ -58,16 +58,16 @@ input[type="number"] {
   text-align-last: center;
   padding: 0;
 }
-.c-scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: 10px;
   width: 12px;
 }
-.c-scroll::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   cursor: pointer;
   background: #1d293d;
   border-radius: 10px;
 }
-.c-scroll::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
 }

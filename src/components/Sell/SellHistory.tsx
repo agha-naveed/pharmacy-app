@@ -101,7 +101,7 @@ export default function SellHistory() {
                 </button>
             </div>
 
-            <section className='c-scroll w-full overflow-x-auto !px-2 !pb-1 !mt-7'>
+            <section className='w-full overflow-x-auto !px-2 !pb-1 !mt-7'>
                 <table className="table">
                 <thead>
                     <tr>
