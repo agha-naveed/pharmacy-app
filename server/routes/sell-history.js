@@ -6,14 +6,19 @@ const router = express.Router();
 router.route("/")
 .get(async (req, res) => {
   let cookie = await req.cookies.user
-
   let medicine;
+
+  let date = new Date()
+  let onlyDate = (date.getDate()).toString().length == 1 ? `0${date.getDate()}` : date.getDate()
+  let month = (date.getMonth() + 1).toString().length == 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+
+  let finalDate = `${date.getFullYear()}-${month}-${onlyDate}`
 
   if(cookie == 'admin') {
     medicine = await MedicinePurchase.find().sort({createdAt: -1})
   }
   else {
-    medicine = await MedicinePurchase.find({user: cookie}).sort({createdAt: -1})
+    medicine = await MedicinePurchase.find({user: cookie, date: finalDate}).sort({createdAt: -1})
   }
 
     if(medicine) {
@@ -40,7 +45,7 @@ router.route("/")
                 $gte: from
             },
             user: cookie
-        }).sort({createdAt: 1})
+        }).sort({createdAt: -1})
 
         return res.json({
             message: 'ok',
@@ -53,7 +58,7 @@ router.route("/")
                 $lte: to
             },
             user: cookie
-        }).sort({createdAt: 1})
+        }).sort({createdAt: -1})
         return res.json({
             message: 'ok',
             data
@@ -67,7 +72,7 @@ router.route("/")
                 $lte: to
             },
             user: cookie
-        }).sort({createdAt: 1})
+        }).sort({createdAt: -1})
         return res.json({
             message: 'ok',
             data

@@ -42,10 +42,7 @@ export default function SellHistory() {
             console.log(response)
     
             if(response.message == 'ok') {
-                // setMedDetails(undefined)
-
                 setMedDetails(response.data)
-                console.log(response.details)
             }
             
           }
@@ -102,6 +99,10 @@ export default function SellHistory() {
             </div>
 
             <section className='w-full overflow-x-auto !px-2 !pb-1 !mt-7'>
+                <h4 className="grid font-semibold !py-2">
+                    Total Price:
+                    <span className="text-[22px]">12312rs</span>
+                </h4>
                 <table className="table">
                 <thead>
                     <tr>
