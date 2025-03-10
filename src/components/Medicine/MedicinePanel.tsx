@@ -153,7 +153,7 @@ export default function MedicinePanel() {
 
             <div className="!px-10 flex flex-col">
                 Total Price:
-                <span className="font-semibold text-2xl">{totalPrice}</span>
+                <span className="font-semibold text-2xl">{totalPrice} Rs.</span>
             </div>
 
             <section className='w-full overflow-x-auto !px-2 !pb-1 !mt-7'>

@@ -9,8 +9,9 @@ export default function SellHistory() {
 
     const [medDetails, setMedDetails] = useState<any>([])
 
-    const [toDate, setToDate] = useState('')
-    const [fromDate, setFromDate] = useState('')
+    const [toDate, setToDate] = useState<string>('')
+    const [fromDate, setFromDate] = useState<string>('')
+    const [total, setTotal] = useState<number>(0)
 
     useEffect(() => {
       const fetchData = async () => {
@@ -24,6 +25,7 @@ export default function SellHistory() {
 
         if(response.message == 'ok') {
             setMedDetails(response.details)
+            console.log(response.details)
         }
 
       }
@@ -70,6 +72,15 @@ export default function SellHistory() {
           fetchData()
 
     }, [toDate])
+    
+    useEffect(() => {
+        let price = 0;
+        for(let i=0; i<medDetails.length; i++) {
+            price += medDetails[i].total
+        }
+
+        setTotal(price)
+    }, [medDetails])
 
     return (
         <div className="overflow-hidden">
@@ -97,12 +108,11 @@ export default function SellHistory() {
                 <span>Add New Entry</span>
                 </button>
             </div>
-
-            <section className='w-full overflow-x-auto !px-2 !pb-1 !mt-7'>
-                <h4 className="grid font-semibold !py-2">
-                    Total Price:
-                    <span className="text-[22px]">12312rs</span>
-                </h4>
+            <h4 className="relative -top-2 grid !px-10 !pt-1">
+                Total Price:
+                <span className="text-2xl font-semibold">{total} Rs.</span>
+            </h4>
+            <section className='w-full overflow-x-auto !px-2 !pb-1 !mt-7 relative -top-4'>
                 <table className="table">
                 <thead>
                     <tr>
@@ -113,7 +123,6 @@ export default function SellHistory() {
                         <th>Quantity</th>
                         <th>Total Price</th>
                         <th>Entry Date</th>
-                        {/* <th>Update</th> */}
                         <th>Print</th>
                     </tr>
                 </thead>
@@ -130,21 +139,6 @@ export default function SellHistory() {
                                 <td>{i.quantity}</td>
                                 <td>{i.total}</td>
                                 <td>{i.date}</td>
-                                {/* <td>
-                                    <button className='
-                                    bg-green-700
-                                    !py-2
-                                    !px-4
-                                    rounded-md
-                                    text-white
-                                    text-[14.5px]
-                                    cursor-pointer
-                                    hover:bg-green-800
-                                    transition-all
-                                    '>
-                                    Update
-                                    </button>
-                                </td> */}
                                 <td>
                                     <button
                                     onClick={() => i.id ? window.open(`/print/${i.id}/date/${i.date}`, "_blank") : window.open(`/print/${i.patient_name}+p_w_id_name/date/${i.date}`, "_blank")}

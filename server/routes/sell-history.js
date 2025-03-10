@@ -15,7 +15,7 @@ router.route("/")
   let finalDate = `${date.getFullYear()}-${month}-${onlyDate}`
 
   if(cookie == 'admin') {
-    medicine = await MedicinePurchase.find().sort({createdAt: -1})
+    medicine = await MedicinePurchase.find({date: finalDate}).sort({createdAt: -1})
   }
   else {
     medicine = await MedicinePurchase.find({user: cookie, date: finalDate}).sort({createdAt: -1})
@@ -39,51 +39,100 @@ router.route("/")
     let cookie = await req.cookies.user
 
 
-    if(from && !to) {
-        const data = await MedicinePurchase.find({
-            date: {
-                $gte: from
-            },
-            user: cookie
-        }).sort({createdAt: -1})
+    if(cookie == 'admin') {
+        if(from && !to) {
+            const data = await MedicinePurchase.find({
+                date: {
+                    $gte: from
+                }
+            }).sort({createdAt: -1})
 
-        return res.json({
-            message: 'ok',
-            data
-        })
-    }
-    if(!from && to) {
-        const data = await MedicinePurchase.find({
-            date: {
-                $lte: to
-            },
-            user: cookie
-        }).sort({createdAt: -1})
-        return res.json({
-            message: 'ok',
-            data
-        })
-    }
+            return res.json({
+                message: 'ok',
+                data
+            })
+        }
+        if(!from && to) {
+            const data = await MedicinePurchase.find({
+                date: {
+                    $lte: to
+                }
+            }).sort({createdAt: -1})
+            return res.json({
+                message: 'ok',
+                data
+            })
+        }
 
-    if(from && to) {
-        const data = await MedicinePurchase.find({
-            date: {
-                $gte: from,
-                $lte: to
-            },
-            user: cookie
-        }).sort({createdAt: -1})
-        return res.json({
-            message: 'ok',
-            data
-        })
+        if(from && to) {
+            const data = await MedicinePurchase.find({
+                date: {
+                    $gte: from,
+                    $lte: to
+                }
+            }).sort({createdAt: -1})
+            return res.json({
+                message: 'ok',
+                data
+            })
+        }
+
+
+        else {
+            return res.json({
+                message: "No Data"
+            })
+        }
     }
 
 
     else {
-        return res.json({
-            message: "No Data"
-        })
+        if(from && !to) {
+            const data = await MedicinePurchase.find({
+                date: {
+                    $gte: from
+                },
+                user: cookie
+            }).sort({createdAt: -1})
+
+            return res.json({
+                message: 'ok',
+                data
+            })
+        }
+        if(!from && to) {
+            const data = await MedicinePurchase.find({
+                date: {
+                    $lte: to
+                },
+                user: cookie
+            }).sort({createdAt: -1})
+            return res.json({
+                message: 'ok',
+                data
+            })
+        }
+
+        if(from && to) {
+            const data = await MedicinePurchase.find({
+                date: {
+                    $gte: from,
+                    $lte: to
+                },
+                user: cookie
+            }).sort({createdAt: -1})
+            return res.json({
+                message: 'ok',
+                data
+            })
+        }
+
+
+        else {
+            return res.json({
+                message: "No Data"
+            })
+        }
     }
 })
 export default router
