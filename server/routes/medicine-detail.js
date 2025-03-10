@@ -42,11 +42,22 @@ router.route("/")
 
     let data, arr = [];
 
-    const { q } = req.query
+    const { q, page } = req.query
 
+    console.log("page: "+page)
     let totalPrice = 0;
     
     await Medicine.deleteMany({stock: 0})
+
+
+    const result = await Product.aggregate([
+        { $match: { category: "electronics" } },
+        { $sort: { createdAt: -1 } },
+        { $skip: (page - 1) * limit },
+        { $limit: limit },
+    ]);
+
+    
 
     if(q) {
         data = await Medicine.find(

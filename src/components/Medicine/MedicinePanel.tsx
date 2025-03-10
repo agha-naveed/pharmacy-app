@@ -1,6 +1,6 @@
 import { LuSearch } from "react-icons/lu";
 import { FaRegPlusSquare } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import Pagination from "../../extra-components/Pagination.tsx";
 
@@ -18,11 +18,12 @@ export default function MedicinePanel() {
 
     const [rmId, setRmId] = useState(undefined)
 
-    const [currentPage, setCurrentPage] = useState(1)
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = Number(searchParams.get("page")) || 1;
 
-    useEffect(() => {
-
-    }, [currentPage])
+    const handlePageChange = (newPage: number) => {
+        setSearchParams({ page: newPage.toString() });
+    };
 
     useEffect(() => {
         const removeMedicine = async() => {
@@ -45,12 +46,10 @@ export default function MedicinePanel() {
             removeMedicine()
 
     }, [rmId])
-    
-
 
     useEffect(() => {
       const fetchData = async () => {
-        const res = await fetch("http://localhost:8000/medicine-detail/api", {
+        const res = await fetch(`http://localhost:8000/medicine-detail/api/?page=${page}`, {
           method: "GET"
         })
         
@@ -64,7 +63,7 @@ export default function MedicinePanel() {
 
       }
       fetchData()
-    }, [])
+    }, [page])
 
 
     const searchQuery = async (q:string) => {
@@ -237,11 +236,24 @@ export default function MedicinePanel() {
             </section>
             
             <div className="!p-2 flex gap-5">
-                <button className="bg-slate-800 text-white !py-[6px] !px-4 rounded-md">Prev</button>
+                <button
+                className={` text-white !py-[6px] !px-4 rounded-md
+                    ${page == 1 ? "bg-zinc-500" : "bg-slate-800"}    
+                `}
+                disabled={page == 1}
+                onClick={() => handlePageChange(page - 1)}
+                >
+                    Prev
+                </button>
                 <button>1</button>
                 <button>2</button>
                 <button>3</button>
-                <button className="bg-slate-800 text-white !py-[6px] !px-4 rounded-md">Next</button>
+                <button
+                className="bg-slate-800 text-white !py-[6px] !px-4 rounded-md"
+                onClick={() => handlePageChange(page + 1)}
+                >
+                    Next
+                </button>
             </div>
         </div>
     )
