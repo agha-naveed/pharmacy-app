@@ -2,6 +2,7 @@ import { LuSearch } from "react-icons/lu";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import Pagination from "../../extra-components/Pagination.tsx";
 
 
 export default function MedicinePanel() {
@@ -16,6 +17,12 @@ export default function MedicinePanel() {
     const [totalPrice, setTotalPrice] = useState<number>(0)
 
     const [rmId, setRmId] = useState(undefined)
+
+    const [currentPage, setCurrentPage] = useState(1)
+
+    useEffect(() => {
+
+    }, [currentPage])
 
     useEffect(() => {
         const removeMedicine = async() => {
@@ -228,6 +235,14 @@ export default function MedicinePanel() {
                 </tbody>
                 </table>
             </section>
+            
+            <div className="!p-2 flex gap-5">
+                <button className="bg-slate-800 text-white !py-[6px] !px-4 rounded-md">Prev</button>
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button className="bg-slate-800 text-white !py-[6px] !px-4 rounded-md">Next</button>
+            </div>
         </div>
     )
 }
