@@ -7,6 +7,7 @@ import { BiSolidUserAccount } from "react-icons/bi";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { MdPeopleAlt } from "react-icons/md";
+import { TbReportAnalytics } from "react-icons/tb";
 
 
 export default function Navbar() {
@@ -156,6 +157,27 @@ export default function Navbar() {
                     >
                         <FaFileInvoiceDollar className='text-2xl' />
                         Sell
+                    </Link>
+                </li>
+                <li className='border-t border-t-white/10'>
+                    <Link
+                    to={'/report'}
+                    className={`
+                    text-white
+                    text-xl
+                    items-center
+                    !px-[40px]
+                    !py-[16px]
+                    gap-2
+                    transition-all
+                    ${isAdmin ? "flex" : "hidden"}
+                    ${location.pathname == "/report" ?
+                        'bg-slate-800' : "hover:bg-slate-600"
+                        }
+                    `}
+                    >
+                        <TbReportAnalytics className='text-2xl' />
+                        Report
                     </Link>
                 </li>
                 <li className='border-t border-t-white/10'>

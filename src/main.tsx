@@ -21,6 +21,7 @@ import PrintContent from './extra-components/PrintContent.tsx'
 import Customer from './components/Customer/Customer.tsx'
 import CustomerHistory from './components/Customer/CustomerHistory.tsx'
 import NewEntry from './components/Customer/NewEntry.tsx'
+import Report from './components/Report.tsx'
 
 
 
@@ -90,6 +91,10 @@ let router = createBrowserRouter([
           index: true,
           element: <SellHistory />
         }]
+      },
+      {
+        path: "report",
+        element: <Report />
       }
     ]
   },
