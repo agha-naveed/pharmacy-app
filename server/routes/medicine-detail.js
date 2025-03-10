@@ -46,6 +46,8 @@ router.route("/")
 
     let totalPrice = 0;
     
+    await Medicine.deleteMany({stock: 0})
+
     if(q) {
         data = await Medicine.find(
         { name: { $regex: q, $options: "i" } },

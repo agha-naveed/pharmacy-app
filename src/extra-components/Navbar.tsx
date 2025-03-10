@@ -38,9 +38,9 @@ export default function Navbar() {
     return (
         <div className='bg-slate-700 min-h-screen !w-[360px] !py-5'>
             <Link to={"/"} className='w-fit flex justify-self-center'>
-                <img src={logo} className='spin w-36 select-none' alt='Logo' />
+                {/* <img src={logo} className='spin w-36 select-none' alt='Logo' /> */}
             </Link>
-            <span className='text-center w-full block text-2xl !py-[5px] text-white font-bold select-none'>Ali Medical Store</span>
+            {/* <span className='text-center w-full block text-2xl !py-[5px] text-white font-bold select-none'>Ali Medical Store</span> */}
 
             <ul className='!mt-5 grid border-y border-y-white/25'>
                 <li>
