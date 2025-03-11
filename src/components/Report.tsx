@@ -6,12 +6,14 @@ export default function Report() {
     const [month, setMonth] = useState("*")
     const [user, setUser] = useState("*")
     const [year, setYear] = useState(0)
+    const [option, setOption] = useState("")
 
     async function fetchData() {
         let obj = {
             month,
             user,
-            year
+            year,
+            option
         }
 
         const res = await fetch("http://localhost:8000/report/api", {
@@ -37,18 +39,18 @@ export default function Report() {
                             onChange={(e:any) => setMonth(e.target.value)}
                             className="h-9 !px-2 rounded-md w-56 border">
                                 <option value="*">-- select --</option>
-                                <option value="0">January</option>
-                                <option value="1">February</option>
-                                <option value="2">March</option>
-                                <option value="3">April</option>
-                                <option value="4">May</option>
-                                <option value="5">June</option>
-                                <option value="6">July</option>
-                                <option value="7">August</option>
-                                <option value="8">September</option>
-                                <option value="9">October</option>
-                                <option value="10">November</option>
-                                <option value="11">December</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
                             </select>
                         </div>
 
@@ -60,6 +62,18 @@ export default function Report() {
                                 <option value="0">-- select --</option>
                                 <option value="2025">2025</option>
                                 <option value="2026">2026</option>
+                            </select>
+                        </div>
+
+                        <div className="grid">
+                            <label htmlFor="">Option</label>
+                            <select
+                            onChange={(e:any) => setOption(e.target.value)}
+                            required
+                            className="h-9 !px-2 rounded-md w-36 border">
+                                <option value="">-- select --</option>
+                                <option value="sell">Sell</option>
+                                <option value="medicine">Medicines</option>
                             </select>
                         </div>
                     </div>
