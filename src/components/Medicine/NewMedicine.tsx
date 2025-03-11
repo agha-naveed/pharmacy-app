@@ -192,9 +192,11 @@ export default function NewMedicine() {
                         {...register("pay_method")}
                         required
                         >
-                            <option value="">-- select --</option>
+                            <option value="-">-- select --</option>
                             <option value="cash">Cash</option>
                             <option value="credit">On Credit</option>
+                            <option value="partial">Partially Paid</option>
+                            <option value="online">Online</option>
                         </select>
                     </div>
 

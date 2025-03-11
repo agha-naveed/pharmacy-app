@@ -327,7 +327,7 @@ export default function NewSell() {
                                             min={0}
                                             {...register("quantity")}
                                             />
-                                            <span className='relative right-10 top-[7px] text-zinc-500 text-[15px]'>/200</span>
+                                            <span className='relative right-11 top-[7px] text-zinc-500 text-[15px]'>/{wholeName.pills_stock}</span>
                                         </div>
                                     </div>
 
