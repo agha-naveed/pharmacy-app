@@ -2,10 +2,21 @@ import express from 'express'
 import Medicine from '../model/medicine.js'
 import Supplier from '../model/supplier.js'
 import MedicinePurchase from '../model/medicine-purchase.js';
+import User from '../model/user.js';
 
 const router = express.Router();
 
 router.route("/")
+.get(async (req, res) => {
+    const user = await User.find()
+
+    if(user) {
+        return res.json({
+            message: "ok",
+            user
+        })
+    }
+})
 .post(async (req, res) => {
     const body = await req.body
 
@@ -15,14 +26,44 @@ router.route("/")
     const option = body.option
 
     if(option == "sell") {
-        const data = await MedicinePurchase.find(
-            {
-                date: {
-                    $gte: year + "-" + month,
-                    $lt: year + "-" + (month + 1)
+        if(user) {
+            const data = await MedicinePurchase.find(
+                {
+                    date: {
+                        $gte: year + "-" + month,
+                        $lt: year + "-" + (month + 1)
+                    }
                 }
+            )
+            if(data) {
+                return res.json({
+                    message: "ok",
+                    data
+                })
             }
-        )
+            else {
+                return res.json({message: "no data"})
+            }
+        }
+        else {
+            const data = await MedicinePurchase.find(
+                {
+                    date: {
+                        $gte: year + "-" + month,
+                        $lt: year + "-" + (month + 1)
+                    }
+                }
+            )
+            if(data) {
+                return res.json({
+                    message: "ok",
+                    data
+                })
+            }
+            else {
+                return res.json({message: "no data"})
+            }
+        }
     }
     if(option == "medicine") {
         const data = await Medicine.find(
