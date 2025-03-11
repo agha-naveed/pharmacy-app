@@ -16,6 +16,7 @@ import MedicinePurchase from './model/medicine-purchase.js'
 import customer from './routes/customer.js'
 import Customer from './model/customer.js'
 import checkExpiration from './routes/checkExpiration.js'
+import report from './routes/report.js'
 
 
 const app = express()
@@ -41,6 +42,8 @@ app.use('/medicine-detail/api', medicineDetail)
 
 app.use('/sell/api', sell)
 app.use('/sell-history/api', sellHistory)
+
+app.use('/report/api', report)
 
 app.use('/customer/api', customer)
 

@@ -14,7 +14,7 @@ export default function Report() {
             year
         }
 
-        const res = await fetch("http://localhost:8000/report", {
+        const res = await fetch("http://localhost:8000/report/api", {
             method: "POST",
             body: JSON.stringify(obj),
             headers: {
