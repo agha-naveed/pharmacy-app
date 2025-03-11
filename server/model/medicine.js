@@ -14,7 +14,7 @@ const medicineSchema = new mongoose.Schema({
     },
     pay_method: {
         type: String,
-        Enumerator: ['cash', 'credit'],
+        Enumerator: ['cash', 'credit', 'partial', 'online'],
     },
     supplier: {
         type: mongoose.Schema.Types.ObjectId,

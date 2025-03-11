@@ -1,7 +1,21 @@
+import { useEffect } from 'react'
 import Header from '../extra-components/Header'
 
 export default function PendingPayments() {
     
+    useEffect(() => {
+        async function fetchData() {
+            const res = await fetch("http://localhost:8000/payments/api", {
+                method: "GET"
+            })
+            const response = await res.json()
+
+            if(response.message == 'ok') {
+                console.log(response)
+            }
+        }
+        fetchData()
+    }, [])
     return (
         <div className='w-full overflow-hidden'>
             <Header value="Payment Status" />
