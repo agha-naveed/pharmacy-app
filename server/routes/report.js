@@ -29,42 +29,85 @@ router.route("/")
     if(option == "sell") {
         if(user) {
             if(user != 'admin') {
-                const data = await MedicinePurchase.find(
-                    {
-                        date: {
-                            $gte: year + "-" + month,
-                            $lt: year + "-" + (month + 1)
-                        },
-                        user
+                if(month >= +"01" && month <= 12) {
+                    const data = await MedicinePurchase.find(
+                        {
+                            date: {
+                                $gte: year + "-" + month,
+                                $lt: year + "-" + (month + 1)
+                            },
+                            user
+                        }
+                    )
+                    if(data) {
+                        return res.json({
+                            message: "ok",
+                            data
+                        })
                     }
-                )
-                if(data) {
-                    return res.json({
-                        message: "ok",
-                        data
-                    })
+                    else {
+                        return res.json({message: "no data"})
+                    }
                 }
                 else {
-                    return res.json({message: "no data"})
+                    const data = await MedicinePurchase.find(
+                        {
+                            date: {
+                                $gte: year + "-01-01",
+                                $lt: year + "-12-31"
+                            },
+                            user
+                        }
+                    )
+                    if(data) {
+                        return res.json({
+                            message: "ok",
+                            data
+                        })
+                    }
+                    else {
+                        return res.json({message: "no data"})
+                    }
                 }
             }
             else {
-                const data = await MedicinePurchase.find(
-                    {
-                        date: {
-                            $gte: year + "-" + month + "-" + "01",
-                            $lt: year + "-" + (month + 1) + "-" + "01"
+                if(month >= +"01" && month <= 12) {
+                    const data = await MedicinePurchase.find(
+                        {
+                            date: {
+                                $gte: year + "-" + month + "-01",
+                                $lt: year + "-" + (month + 1) + "-01"
+                            }
                         }
+                    )
+                    if(data) {
+                        return res.json({
+                            message: "ok",
+                            data
+                        })
                     }
-                )
-                if(data) {
-                    return res.json({
-                        message: "ok",
-                        data
-                    })
+                    else {
+                        return res.json({message: "no data"})
+                    }
                 }
                 else {
-                    return res.json({message: "no data"})
+                    const data = await MedicinePurchase.find(
+                        {
+                            date: {
+                                $gte: year + "-01-01",
+                                $lt: year + "-12-31"
+                            }
+                        }
+                    )
+                    if(data) {
+                        return res.json({
+                            message: "ok",
+                            data
+                        })
+                    }
+                    else {
+                        return res.json({message: "no data"})
+                    }
                 }
             }
         }
@@ -93,7 +136,7 @@ router.route("/")
             const data = await Medicine.find(
                 {
                     date: {
-                        $gte: year + "-" + "01-01",
+                        $gte: year + "-01-01",
                         $lt: year + "-12-31"
                     }
                 }
