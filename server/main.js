@@ -26,7 +26,7 @@ app.use(cookieParser())
 app.use(cors({origin: "http://localhost:5173", credentials: true}))
 app.use(express.json())
 
-mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_skd")
+mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_store")
 .then(() => {
     console.log("Server Connected...")
 }).catch(() => console.log("Error while connecting to the server..."))
