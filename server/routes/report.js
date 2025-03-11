@@ -25,14 +25,58 @@ router.route("/")
     const year = body.year
     const option = body.option
 
+
     if(option == "sell") {
         if(user) {
-            const data = await MedicinePurchase.find(
+            if(user != 'admin') {
+                const data = await MedicinePurchase.find(
+                    {
+                        date: {
+                            $gte: year + "-" + month,
+                            $lt: year + "-" + (month + 1)
+                        },
+                        user
+                    }
+                )
+                if(data) {
+                    return res.json({
+                        message: "ok",
+                        data
+                    })
+                }
+                else {
+                    return res.json({message: "no data"})
+                }
+            }
+            else {
+                const data = await MedicinePurchase.find(
+                    {
+                        date: {
+                            $gte: year + "-" + month + "-" + "01",
+                            $lt: year + "-" + (month + 1) + "-" + "01"
+                        }
+                    }
+                )
+                if(data) {
+                    return res.json({
+                        message: "ok",
+                        data
+                    })
+                }
+                else {
+                    return res.json({message: "no data"})
+                }
+            }
+        }
+    }
+    if(option == "medicine") {
+        if(month != '*') {
+            const data = await Medicine.find(
                 {
                     date: {
-                        $gte: year + "-" + month,
-                        $lt: year + "-" + (month + 1)
-                    }
+                        $gte: year + "-" + month + "-" + "01",
+                        $lt: year + "-" + (month + 1) + "-" + "01"
+                    },
                 }
             )
             if(data) {
@@ -46,11 +90,11 @@ router.route("/")
             }
         }
         else {
-            const data = await MedicinePurchase.find(
+            const data = await Medicine.find(
                 {
                     date: {
-                        $gte: year + "-" + month,
-                        $lt: year + "-" + (month + 1)
+                        $gte: year + "-" + "01-01",
+                        $lt: year + "-12-31"
                     }
                 }
             )
@@ -64,16 +108,6 @@ router.route("/")
                 return res.json({message: "no data"})
             }
         }
-    }
-    if(option == "medicine") {
-        const data = await Medicine.find(
-            {
-                date: {
-                    $gte: year + "-" + month,
-                    $lt: year + "-" + (month + 1)
-                }
-            }
-        )
     }
 })
 
