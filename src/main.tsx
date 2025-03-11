@@ -22,6 +22,7 @@ import Customer from './components/Customer/Customer.tsx'
 import CustomerHistory from './components/Customer/CustomerHistory.tsx'
 import NewEntry from './components/Customer/NewEntry.tsx'
 import Report from './components/Report.tsx'
+import PendingPayments from './components/PendingPayments.tsx'
 
 
 
@@ -95,6 +96,10 @@ let router = createBrowserRouter([
       {
         path: "report",
         element: <Report />
+      },
+      {
+        path: "pending-payments",
+        element: <PendingPayments />
       }
     ]
   },

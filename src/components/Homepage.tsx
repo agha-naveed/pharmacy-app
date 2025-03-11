@@ -95,7 +95,7 @@ export default function Homepage() {
     return (
         <div className="w-full flex flex-col overflow-hidden">
             <Header value={"Dashboard"} />
-            <section className='flex gap-5 p-sec'>
+            <section className='flex flex-wrap gap-5 p-sec'>
 
                 <div
                 title='Create New Entry'
@@ -183,6 +183,28 @@ export default function Homepage() {
                 >
                     <h4 className='text-[32px] font-semibold'>{details.stock}</h4>
                     <span>Stock</span>
+                </div>
+
+                <div
+                title="Total Medicines"
+                className='
+                w-40
+                h-36
+                rounded-lg
+                transition-all
+                bg-orange-400
+                hover:bg-orange-500
+                cursor-pointer
+                flex
+                flex-col
+                items-center
+                justify-center
+                text-white text-center
+                '
+                onClick={() => navigate("/pending-payments")}
+                >
+                    <h4 className='text-[32px] font-semibold'>{details.stock}</h4>
+                    <span>Pending Payment</span>
                 </div>
 
 
