@@ -12,7 +12,8 @@ export default function Homepage() {
     const [details, setDetails] = useState({
         users: 0,
         stock: 0,
-        sell: 0
+        sell: 0,
+        status: ""
     })
     const [chart, setChart] = useState<any>()
     const [supplier, setSupplier] = useState<any>()
@@ -30,7 +31,8 @@ export default function Homepage() {
                 setDetails({
                     users: response.users,
                     stock: response.medicines.length,
-                    sell: response.sell
+                    sell: response.sell,
+                    status: response.status
                 })
                 setChart(response.medicines)
                 setSupplier(response.supplier)
@@ -203,7 +205,7 @@ export default function Homepage() {
                 '
                 onClick={() => navigate("/pending-payments")}
                 >
-                    <h4 className='text-[32px] font-semibold'>{details.stock}</h4>
+                    <h4 className='text-[32px] font-semibold'>{details.status}</h4>
                     <span>Pending Payment</span>
                 </div>
 

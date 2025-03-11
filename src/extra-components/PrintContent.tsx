@@ -75,7 +75,7 @@ export default function PrintContent() {
     return (
         <section className='flex justify-center items-center !p-10 bg-zinc-400'>
             <div ref={contentRef}
-            className='flex flex-col relative !p-20 min-w-[794px] w-[794px] min-h-[1123px] h-[1123px] bg-white shadow-2xl gap-10'>
+            className='flex flex-col justify-between relative !p-20 min-w-[794px] w-[794px] min-h-[1123px] h-[1123px] bg-white shadow-2xl gap-10'>
                 <img src={logo}
                     className='w-[70%] absolute opacity-5 top-[20%] left-1/2 -translate-x-1/2'
                     alt="Ali Medical Store Logo" />
@@ -90,7 +90,7 @@ export default function PrintContent() {
                     </div>
                 </div>
 
-                <div className='relative z-20 !py-16 flex justify-between'>
+                <div className='relative z-20 flex justify-between'>
                     <div>
                         <h4 className='font-semibold'>BILLED TO:</h4>
                         <span>{data[0]?.patient_name}</span>
@@ -108,7 +108,7 @@ export default function PrintContent() {
                     </div>
                 </div>
 
-                <div>
+                <div className='!mb-10'>
                     <table className='relative z-20 !w-full p-table'>
                         <thead className='h-[50px] content-center'>
                             <tr className='border-b font-semibold text-[15px]'>

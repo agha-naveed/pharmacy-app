@@ -43,6 +43,12 @@ router.route("/")
     const data = await User.find()
     const stock = await Medicine.find()
 
+    const status = await Medicine.find({
+        pay_method: {
+            $in: ['partial', 'credit']
+        }
+    })
+
 
     let medicinePurchase;
 
@@ -66,7 +72,8 @@ router.route("/")
         users: data.length,
         medicines: stock,
         sell: medicinePurchase.length,
-        supplier
+        supplier,
+        status: status.length
     })
 })
 
