@@ -47,6 +47,11 @@ router.route("/")
         return res.json({message: 'ok'})
     }).catch(() => res.json({message: "error"}))
 })
+.put(async (req, res) => {
+    const { q } = req.query
+
+    
+})
 
 
 export default router

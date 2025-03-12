@@ -9,8 +9,8 @@ export default function PendingPayments() {
     const [id, setId] = useState<any>("")
     const [edit, setEdit] = useState<any>()
     const [focus, setFocus] = useState<boolean>(false)
-    const [searchQuery, setSearchQuery] = useState<any>("")
     const searchRef = useRef<any>(null)
+    const [totalPrice, setTotalPrice] = useState(0)
 
     const navigate = useNavigate()
 
@@ -46,11 +46,25 @@ export default function PendingPayments() {
         updateData()
     }, [id])
 
-    useEffect(() => {
-        if(searchQuery.length > 0) {
-            
+    
+    const searchQuery = async (q:string) => {
+        const res = await fetch(`http://localhost:8000/payments/api?q=${q}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+
+        
+        const response = await res.json()
+        console.log(response)
+
+        if(response.message == 'ok') {
+            setTotalPrice(response.price)
         }
-    }, [searchQuery])
+
+    }
+
     return (
         <div className='w-full overflow-hidden'>
             <Header value="Payment Status" />
