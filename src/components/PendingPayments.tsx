@@ -143,7 +143,13 @@ export default function PendingPayments() {
                                             <td>{i.name}</td>
                                             <td>{i.batch_no}</td>
                                             <td>{i.pay_method}</td>
-                                            <td>{i.pills_price * i.pills_stock}</td>
+                                            <td>
+                                                {
+                                                    i.pay_method == "partial" ?
+                                                    (i.pills_price * i.pills_stock) - i.partial_price :
+                                                    i.pills_price * i.pills_stock
+                                                }
+                                            </td>
                                             <td>
                                                 <button
                                                 className='

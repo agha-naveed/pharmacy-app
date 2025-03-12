@@ -42,7 +42,7 @@ router.route("/")
             date,
             sell_pills_price,
             expiry_date,
-            partial_price: partial_price ? partial_price : null
+            partial_price: partial_price ?? 0
         }).then(() => res.json({ message: 'ok' }))
         .catch((err) => {
             res.json({ message: "some error occurred!" })
@@ -70,7 +70,7 @@ router.route("/")
                     date,
                     sell_pills_price,
                     expiry_date,
-                    partial_price: partial_price ? partial_price : null
+                    partial_price: partial_price ?? 0
                 }
         }).then(() => res.json({ message: 'ok' }))
         .catch((err) => {

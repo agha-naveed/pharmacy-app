@@ -86,6 +86,7 @@ export default function NewMedicine() {
                 const response = await res.json()
                 if(response.message == 'ok') {
                     console.log(response)
+                    setPartial(true)
                     setProduct({
                         med: response.medicine,
                         suppliers: response.suppliers
