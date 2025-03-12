@@ -76,9 +76,9 @@ export default function Header({value}:any) {
                     max-w-[320px]
                     h-auto
                     bg-white
-                    shadow-lg
+                    shadow-xl
                     overflow-hidden
-                    
+                    z-20
                 `}>
                     {
                         expired ? 

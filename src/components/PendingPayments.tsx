@@ -55,13 +55,9 @@ export default function PendingPayments() {
 
         
         const response = await res.json()
-        console.log(response)
 
         if(response.message === 'ok') {
             setDetail(response.data)
-        }
-        if(response.message === 'no data') {
-            
         }
         if(response.message === 'error') {
             alert("Some Error Occurred!")
@@ -134,18 +130,20 @@ export default function PendingPayments() {
                                     <th>Medicine Name</th>
                                     <th>Batch No.</th>
                                     <th>Payment Status</th>
+                                    <th>Price</th>
                                     <th>Paid</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    detail ?
+                                    detail.length > 0 ?
                                     detail.map((i:any, idx:number) => (
                                         <tr key={`payment-status-${idx}`}>
                                             <td>{i.supplier_name}</td>
                                             <td>{i.name}</td>
                                             <td>{i.batch_no}</td>
                                             <td>{i.pay_method}</td>
+                                            <td>{i.pills_price * i.pills_stock}</td>
                                             <td>
                                                 <button
                                                 className='
@@ -159,7 +157,12 @@ export default function PendingPayments() {
                                                 </button>
                                             </td>
                                         </tr>
-                                    )) : null
+                                    )) :
+                                    <>
+                                        <tr>
+                                            <td colSpan={5} className='!border-none text-center text-xl font-semibold'>No Data Found!</td>
+                                        </tr>
+                                    </>
                                 }
                             </tbody>
                         </table>
