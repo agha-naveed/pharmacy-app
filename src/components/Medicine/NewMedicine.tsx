@@ -17,6 +17,7 @@ interface IFormInputs {
   expiry_date: string;
   pills_stock: number;
   update: boolean;
+  partial_price: number;
 }
 export default function NewMedicine() {
 
@@ -32,6 +33,8 @@ export default function NewMedicine() {
 
     const [fetched, setFetched] = useState(false)
 
+    const [partial, setPartial] = useState(false)
+
     const [product, setProduct] = useState({
         med: {
             name: undefined,
@@ -44,7 +47,8 @@ export default function NewMedicine() {
             sell_pills_price: undefined,
             pills_stock: undefined,
             discount: undefined,
-            expiry_date: undefined
+            expiry_date: undefined,
+            partial_price: undefined
         },
         suppliers: {
             name: undefined,
@@ -91,13 +95,12 @@ export default function NewMedicine() {
 
                     reset({
                         ...response.medicine,
-                        supplier: response.suppliers._id, // Assuming suppliers have ID
+                        supplier: response.suppliers._id,
                         date: today,
                         expiry_date: response.medicine.expiry_date
                     });
                     setIsEditing(true);
                 }
-                
             }
         }
         fetchData()
@@ -157,7 +160,7 @@ export default function NewMedicine() {
                     </div>
 
                     <div className='grid w-full'>
-                        <label htmlFor="">Batch #</label>
+                        <label htmlFor="">Batch No.</label>
                         <input
                         placeholder='Batch No.'
                         type="text"
@@ -190,6 +193,7 @@ export default function NewMedicine() {
                         rounded-md
                         '
                         {...register("pay_method")}
+                        onChange={(e:any) => setPartial(e.target.value == "partial" ? true : false)}
                         required
                         >
                             <option value="-">-- select --</option>
@@ -327,23 +331,39 @@ export default function NewMedicine() {
                 </div>
 
                 <div className="flex gap-5">
-                    <div className='grid'>
-                        <label htmlFor="">Discount</label>
+                    <div className={`${partial ? "grid" : "hidden"}`}>
+                        <label htmlFor="">Price</label>
                         <input
                         type="number"
                         min={0}
                         className='
                             border
+                            w-36
                             border-zinc-400
                             h-10
                             !px-2
                             rounded-md
                         '
-                        {...register("discount")}
+                        {...register("partial_price")}
                          />
                     </div>
 
-                    
+                    <div className='grid'>
+                        <label htmlFor="">Discount</label>
+                        <input
+                        type="number"
+                        min={0}
+                        className={`
+                            border
+                            border-zinc-400
+                            h-10
+                            !px-2
+                            rounded-md
+                            ${partial ? "w-32" : "w-full"}
+                        `}
+                        {...register("discount")}
+                         />
+                    </div>
 
                     <div className='grid'>
                         <label htmlFor="">Entry Date:</label>

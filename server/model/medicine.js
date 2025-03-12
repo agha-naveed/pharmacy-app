@@ -43,6 +43,9 @@ const medicineSchema = new mongoose.Schema({
     },
     expiry_date: {
         type: String
+    },
+    price_partial: {
+        type: Number
     }
 }, { timestamps: true });
 

@@ -20,6 +20,7 @@ router.route("/")
     const date = body.date
     const sell_pills_price = body.sell_pills_price
     const expiry_date = body.expiry_date
+    const partial_price = body.partial_price
 
     const update = body.update
 
@@ -40,7 +41,8 @@ router.route("/")
             pills_stock,
             date,
             sell_pills_price,
-            expiry_date
+            expiry_date,
+            partial_price: partial_price ? partial_price : null
         }).then(() => res.json({ message: 'ok' }))
         .catch((err) => {
             res.json({ message: "some error occurred!" })
@@ -67,7 +69,8 @@ router.route("/")
                     pills_stock,
                     date,
                     sell_pills_price,
-                    expiry_date
+                    expiry_date,
+                    partial_price: partial_price ? partial_price : null
                 }
         }).then(() => res.json({ message: 'ok' }))
         .catch((err) => {

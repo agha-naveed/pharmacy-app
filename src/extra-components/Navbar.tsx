@@ -59,7 +59,7 @@ export default function Navbar() {
                             'bg-slate-800' :
                         location.pathname == "/sell-new-entry" ?
                             "bg-slate-800" :
-                        location.pathname == "pending-payments" ?
+                        location.pathname == "/pending-payments" ?
                             "bg-slate-800" :
                             "hover:bg-slate-600"
                         }
