@@ -7,10 +7,8 @@ import { useNavigate } from 'react-router-dom';
 export default function PendingPayments() {
     const [detail, setDetail] = useState<any>([])
     const [id, setId] = useState<any>("")
-    const [edit, setEdit] = useState<any>()
     const [focus, setFocus] = useState<boolean>(false)
     const searchRef = useRef<any>(null)
-    const [totalPrice, setTotalPrice] = useState(0)
 
     const navigate = useNavigate()
 
@@ -59,8 +57,14 @@ export default function PendingPayments() {
         const response = await res.json()
         console.log(response)
 
-        if(response.message == 'ok') {
-            setTotalPrice(response.price)
+        if(response.message === 'ok') {
+            setDetail(response.data)
+        }
+        if(response.message === 'no data') {
+            
+        }
+        if(response.message === 'error') {
+            alert("Some Error Occurred!")
         }
 
     }
