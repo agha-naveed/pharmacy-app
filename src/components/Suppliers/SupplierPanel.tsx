@@ -13,9 +13,7 @@ export default function SupplierPanel() {
         const res = await fetch("http://localhost:8000/supplier/api", {
           method: "GET"
         })
-
         const response = await res.json()
-
         if(response.message == 'ok') {
             setDetails(response.suppliers)
         }
