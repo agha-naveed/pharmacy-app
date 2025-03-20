@@ -1,4 +1,3 @@
-import { LuSearch } from "react-icons/lu";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -8,7 +7,6 @@ export default function SupplierPanel() {
     const navigate = useNavigate()
 
     const [details, setDetails] = useState([])
-    const [focus, setFocus] = useState(false)
 
     useEffect(() => {
       const fetchData = async () => {

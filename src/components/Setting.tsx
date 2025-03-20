@@ -14,11 +14,6 @@ export default function page() {
 
     const [msg, setMsg] = useState("")
 
-    const [details, setDetails] = useState<IFormInputs>({
-        first_name: "",
-        last_name: "",
-        username: ""
-    })
 
     const { register, handleSubmit, setValue } = useForm<IFormInputs>({
         defaultValues: {

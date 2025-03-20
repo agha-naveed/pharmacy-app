@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-// import logo from '../assets/img/logo.png'
+import logo from '../assets/logo.png'
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { PiPillFill } from "react-icons/pi";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -39,7 +39,7 @@ export default function Navbar() {
     return (
         <div className='bg-slate-700 min-h-screen !w-[360px] !py-5'>
             <Link to={"/"} className='w-fit flex justify-self-center'>
-                {/* <img src={logo} className='spin w-36 select-none' alt='Logo' /> */}
+                <img src={logo} className='spin w-24 select-none' alt='Logo' />
             </Link>
             <span className='text-center w-full block text-2xl !py-[5px] text-white font-bold select-none'>Agha Pharmacy</span>
 

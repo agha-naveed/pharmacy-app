@@ -114,15 +114,6 @@ export default function NewSell() {
     const [products, setProducts] = useState([{ id: 1 }]);
 
 
-
-    const removeProduct = (id: number) => {
-        
-        setProducts(products.filter((product) => product.id !== id));
-
-    };
-
-    
-
     const onSubmit = async (data: IFormInputs) => {
         
         let date = new Date()
