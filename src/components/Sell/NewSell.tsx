@@ -111,7 +111,7 @@ export default function NewSell() {
 
     const { register, handleSubmit } = useForm<IFormInputs>();
 
-    const [products, setProducts] = useState([{ id: 1 }]);
+    const [products] = useState([{ id: 1 }]);
 
 
     const onSubmit = async (data: IFormInputs) => {
