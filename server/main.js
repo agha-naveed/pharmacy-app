@@ -103,8 +103,6 @@ app.get('/print/:id/date/:q_date/api', async (req, res) => {
 
 })
 
-
-
-app.listen(8000, () => {
-    console.log("server running on port: "+ 8000)
-})
+module.exports = (req, res) => {
+    app(req, res);  // Express does the work of handling requests
+};
