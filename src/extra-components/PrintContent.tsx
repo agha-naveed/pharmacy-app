@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReactToPrint } from "react-to-print";
 import { useParams } from 'react-router-dom';
-import logo from '../assets/img/logo.png'
+import logo from '../assets/logo.png'
 import sign from '../assets/img/Narf_signature.png'
 import qr from '../assets/img/qr-code.png'
 
