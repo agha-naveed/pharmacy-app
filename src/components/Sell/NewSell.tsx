@@ -104,10 +104,7 @@ export default function NewSell() {
                 setName("")
             }, 800)
         }
-
-
     }, [id])
-
 
     const { register, handleSubmit } = useForm<IFormInputs>();
 

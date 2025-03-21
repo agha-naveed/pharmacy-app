@@ -1,4 +1,6 @@
 import express from 'express'
+import dotenv from "dotenv";
+dotenv.config(); 
 import cors from 'cors'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
@@ -26,7 +28,7 @@ app.use(cookieParser())
 app.use(cors({origin: "http://localhost:5173", credentials: true}))
 app.use(express.json())
 
-mongoose.connect("mongodb://127.0.0.1:27017/ali_pharmacy_store")
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log("Server Connected...")
 }).catch(() => console.log("Error while connecting to the server..."))
@@ -103,6 +105,8 @@ app.get('/print/:id/date/:q_date/api', async (req, res) => {
 
 })
 
-module.exports = (req, res) => {
-    app(req, res);  // Express does the work of handling requests
-};
+// module.exports = (req, res) => {
+//     app(req, res);  // Express does the work of handling requests
+// };
+
+app.listen(8000)
