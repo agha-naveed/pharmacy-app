@@ -2,7 +2,6 @@ import express from 'express'
 import User from '../model/user.js'
 import Medicine from '../model/medicine.js';
 import MedicinePurchase from '../model/medicine-purchase.js';
-import supplier from '../model/supplier.js'
 import Supplier from '../model/supplier.js';
 
 const router = express.Router();

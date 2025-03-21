@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "nodemon api/main.js",
+    "start": "nodemon server/main.js",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
