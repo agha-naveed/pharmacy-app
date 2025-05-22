@@ -105,8 +105,5 @@ app.get('/print/:id/date/:q_date/api', async (req, res) => {
 
 })
 
-// module.exports = (req, res) => {
-//     app(req, res);  // Express does the work of handling requests
-// };
 
 app.listen(8000)
