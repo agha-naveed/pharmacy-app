@@ -83,7 +83,7 @@ router.route("/")
 
 })
 .get(async (req, res) => {
-    console.log("GETm ehtid")
+    
     const data = await Supplier.find()
 
     return res.json({
