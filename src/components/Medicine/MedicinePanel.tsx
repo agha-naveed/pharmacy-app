@@ -47,21 +47,20 @@ export default function MedicinePanel() {
     }, [rmId])
 
     useEffect(() => {
-      const fetchData = async () => {
-        const res = await fetch(`http://localhost:8000/medicine-detail/api/?page=${page}`, {
-          method: "GET"
-        })
-        
-        const response = await res.json()
-        console.log(response)
+        const fetchData = async () => {
+            const res = await fetch(`http://localhost:8000/medicine-detail/api/?page=${page}`, {
+            method: "GET"
+            })
+            
+            const response = await res.json()
+            console.log(response)
 
-        if(response.message == 'ok') {
-            setMedDetails(response.medicines)
-            setTotalPrice(response.price)
+            if(response.message == 'ok') {
+                setMedDetails(response.medicines)
+                setTotalPrice(response.price)
+            }
         }
-
-      }
-      fetchData()
+        fetchData()
     }, [page])
 
 
